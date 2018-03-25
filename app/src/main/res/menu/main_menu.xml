@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/menuTodoList"
+        android:title="할일 목록">
+
+    </item>
+
+    <item
+        android:id="@+id/menuTimerChecker"
+        android:title="복식 호흡 시간 체커 "
+        ></item>
+
+    <group
+
+        android:id="@+id/groupRecord">
+        <item
+            android:id="@+id/menuRecord"
+            android:title="녹음"></item>
+        <item
+            android:id="@+id/menuRecordList"
+            android:title="녹음 목록">
+
+        </item>
+    </group>
+
+</menu>

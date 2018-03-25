@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="defaultSingleListItemSize">80dp</dimen>
+    <dimen name="defaultEdWidth">150dp</dimen>
+
+    <dimen name="defaultPadding">8dp</dimen>
+    <!--<dimen name="defaultEdHeight">wrap_content</dimen>-->
+
+</resources>
