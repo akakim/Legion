@@ -36,11 +36,12 @@
     <color name="indigoDeep">#3D5AFE</color>
     <color name="indigoDeeDeep">#304FFE</color>
 
-    <color name="colorBtnDefault">#3F51B5</color>
-    <color name="colorBtnFocused">#1A237E</color>
-    <color name="colorBtnSelected">#1A237E</color>
-    <color name="colorBtnDisabled">#78909C</color>
-    <color name="colorBtnTextColor">#E8EAF6</color>
+    <color name="btnDefault">#3F51B5</color>
+    <color name="btnFocused">#1A237E</color>
+    <color name="btnSelected">#1A237E</color>
+    <color name="btnDisabled">#78909C</color>
+    <color name="btnTextColor">#E8EAF6</color>
 
+    <color name="primaryStroke">@color/indigoLevel6</color>
 
 </resources>

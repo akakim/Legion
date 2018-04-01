@@ -2,17 +2,17 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:color="@color/colorBtnSelected"
+        android:color="@color/btnSelected"
         android:state_selected="true"/>
 
     <item
-        android:color="@color/colorBtnFocused"
+        android:color="@color/btnFocused"
         android:state_window_focused="true"/>
 
 
     <item
-        android:color="@color/colorBtnDisabled"
+        android:color="@color/btnDisabled"
         android:state_enabled="false"/>
 
-    <item android:color="@color/colorBtnDefault"></item>
+    <item android:color="@color/btnDefault"></item>
 </selector>

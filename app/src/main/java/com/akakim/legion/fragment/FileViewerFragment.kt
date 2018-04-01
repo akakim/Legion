@@ -25,10 +25,9 @@ import kotlinx.android.synthetic.main.fragment_file_viewr.*
  * Use the [FileViewrFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FileViewerFragment : Fragment(),OnEventListener{
+class FileViewerFragment : BaseFragment(),OnEventListener{
 
 
-    private var mListener: OnFragmentInteractionListener? = null
 
     private var paramPos : Int = -1
 
@@ -43,11 +42,10 @@ class FileViewerFragment : Fragment(),OnEventListener{
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        val view  = inflater.inflate(R.layout.fragment_file_viewr, container, false)
+        val view  = inflater!!.inflate(R.layout.fragment_file_viewr, container, false)
 
 
 
@@ -73,30 +71,15 @@ class FileViewerFragment : Fragment(),OnEventListener{
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
-        }
-    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         observer = RecordFileObserver (context.getExternalFilesDir( Constant.defaultDirectory ).toString(), this )
 
-
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-    }
 
     override fun onEvent(event: Int, file: String?) {
 

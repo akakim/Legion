@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import com.akakim.legion.R
 import com.akakim.legion.adapter.fragment.RecordingFragmentAdapter
+import com.akakim.legion.fragment.RecordFragment
 import kotlinx.android.synthetic.main.activity_recording.*
 import kotlinx.android.synthetic.main.activity_recording.view.*
 import kotlinx.android.synthetic.main.toolbar_recording.*
@@ -51,7 +52,20 @@ class RecordingActivity : AppCompatActivity() {
         }
 
         override fun getItem(position: Int): Fragment {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+            var fragment : Fragment
+
+            when (position){
+                1 ->{
+                    fragment = RecordFragment()
+
+                }
+                else ->{
+                    fragment = RecordFragment()
+                }
+            }
+
+            return fragment
         }
 
         override fun getCount(): Int {

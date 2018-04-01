@@ -4,71 +4,103 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.akakim.legion.R
+import com.akakim.utillibrary.service.RecordingService
+import kotlinx.android.synthetic.main.fragment_record.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [RecordFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [RecordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RecordFragment : Fragment() {
+
+class RecordFragment : BaseFragment(),View.OnClickListener {
 
 
 
-    private var mListener: OnFragmentInteractionListener? = null
+    var startRecording : Boolean
+    var pauseRecording : Boolean
+    var timeWhenPaused : Long
+
+    init {
+        startRecording = true
+        pauseRecording = true
+        timeWhenPaused = 0
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-//            mParam1 = arguments.getString(ARG_PARAM1)
-//            mParam2 = arguments.getString(ARG_PARAM2)
+
+            position = arguments.getInt(ARG_POSITION)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_record, container, false)
+        return inflater?.inflate(R.layout.fragment_record, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
+        btnRecord.setOnClickListener( this )
+        btnPause.setOnClickListener( this )
+        btnPause.visibility = View.INVISIBLE
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
+
+    override fun onClick(v: View?) {
+
+
+        when ( v?.id ){
+
+            R.id.btnRecord ->{
+
+                onRecord( startRecording )
+                startRecording = !startRecording
+            }
+            R.id.btnPause ->{
+                onPauseRecord( pauseRecording )
+                pauseRecording = !pauseRecording
+            }
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+
+
+    fun onRecord(start: Boolean ){
+
+        var intent = Intent( context, RecordingService::class.java)
+
+
+        if ( start ){
+
         }
+        if( context != null ){
+
+        }
+
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-    }
+    fun onPauseRecord( boolean : Boolean ) {
 
+
+    }
     companion object {
 
-        fun newInstance(param1: String, param2: String): RecordFragment {
+        open val ARG_POSITION   = "position"
+
+             val LOG_TAG        = "RecordFragment"
+             var position       =  -1
+        fun newInstance(position: Int): RecordFragment {
             val fragment = RecordFragment()
             val args = Bundle()
 
+            args.putInt( ARG_POSITION , position )
             fragment.arguments = args
             return fragment
         }

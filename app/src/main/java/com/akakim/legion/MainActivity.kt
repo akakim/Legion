@@ -1,24 +1,32 @@
 package com.akakim.legion
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.TodoListItem
-import com.akakim.legion.fragment.FileViewerFragment
-import com.akakim.legion.fragment.RecordFragment
-import com.akakim.legion.fragment.TimerFragment
-import com.akakim.legion.fragment.TodoListFragment
+import com.akakim.legion.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener
+                    ,BaseFragment.OnFragmentInteractionListener
+
+
+{
+    override fun onFragmentInteraction(fragmentTag: String, uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
 
-
+        Log.d(this.localClassName, " onNavigation Item Selected")
         val argBundle = Bundle()
         argBundle.let {
             when(item.itemId){
@@ -44,9 +52,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                     todoListFrag.arguments = it
 
-                    fragmentManager
+                    supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.flMain, todoListFrag, FragmentConstant.TODO_LIST_FRAGMENT)
+                            .replace(R.id.flMain, todoListFrag as Fragment, FragmentConstant.TODO_LIST_FRAGMENT)
                             .commit()
                 }
 
@@ -54,23 +62,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 R.id.menuRecord -> {
 
                     val recordFragment = RecordFragment()
-                    fragmentManager
+                    supportFragmentManager
                             .beginTransaction()
                             .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
                             .commit()
 
                 }
                 R.id.menuTimerChecker -> {
-                    val timerFragment = TimerFragment()
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-                            .commit()
+//                    val timerFragment = TimerFragment()
+//                    supportFragmentManager
+//                            .beginTransaction()
+//                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+//                            .commit()
                 }
                 R.id.menuRecordList ->{
 
                     val fileViewerFragment = FileViewerFragment()
-                    fragmentManager
+                    supportFragmentManager
                             .beginTransaction()
                             .replace(R.id.flMain, fileViewerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
                             .commit()
@@ -94,7 +102,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         navigationView.setNavigationItemSelectedListener( this )
-
+        Log.d(MainActivity::javaClass.name,"app > MainActiviyt ... " )
+//        navigationView.setOnClickListener {
+//            Log.d(MainActivity::javaClass.name,"onClickListenre... " )
+//        }
+//        navigationView.setNavigationItemSelectedListener {
+//            Log.d(this.localClassName, " onNavigation Item Selected")
+//
+//            true
+//        }
         navigationView.setCheckedItem( R.id.menuTodoList )
     }
 
@@ -107,6 +123,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        Log.d(this.localClassName, " onOp;tionItemSelected");
+
         return super.onOptionsItemSelected(item)
+
+
     }
 }

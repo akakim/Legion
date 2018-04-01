@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener{
         when (v!!.id){
             R.id.btnLogin -> {
 
+
                 val i = Intent ( this , classLoader.loadClass(  RecordingActivity::class.java.canonicalName ))
                 startActivity(i )
             }

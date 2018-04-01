@@ -1,7 +1,5 @@
 package com.akakim.legion.fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
@@ -18,21 +16,11 @@ import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
 import com.akakim.legion.data.TodoListItem
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TodoListFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TodoListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TodoListFragment : Fragment(),OnSingleItemClickListener {
+
+class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
     override fun onClick(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
-
-
-    private var mListener: OnFragmentInteractionListener? = null
 
     private var todoList = ArrayList<TodoListItem>()
 
@@ -43,10 +31,10 @@ class TodoListFragment : Fragment(),OnSingleItemClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo_list, container, false)
+
+        return inflater?.inflate(R.layout.fragment_todo_list, container, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,28 +85,6 @@ class TodoListFragment : Fragment(),OnSingleItemClickListener {
         }
 
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-    }
-
 
 
     companion object {

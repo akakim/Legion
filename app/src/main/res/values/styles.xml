@@ -29,7 +29,7 @@
 
     <style name="btnDefault">
         <item name="android:backgroundTint">@color/selector_button</item>
-        <item name="android:textColor">@color/colorBtnTextColor</item>
+        <item name="android:textColor">@color/btnTextColor</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
