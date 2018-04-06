@@ -1,5 +1,6 @@
 package com.akakim.utillibrary.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
@@ -22,11 +23,13 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
 
         val TAG = "DBHelper"
 
-        val DATABASE_VERSION = "saved_recording.db"
+        val DATABASE_NAME = "saved_recording.db"
+        val DATABASE_VERSION = 1
+
         // 테이블 명
         val TABLE_NAME="saved_recording"
 
-        //
+        // 컬럼명
         val COLUMN_NAME_RECORDING_NAME = "recording_name"
         val COLUMN_NAME_RECORDING_FILE_PATH = "file_path"
         val COLUMN_NAME_RECORDING_LENGTH = "length"
@@ -47,9 +50,14 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
 
         @SuppressWarnings(" unused " )
         val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + TABLE_NAME
+
+        var onDatabaseChangedListener : OnDatabaseChangedListener? = null
+
+
     }
 
-    var context : Context
+    var context : Context?
+
 
 
 
@@ -65,9 +73,10 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
     }
 
 
-//    constructor(context: Context?) : super( context){
-//        this.context = context
-//    }
+    constructor(context: Context?) : super( context, DATABASE_NAME,null, DATABASE_VERSION){
+        this.context = context
+    }
+
 
     constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int, context1: Context) : super(context, name, factory, version) {
         this.context = context1
@@ -79,12 +88,53 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
     }
 
 
-//    fun restoreRecording(item: RecordingItem):Long {
-//
-//    }
 
-//    interface DBHelperItem : BaseColumns{
-//        abstract val TABLE_NAME = "saved_recordings"
-//
-//    }
+    fun getItemAt( position : Int ) : RecordingItem? {
+
+
+        val db = readableDatabase
+
+        var projection = arrayOf(
+                BaseColumns._ID,
+                COLUMN_NAME_RECORDING_NAME,
+                COLUMN_NAME_RECORDING_FILE_PATH,
+                COLUMN_NAME_RECORDING_LENGTH,
+                COLUMN_NAME_TIME_ADDED
+        )
+
+        var cursor = db.query(TABLE_NAME, projection, null,null,null,null,null,null)
+
+        if( cursor.moveToPosition( position )){
+
+            var aItem = RecordingItem().apply {
+                id          = cursor.getInt( cursor.getColumnIndex( BaseColumns._ID))
+                name        = cursor.getString( cursor.getColumnIndex ( COLUMN_NAME_RECORDING_NAME ))
+                filePath    = cursor.getString( cursor.getColumnIndex( COLUMN_NAME_RECORDING_FILE_PATH ))
+                length      = cursor.getInt( cursor.getColumnIndex( COLUMN_NAME_RECORDING_LENGTH ))
+                time        = cursor.getLong( cursor.getColumnIndex( COLUMN_NAME_TIME_ADDED ))
+
+            }
+
+            cursor.close()
+            return aItem
+
+        }
+        return null
+    }
+
+    fun removeItemWithId(id : Int){
+
+    }
+
+
+    fun restoreRecording(item: RecordingItem):Long {
+
+        val db = writableDatabase
+
+        val cv = ContentValues()
+
+        cv.put( COLUMN_NAME_RECORDING_FILE_PATH
+
+        )
+    }
 }
