@@ -122,6 +122,7 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
 
             } else {
 
+
                 // stop Recording
 
 //            btn
