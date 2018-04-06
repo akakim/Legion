@@ -5,13 +5,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
+import android.os.Environment
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
 
 import com.akakim.legion.R
+import com.akakim.legion.common.Constant
 import com.akakim.utillibrary.service.RecordingService
 import kotlinx.android.synthetic.main.fragment_record.*
+import java.io.File
 
 
 class RecordFragment : BaseFragment(),View.OnClickListener {
@@ -63,6 +69,8 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                 onRecord( startRecording )
                 startRecording = !startRecording
             }
+
+
             R.id.btnPause ->{
                 onPauseRecord( pauseRecording )
                 pauseRecording = !pauseRecording
@@ -74,20 +82,83 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
 
     fun onRecord(start: Boolean ){
 
-        var intent = Intent( context, RecordingService::class.java)
 
 
-        if ( start ){
+        var intent = Intent( context, RecordingService::class.java).let {
 
+            if ( start ){
+
+                btnRecord.text = "정지"
+
+                Toast.makeText(context,"녹음 시작",Toast.LENGTH_SHORT).show()
+
+
+                val folder = File(Environment.getExternalStorageDirectory() , Constant.defaultDirectory )
+
+                if( !folder.exists()){
+                    folder.mkdir()
+                }
+
+
+                // 시간제기 시작
+
+                chronometer.apply {
+                    this.base = SystemClock.elapsedRealtime()
+                    chronometer.start()
+                    setOnChronometerTickListener {
+
+                    }
+                }
+
+                context.startService( it )
+
+                // keep screen on while recording
+                activity.window.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
+
+                tvRecordingStatus.text= "녹음중..."
+
+
+//            context.startService( intent )
+
+            } else {
+
+                // stop Recording
+
+//            btn
+
+                chronometer.stop()
+                chronometer.base = SystemClock.elapsedRealtime()
+
+                timeWhenPaused = 0
+                tvRecordingStatus.text = " 버튼을 클릭하시면 녹음이 시작됩니다."
+
+                context.startService( it )
+
+                // keep screen on while recording
+                activity.window.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
+            }
         }
-        if( context != null ){
 
-        }
+
 
     }
 
-    fun onPauseRecord( boolean : Boolean ) {
+    fun onPauseRecord( pause : Boolean ) {
 
+
+        if( pause ) {
+            btnPause.text = "재생"
+
+            timeWhenPaused = chronometer.base - SystemClock.elapsedRealtime()
+            chronometer.stop()
+
+        }else {
+
+            btnPause.text = "일시정지"
+
+            chronometer.base = (SystemClock.elapsedRealtime() + timeWhenPaused)
+            chronometer.start()
+        }
 
     }
     companion object {

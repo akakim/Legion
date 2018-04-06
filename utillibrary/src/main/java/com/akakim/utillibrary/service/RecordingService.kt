@@ -17,7 +17,40 @@ import java.io.IOError
  */
 
 
-open class RecordingService {}
+open class RecordingService : Service() {
+
+    companion object {
+
+        private val TAG = "RecordingService"
+
+
+    }
+
+    var fileName : String = ""
+    var filePath : String = ""
+
+    var recorder : MediaRecorder? = null
+    var database : DBHelper? = null
+
+
+    override fun onCreate() {
+        super.onCreate()
+
+        database = DBHelper(applicationContext )
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+
+
+
+
+
+    interface OnTimerChangedListener{
+        fun onTImerChanged( seconds : Int )
+    }
+}
 
 //    : Service() {
 //

@@ -12,11 +12,11 @@ import android.os.Parcelable
 
 
 data class RecordingItem(
-        val name: String,
-        val filePath : String,
-        val id : Int,
-        val length : Int,
-        val time : Long) : Parcelable{
+        var name: String,
+        var filePath : String,
+        var id : Int,
+        var length : Int,
+        var time : Long) : Parcelable{
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -48,5 +48,7 @@ data class RecordingItem(
             return arrayOfNulls(size)
         }
     }
+
+    constructor() : this("","",-1,0,0L)
 
 }
