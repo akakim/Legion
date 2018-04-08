@@ -28,11 +28,13 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedL
     }
 
 
-    val context : Context
-    val recordList : ArrayList<RecordItem>
+    val context             : Context
+    val recordList          : ArrayList<RecordItem>
 
-    val listener : OnSingleItemClickListener
-    var selected = -1
+    val listener            : OnSingleItemClickListener
+
+    var selected            = -1
+
     constructor(context : Context,recordList : ArrayList<RecordItem>,listener : OnSingleItemClickListener): super(){
 
         this.context = context

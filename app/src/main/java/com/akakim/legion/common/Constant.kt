@@ -9,7 +9,7 @@ package com.akakim.legion.common
 
 class Constant{
     companion object {
-        open val defaultDirectory = "/Recorder/LegionRecord"
+        open val defaultDirectory = "/Recorder/RecordDir"
 
 
 

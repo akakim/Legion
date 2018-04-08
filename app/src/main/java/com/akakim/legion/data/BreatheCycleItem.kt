@@ -1,5 +1,8 @@
 package com.akakim.legion.data
 
+import android.os.Parcel
+import android.os.Parcelable
+
 /**
  * Created by RyoRyeong Kim on 2018-04-06.
  *
@@ -13,4 +16,29 @@ package com.akakim.legion.data
 data class BreatheCycleItem(
         var doThat : String ,
         var term : Int
-)
+) : Parcelable{
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readInt()) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(doThat)
+        parcel.writeInt(term)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<BreatheCycleItem> {
+        override fun createFromParcel(parcel: Parcel): BreatheCycleItem {
+            return BreatheCycleItem(parcel)
+        }
+
+        override fun newArray(size: Int): Array<BreatheCycleItem?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+}

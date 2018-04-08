@@ -15,16 +15,16 @@ import kotlinx.android.synthetic.main.item_recording.view.*
 
 class RecordViewHolder : RecyclerView.ViewHolder {
 
-    val tvRecordFileName : TextView?
-    val tvFileLength : TextView?
-    val tvDate : TextView?
+    val tvRecordFileName        : TextView?
+    val tvFileLength            : TextView?
+    val tvDate                  : TextView?
 
     constructor(itemView: View?) : super(itemView){
 
 
-        tvRecordFileName = itemView?.findViewById( R.id.tvRecordFileName )
-        tvFileLength = itemView?.findViewById( R.id.tvFileLength )
-        tvDate = itemView?.findViewById( R.id.tvDate )
+        tvRecordFileName    = itemView?.findViewById( R.id.tvRecordFileName )
+        tvFileLength        = itemView?.findViewById( R.id.tvFileLength )
+        tvDate              = itemView?.findViewById( R.id.tvDate )
 
     }
 }

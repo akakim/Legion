@@ -1,7 +1,6 @@
-package com.akakim.legion.fragment
+package com.akakim.legion.fragment.record
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
@@ -15,6 +14,7 @@ import com.akakim.legion.R
 import com.akakim.legion.common.Constant
 import com.akakim.legion.data.OnEventListener
 import com.akakim.legion.data.RecordFileObserver
+import com.akakim.legion.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_file_viewr.*
 
 /**

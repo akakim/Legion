@@ -56,12 +56,12 @@ open class RecordingService : Service() {
         elapsedMillies      = 0
         elapsedSeconds      = 0
 
-        recorder            = null
-        database            = null
+        recorder                = null
+        database                = null
         onTimerChangedListener  = null
 
-        timer = null
-        timerTask  = null
+        timer                   = null
+        timerTask               = null
     }
 
     override fun onCreate() {

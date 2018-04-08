@@ -12,13 +12,18 @@ import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.TodoListItem
 import com.akakim.legion.fragment.*
+import com.akakim.legion.fragment.record.FileViewerFragment
+import com.akakim.legion.fragment.record.RecordFragment
+import com.akakim.legion.fragment.timer.TimerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
+
+
+
+
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener
-                    ,BaseFragment.OnFragmentInteractionListener
+                    ,BaseFragment.OnFragmentInteractionListener {
 
-
-{
     override fun onFragmentInteraction(fragmentTag: String, uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -34,6 +39,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     // TODO : 엑셀처럼 정리된 형식의 파일 출력을 염두해두기
                     // TODO : Widget에서 읽기 전용부터 만들기 염두해두기
                     // TODO : Widget에서 쓰기 까지만 만들기. 더이상은 안되.
+                    // TODO : CheckList의 아이템은 여기에 한개씩 들어간다.
+
 
                     // input test Data
                     val todoList = ArrayList<TodoListItem>()
@@ -69,11 +76,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                 }
                 R.id.menuTimerChecker -> {
-//                    val timerFragment = TimerFragment()
-//                    supportFragmentManager
-//                            .beginTransaction()
-//                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-//                            .commit()
+                    val timerFragment = TimerFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+                            .commit()
                 }
                 R.id.menuRecordList ->{
 

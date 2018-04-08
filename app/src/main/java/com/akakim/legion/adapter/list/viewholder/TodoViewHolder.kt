@@ -17,14 +17,14 @@ import kotlinx.android.synthetic.main.item_todo.view.*
 class TodoViewHolder : RecyclerView.ViewHolder {
 
 
-    val tvTitle : TextView?
-    val cbTodo : CheckBox?
+    val tvTitle     : TextView?
+    val cbTodo      : CheckBox?
 
     constructor( itemView : View? ) : super (itemView ){
 
 
-            tvTitle = itemView?.findViewById(R.id.tvTitle )
-            cbTodo = itemView?.findViewById(R.id.cbTodo )
+            tvTitle         = itemView?.findViewById(R.id.tvTitle )
+            cbTodo          = itemView?.findViewById(R.id.cbTodo )
 
 
     }

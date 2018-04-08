@@ -1,9 +1,6 @@
-package com.akakim.legion.fragment
+package com.akakim.legion.fragment.record
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.app.Fragment
 import android.content.Intent
 import android.os.Environment
 import android.os.SystemClock
@@ -15,6 +12,7 @@ import android.widget.Toast
 
 import com.akakim.legion.R
 import com.akakim.legion.common.Constant
+import com.akakim.legion.fragment.BaseFragment
 import com.akakim.utillibrary.service.RecordingService
 import kotlinx.android.synthetic.main.fragment_record.*
 import java.io.File
@@ -172,7 +170,7 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
             val fragment = RecordFragment()
             val args = Bundle()
 
-            args.putInt( ARG_POSITION , position )
+            args.putInt(ARG_POSITION, position )
             fragment.arguments = args
             return fragment
         }

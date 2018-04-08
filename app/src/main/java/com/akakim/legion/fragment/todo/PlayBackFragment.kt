@@ -1,9 +1,6 @@
-package com.akakim.legion.fragment
+package com.akakim.legion.fragment.todo
 
-import android.app.DialogFragment
-import android.content.Context
-import android.net.Uri
-
+import com.akakim.legion.fragment.BaseDialogFragment
 
 
 /**

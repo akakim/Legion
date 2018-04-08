@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/defaultItemSize"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tvSequence"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="@dimen/defaultPadding"
+        tools:text="1. "
+        />
+
+    <TextView
+        android:id="@+id/tvDoThat"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/tvSequence"/>
+
+
+    <TextView
+        android:id="@+id/tvCycleTerm"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
