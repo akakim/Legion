@@ -16,7 +16,7 @@ import com.akakim.legion.R
  * 사용자는 처음 수기로 입력을 해야만 한다.
  * TODO : 처음 입력한 수기를 기억하는 걸 만든다. command 처럼 기억했다가 편하게 입력하는 방법 .
  * 그 다음은 Timer 를 젠다.
- * TODO : 아예 입력값 없이 제기만 하는 Timer도 필요할 거같다. 
+ * TODO : 아예 입력값 없이 제기만 하는 Timer도 필요할 거같다.
  */
 class RoutineInputFragment : Fragment() {
 
