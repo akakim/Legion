@@ -1,5 +1,6 @@
 package com.akakim.legion.data
 
+import android.graphics.Color
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -15,16 +16,19 @@ import android.os.Parcelable
 
 data class BreatheCycleItem(
         var doThat : String ,
-        var term : Int
+        var term : Int,
+        var color: Int
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
             parcel.readString(),
+            parcel.readInt(),
             parcel.readInt()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(doThat)
-        parcel.writeInt(term)
+        parcel.writeString( doThat )
+        parcel.writeInt( term )
+        parcel.writeInt( color )
     }
 
     override fun describeContents(): Int {

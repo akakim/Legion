@@ -11,7 +11,7 @@ import com.akakim.legion.R
 import com.akakim.legion.adapter.list.CycleAdapter
 import com.akakim.legion.data.BreatheCycleItem
 import com.akakim.legion.fragment.BaseFragment
-import kotlinx.android.synthetic.main.fragment_timer.*
+import kotlinx.android.synthetic.main.share_layout_timer.*
 
 
 /**

@@ -68,19 +68,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                 R.id.menuRecord -> {
 
-                    val recordFragment = RecordFragment()
-                    supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-                            .commit()
+//                    val recordFragment = RecordFragment()
+//                    supportFragmentManager
+//                            .beginTransaction()
+//                            .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+//                            .commit()
 
                 }
                 R.id.menuTimerChecker -> {
-                    val timerFragment = TimerFragment()
-                    supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-                            .commit()
+//                    val timerFragment = TimerFragment()
+//                    supportFragmentManager
+//                            .beginTransaction()
+//                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+//                            .commit()
+
+
+
                 }
                 R.id.menuRecordList ->{
 

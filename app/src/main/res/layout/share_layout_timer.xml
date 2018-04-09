@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/checkProgressBar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="27dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:progress="0"
+        android:max = "100"
+        android:background="@drawable/oval_shape_background"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/oval_shape"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
+
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/defaultChronometerSize"
+        android:fontFamily="sans-serif-light"
+        android:layout_alignBottom="@id/checkProgressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp" />
+
+    <Button
+        android:id="@+id/btnToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시작"
+        android:layout_below="@id/checkProgressBar"
+        />
+
+    <Button
+        android:id="@+id/btnInitialize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초기화 "
+        android:layout_below="@id/checkProgressBar"
+        android:layout_toRightOf="@id/btnToggle"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCycleList"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_alignParentBottom="true">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
