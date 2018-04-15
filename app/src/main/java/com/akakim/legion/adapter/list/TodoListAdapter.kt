@@ -39,11 +39,12 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
 
         holder?.cbTodo?.apply {
-            if ( todoListItem.checked == 1 ){
-                check( true )
-            }else {
-                check(false )
-            }
+
+//            if ( todoListItem.checked == 1 ){
+//                check( true )
+//            }else {
+//                check(false )
+//            }
 
             setOnCheckedChangeListener { buttonView, isChecked ->
 

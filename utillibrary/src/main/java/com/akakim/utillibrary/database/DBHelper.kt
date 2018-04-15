@@ -133,8 +133,7 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
 
         val cv = ContentValues()
 
-        cv.put( COLUMN_NAME_RECORDING_FILE_PATH
-
-        )
+        return 0L
+//        cv.put( COLUMN_NAME_RECORDING_FILE_PATH)
     }
 }

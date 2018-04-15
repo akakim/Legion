@@ -9,12 +9,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
+import com.akakim.legion.activity.TimerActivity
 import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.TodoListItem
 import com.akakim.legion.fragment.*
 import com.akakim.legion.fragment.record.FileViewerFragment
-import com.akakim.legion.fragment.record.RecordFragment
-import com.akakim.legion.fragment.timer.TimerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -76,13 +75,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                 }
                 R.id.menuTimerChecker -> {
-//                    val timerFragment = TimerFragment()
+//                    val timerFragment = TimerRoutineFragment()
 //                    supportFragmentManager
 //                            .beginTransaction()
 //                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
 //                            .commit()
+                    val i = Intent ( this , TimerActivity::class.java )
 
-
+                    startActivity( i )
 
                 }
                 R.id.menuRecordList ->{

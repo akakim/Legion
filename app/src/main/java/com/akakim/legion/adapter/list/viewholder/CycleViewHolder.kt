@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.akakim.legion.R
-import kotlinx.android.synthetic.main.item_breathe_cycle.view.*
+import kotlinx.android.synthetic.main.item_breathe_routine.view.*
 
 /**
  * @author KIM

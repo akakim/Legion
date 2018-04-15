@@ -6,6 +6,7 @@
     tools:context="com.akakim.legion.fragment.timer.RoutineInputFragment">
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -25,7 +26,7 @@
 
         <RadioButton
             android:id="@+id/btnStopBreathe"
-            android:text="숨 참음 "
+            android:text="숨 참음"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -37,11 +38,14 @@
             android:checked="true"/>
 
     </RadioGroup>
+
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutRoutine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/edRoutine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="시작할 루틴 명"/>
@@ -50,9 +54,44 @@
 
 
     <NumberPicker
+        android:id="@+id/numberPicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </NumberPicker>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btnInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="루틴 추가"
+            />
+
+        <Button
+            android:id="@+id/btnCommit"
+            android:text="다음"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:shadowRadius="2"/>
+
+
+    </RelativeLayout>
+
+    <!-- read only -->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvPreView">
+
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </android.support.v7.widget.LinearLayoutCompat>

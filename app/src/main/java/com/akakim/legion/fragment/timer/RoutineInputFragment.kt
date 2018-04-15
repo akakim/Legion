@@ -1,14 +1,27 @@
 package com.akakim.legion.fragment.timer
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Color
 import android.os.Bundle
-import android.app.Fragment
+import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
+import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 
 import com.akakim.legion.R
+import com.akakim.legion.adapter.list.RoutineAdapter
+import com.akakim.legion.data.BreatheRoutineCycleItem
+import com.akakim.legion.data.RecordItem
+
+import kotlinx.android.synthetic.main.fragment_routine_input.*
+import kotlinx.android.synthetic.main.share_layout_timer.*
 
 
 /**
@@ -20,81 +33,144 @@ import com.akakim.legion.R
  */
 class RoutineInputFragment : Fragment() {
 
-    // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
+              var mListenerRoutine  : OnRoutineFragmentInteractionListener? = null
 
-    private var mListener: OnFragmentInteractionListener? = null
+    lateinit  var routineAdapter           : RoutineAdapter
+              var routineList       : ArrayList<BreatheRoutineCycleItem> = ArrayList<BreatheRoutineCycleItem>()
+
+
+    @ColorInt var selectedColor     : Int = 0
+
+    @ColorInt var inspirationColor  : Int = 0
+    @ColorInt var expirationColor   : Int = 0
+    @ColorInt var stopColor         : Int = 0
+    @ColorInt var etcColor          : Int = 0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
-        }
+//        if (arguments != null) {  }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle): View? {
-        // Inflate the layout for this fragment
+                              savedInstanceState: Bundle?): View? {
+
+        inspirationColor    = context.getColor( R.color.inspirationRoutine )
+        expirationColor     = context.getColor( R.color.expirationRoutine )
+        stopColor           = context.getColor( R.color.stopRoutine )
+        etcColor            = context.getColor( R.color.etcRoutine )
+
+
+
         return inflater.inflate(R.layout.fragment_routine_input, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+            routineAdapter       = RoutineAdapter(context,routineList )
+            rvPreView.adapter         = routineAdapter
+            rvPreView.layoutManager   = LinearLayoutManager( context)
+
+//        routineAdapter
+
+
+        btnCommit.setOnClickListener {
+
+
+            if( routineList.size != 0 ) {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList( TimerRoutineFragment.ARG_CYCLE_ITEMS, routineList )
+                mListenerRoutine?.onRoutineFragmentInteraction("", bundle)
+            }
+
+
+        }
+
+
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+
+            when(checkedId){
+                R.id.btnExpiration  -> {
+                    edRoutine.setText("날숨", TextView.BufferType.EDITABLE)
+                    selectedColor = inspirationColor
+
+                }
+                R.id.btnInspiration -> {
+                    edRoutine.setText("들숨", TextView.BufferType.EDITABLE)
+                    selectedColor = expirationColor
+                }
+                R.id.btnStopBreathe -> {
+                    edRoutine.setText("멈춤", TextView.BufferType.EDITABLE)
+                    selectedColor  = stopColor
+                }
+                else -> {
+                    edRoutine.setText("",TextView.BufferType.EDITABLE)
+                    selectedColor = etcColor
+                }
+            }
+        }
+
+        numberPicker.minValue = 1
+        numberPicker.maxValue = 60
+        numberPicker.wrapSelectorWheel = false
+
+
+
+
+        btnInput.setOnClickListener {
+
+            // 필수값 체크
+
+            if( !"".equals( edRoutine.text.toString())){
+
+
+                val aItem = BreatheRoutineCycleItem(
+                                edRoutine.text.toString(),
+                                numberPicker.value,
+                                selectedColor)
+
+                this.routineList . add( aItem )
+
+                val itemSize : Int = routineAdapter.itemCount
+                routineAdapter.notifyDataSetChanged()
+            }
+
         }
     }
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
+
+
+        if (context is OnRoutineFragmentInteractionListener) {
+            mListenerRoutine = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement OnRoutineFragmentInteractionListener")
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        mListener = null
+        mListenerRoutine = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+
+    interface OnRoutineFragmentInteractionListener {
+        fun onRoutineFragmentInteraction(tag: String, bundle : Bundle )
     }
+
 
     companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RoutineInputFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         fun newInstance(param1: String, param2: String): RoutineInputFragment {
             val fragment = RoutineInputFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
+
             fragment.arguments = args
             return fragment
         }

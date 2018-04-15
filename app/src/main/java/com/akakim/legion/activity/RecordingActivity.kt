@@ -9,19 +9,21 @@ import android.view.Menu
 import com.akakim.legion.R
 import com.akakim.legion.adapter.fragment.RecordingFragmentAdapter
 import com.akakim.legion.fragment.record.RecordFragment
+import com.akakim.legion.fragment.timer.RoutineInputFragment
 import kotlinx.android.synthetic.main.activity_recording.*
 import kotlinx.android.synthetic.main.toolbar_recording.*
 
 class RecordingActivity : AppCompatActivity() {
 
 
+    var currentFragment : Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recording)
 
-        viewPager.adapter = RecordingFragmentAdapter (this, supportFragmentManager )
-        tabLayout.setupWithViewPager( viewPager )
+//        viewPager.adapter = RecordingFragmentAdapter (this, supportFragmentManager )
+//        tabLayout.setupWithViewPager( viewPager )
 
 
         toolbar?.let {
@@ -29,6 +31,7 @@ class RecordingActivity : AppCompatActivity() {
             it.popupTheme =  R.style.ThemeOverlay_AppCompat_Light
             setSupportActionBar( it )
         }
+
 
 
 

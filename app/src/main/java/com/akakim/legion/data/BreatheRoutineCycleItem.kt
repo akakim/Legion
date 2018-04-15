@@ -1,6 +1,5 @@
 package com.akakim.legion.data
 
-import android.graphics.Color
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -14,7 +13,7 @@ import android.os.Parcelable
  */
 
 
-data class BreatheCycleItem(
+data class BreatheRoutineCycleItem(
         var doThat : String ,
         var term : Int,
         var color: Int
@@ -35,12 +34,12 @@ data class BreatheCycleItem(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<BreatheCycleItem> {
-        override fun createFromParcel(parcel: Parcel): BreatheCycleItem {
-            return BreatheCycleItem(parcel)
+    companion object CREATOR : Parcelable.Creator<BreatheRoutineCycleItem> {
+        override fun createFromParcel(parcel: Parcel): BreatheRoutineCycleItem {
+            return BreatheRoutineCycleItem(parcel)
         }
 
-        override fun newArray(size: Int): Array<BreatheCycleItem?> {
+        override fun newArray(size: Int): Array<BreatheRoutineCycleItem?> {
             return arrayOfNulls(size)
         }
     }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.akakim.legion.R
 import com.akakim.legion.adapter.list.viewholder.CycleViewHolder
-import com.akakim.legion.data.BreatheCycleItem
+import com.akakim.legion.data.BreatheRoutineCycleItem
 
 /**
  * @author KIM
@@ -15,27 +15,27 @@ import com.akakim.legion.data.BreatheCycleItem
  * @date 2018-04-09
  */
 
-class CycleAdapter : RecyclerView.Adapter<CycleViewHolder> {
+class RoutineAdapter : RecyclerView.Adapter<CycleViewHolder> {
 
     var context             : Context?
-    var cycleItems          : ArrayList<BreatheCycleItem>
+    var routineCycleItems: ArrayList<BreatheRoutineCycleItem>
 
 
-    constructor(context : Context , cycleItems: ArrayList<BreatheCycleItem>){
+    constructor(context : Context, routineCycleItems: ArrayList<BreatheRoutineCycleItem>){
 
-        this.context        = context
-        this.cycleItems     = cycleItems
+        this.context            = context
+        this.routineCycleItems  = routineCycleItems
     }
 
 
     override fun onBindViewHolder(holder: CycleViewHolder?, position: Int) {
 
-        val aItem  = cycleItems.get( position )
+        val aItem  = routineCycleItems.get( position )
 
         holder?.apply {
             tvSequence?.text     = position.toString()
             tvDoThat?.text       = aItem.doThat
-            tvCycleTerm?.text    = aItem.term.toString()           // TODO : 포맷 값을 생각하기.
+            tvCycleTerm?.text    = aItem.term.toString() + " 초 "           // TODO : 포맷 값을 생각하기.
 
 
         }
@@ -44,12 +44,18 @@ class CycleAdapter : RecyclerView.Adapter<CycleViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return cycleItems.size
+        return routineCycleItems.size
     }
 
+    open fun getTotalCycleTerm() :Int{
+
+        val sum = routineCycleItems.sumBy { it.term }
+
+        return sum
+    }
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CycleViewHolder {
 
-        val view = LayoutInflater.from( context ).inflate(R.layout.item_breathe_cycle,parent,false)
+        val view = LayoutInflater.from( context ).inflate(R.layout.item_breathe_routine,parent,false)
 
         return CycleViewHolder( view )
     }

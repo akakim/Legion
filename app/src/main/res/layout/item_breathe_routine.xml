@@ -17,12 +17,17 @@
         android:id="@+id/tvDoThat"
         android:layout_width="260dp"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/tvSequence"/>
 
 
     <TextView
         android:id="@+id/tvCycleTerm"
+        android:paddingRight = "@dimen/defaultPadding"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"/>
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" />
 </RelativeLayout>

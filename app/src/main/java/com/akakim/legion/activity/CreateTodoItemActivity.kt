@@ -49,7 +49,7 @@ class CreateTodoItemActivity : BaseActivity() {
 
     companion object {
 
-        val  CREATE_BUNDLE_ITEM_KEY="bundleItem"
-        val  CREATED_ITEM_KEY ="todo_item"
+        val  CREATE_BUNDLE_ITEM_KEY = "bundleItem"
+        val  CREATED_ITEM_KEY       = "todo_item"
     }
 }
