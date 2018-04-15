@@ -18,7 +18,6 @@ import com.akakim.legion.data.BreatheRoutineCycleItem
 import com.akakim.legion.fragment.BaseFragment
 
 import kotlinx.android.synthetic.main.share_layout_timer.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -31,16 +30,11 @@ class TimerRoutineFragment : BaseFragment()
         ,DialogInterface.OnClickListener
         ,View.OnClickListener
         ,Chronometer.OnChronometerTickListener {
-    override fun onChronometerTick(chronometer: Chronometer?) {
 
-
-        Log.d(this@TimerRoutineFragment.javaClass.simpleName,"onTick() : "   + chronometer?.contentDescription)
-
-    }
 
 
     lateinit var builder  : AlertDialog.Builder
-    var iniValue : Long = 0L
+    var initValue: Long = 0L
 
 
     var dialog : AlertDialog? = null
@@ -48,7 +42,6 @@ class TimerRoutineFragment : BaseFragment()
     var cyclerItemRoutines  : ArrayList<BreatheRoutineCycleItem> = ArrayList()
 
     var isStarted = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,9 +64,10 @@ class TimerRoutineFragment : BaseFragment()
 
         }
 
+        val view =  inflater?.inflate(R.layout.fragment_timer, container, false)
 
+        return view
 
-        return inflater?.inflate(R.layout.fragment_timer, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -86,8 +80,8 @@ class TimerRoutineFragment : BaseFragment()
 
 
 
-        iniValue = cyclerItemRoutines.sumBy { it.term }.toLong()
-        Log.d("initValue" , iniValue.toString())
+        initValue = cyclerItemRoutines.sumBy { it.term }.toLong() * 1000
+        Log.d("initValue" , initValue.toString())
 
 
 
@@ -97,7 +91,8 @@ class TimerRoutineFragment : BaseFragment()
             isCountDown = true
 //            format  =   "MM:SS"
 
-            base = SystemClock.elapsedRealtime() + iniValue
+            base = SystemClock.elapsedRealtime() + initValue
+//            text= initValue.toString()
             setOnClickListener( this@TimerRoutineFragment  )
             setOnChronometerTickListener ( this@TimerRoutineFragment )
 
@@ -110,7 +105,7 @@ class TimerRoutineFragment : BaseFragment()
 
 
 //        chronometer.apply {
-//            setStartTime(iniValue)
+//            setStartTime(initValue)
 //
 //            setOnClickListener {
 //                dialog?.show()
@@ -130,7 +125,7 @@ class TimerRoutineFragment : BaseFragment()
 
 
                 }else {
-                    chronometer.base = SystemClock.elapsedRealtime() + iniValue
+//                    chronometer.base = SystemClock.elapsedRealtime() + initValue
                     chronometer.start()
                 }
                 isStarted= !isStarted
@@ -141,7 +136,7 @@ class TimerRoutineFragment : BaseFragment()
 
                 chronometer.stop()
 
-                chronometer.base = SystemClock.elapsedRealtime() + iniValue
+                chronometer.base = SystemClock.elapsedRealtime() +  initValue
 
                 isStarted = false
             }
@@ -164,6 +159,22 @@ class TimerRoutineFragment : BaseFragment()
             }
         }
     }
+
+    override fun onChronometerTick(chronometer: Chronometer?) {
+
+
+
+        var onTickValue  = chronometer?.base!! - SystemClock.currentThreadTimeMillis()
+        Log.d(this@TimerRoutineFragment.javaClass.simpleName,"onTick() : "   +  onTickValue )
+
+
+        if( cyclerItemRoutines.get(0).term >= onTickValue/1000 ) {
+            adapter?.notifyItemRemoved(0)
+        }
+
+
+    }
+
 
     companion object {
 

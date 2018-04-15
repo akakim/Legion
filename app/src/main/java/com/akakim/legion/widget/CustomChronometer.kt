@@ -2,6 +2,7 @@ package com.akakim.legion.widget
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.RemoteViews
 import android.widget.TextView
@@ -24,6 +25,8 @@ open class CustomChronometer : TextView{
 
             mBase = value
 
+            dispatchChronometerTick()
+            updateText( SystemClock.elapsedRealtime() )
         }
     var mNow    : Long = 0L
 
@@ -58,9 +61,21 @@ open class CustomChronometer : TextView{
 //        val a : TypedArray = context.obtainStyledAttributes( attrs,com.android.internal.R.styleable.C)
     }
 
+    @Synchronized
+    private fun updateText(now : Long ){
+        mNow = now
+//        var seconds : Long = mCou
 
+    }
 
     fun dispatchChronometerTick(){
         mOnChronometerTickListener?.onChronometerTick( this )
+    }
+
+    companion object {
+        val MIN_IN_SEC = 60
+        val HOUR_IN_SEC = MIN_IN_SEC * 60
+
+
     }
 }

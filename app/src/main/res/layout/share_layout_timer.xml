@@ -39,13 +39,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="64dp" />
 
-    <Button
-        android:id="@+id/btnToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시작"
-        android:layout_below="@id/checkProgressBar"
-        />
+    <!--<Button-->
+        <!--android:id="@+id/btnToggle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="시작"-->
+        <!--android:layout_below="@id/checkProgressBar"-->
+        <!--/>-->
 
     <Button
         android:id="@+id/btnInitialize"
@@ -53,9 +53,20 @@
         android:layout_height="wrap_content"
         android:text="초기화 "
         android:layout_below="@id/checkProgressBar"
-        android:layout_toRightOf="@id/btnToggle"/>
+
+        android:layout_centerHorizontal="true"/>
+
+
+    <include
+        android:id="@+id/header"
+        android:layout_below="@id/btnInitialize"
+        layout="@layout/header_breath_cycle"
+        android:layout_height="@dimen/defaultItemSize"
+        android:layout_width="wrap_content" />
+
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/header"
         android:id="@+id/rvCycleList"
         android:layout_width="match_parent"
         android:layout_height="280dp"

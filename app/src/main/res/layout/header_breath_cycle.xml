@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/defaultItemSize"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tvTitleSequence"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="@dimen/defaultPadding"
+        android:text="순번"
+
+        />
+
+    <TextView
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tvTitleSequence"
+        android:text="루틴 명 "/>
+
+
+    <TextView
+        android:id="@+id/tvCycleTerm"
+        android:paddingRight = "@dimen/defaultPadding"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="시간"/>
+</RelativeLayout>
