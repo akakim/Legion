@@ -1,6 +1,7 @@
 package com.akakim.legion.data
 
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.TextView
 import java.text.SimpleDateFormat
 
@@ -13,24 +14,34 @@ import java.text.SimpleDateFormat
 
 open class CustomCountDownTimer : CountDownTimer{
 
+    var millisInFuture : Long
+    var countDownInterval : Long
+    var mListener : CountDownListener
 
-    val targetTextView : TextView
 
-    var formatter : SimpleDateFormat
+    constructor(mListener : CountDownListener, millisInFuture: Long, countDownInterval: Long)
+            : super(millisInFuture, countDownInterval) {
+        this. mListener = mListener
 
-    init {
-        formatter = SimpleDateFormat("MM:SS")
-    }
-    constructor(targetTextView : TextView, millisInFuture: Long, countDownInterval: Long)
-    : super(millisInFuture, countDownInterval) {
-        this. targetTextView = targetTextView
+        this.millisInFuture = millisInFuture
+        this.countDownInterval = countDownInterval
     }
     override fun onFinish() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("CustomCountDownTimer", "onFinish"  )
+        mListener.onFinishCountDown()
+
     }
 
     override fun onTick(millisUntilFinished: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        Log.d("CustomCountDownTimer", "onTicksssss" + millisUntilFinished )
+        mListener.onTick(millisUntilFinished,countDownInterval)
+    }
+
+
+    open interface CountDownListener{
+        fun onFinishCountDown()
+        fun onTick(millisUntilFinished: Long , countDownInterval: Long)
     }
 
 }

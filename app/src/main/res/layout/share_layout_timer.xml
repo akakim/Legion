@@ -18,6 +18,17 @@
         />
 
 
+
+    <!--<com.akakim.legion.widget.CountDownChronometer-->
+        <!--android:id="@+id/chronometer"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="@dimen/defaultChronometerSize"-->
+        <!--android:fontFamily="sans-serif-light"-->
+        <!--android:layout_alignBottom="@id/checkProgressBar"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="64dp"-->
+        <!--android:text="00"/>-->
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
