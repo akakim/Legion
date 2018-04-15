@@ -1,6 +1,7 @@
 package com.akakim.legion.fragment.timer
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v7.widget.LinearLayoutManager
 
 import android.view.LayoutInflater
@@ -50,33 +51,45 @@ class TimerRoutineFragment : BaseFragment() {
 
 
         val iniValue : Long = cyclerItemRoutines.sumBy { it.term }.toLong()
-        chronometer.base = iniValue
+
+        chronometer.apply {
+            base = iniValue + SystemClock.elapsedRealtime()
+
+            setOnChronometerTickListener {
+
+            }
+        }
+//        chronometer.base = iniValue + SystemClock.elapsedRealtime()
+//        chronometer.setOnChronometerTickListener {
+//
+//        }
+
 //        chronometer.format = "H:MM:SS"
 
 
 
-        chronometer.apply {
-
-            setOnClickListener {
-
-                if( isStarted ){
-                    this.stop()
-                    isStarted= false
-                }else {
-                    this.start()
-                    isStarted = true
-                }
-
-            }
-
-
-            setOnChronometerTickListener {
-                chronometer ->
-
-
-
-            }
-        }
+//        chronometer.apply {
+//
+//            setOnClickListener {
+//
+//                if( isStarted ){
+//                    this.stop()
+//                    isStarted= false
+//                }else {
+//                    this.start()
+//                    isStarted = true
+//                }
+//
+//            }
+//
+//
+//            setOnChronometerTickListener {
+//                chronometer ->
+//
+//
+//
+//            }
+//        }
     }
 
     companion object {
