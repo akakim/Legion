@@ -50,7 +50,8 @@
             android:name=".navigationTest"
             android:label="@string/title_activity_navigation_test"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.TimerActivity"></activity>
+        <activity android:name=".activity.TimerActivity" />
+        <activity android:name=".activity.EditTodoItemActivity"></activity>
     </application>
 
 </manifest>

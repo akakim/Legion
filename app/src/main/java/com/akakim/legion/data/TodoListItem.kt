@@ -27,7 +27,8 @@ import java.time.Period
         val todoTitle : String ,
         val todoDetailContent : String,
         val date : String,
-        var checked : Int): Parcelable{
+        var checked : Int
+        ): Parcelable{
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
@@ -36,11 +37,22 @@ import java.time.Period
             parcel.readInt())
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        dest?.apply {
+            writeString( pk)
+            writeString( todoTitle)
+            writeString( todoDetailContent)
+            writeString( date)
+            writeInt( checked)
+
+
+        }
+
+
     }
 
     override fun describeContents(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<TodoListItem> {

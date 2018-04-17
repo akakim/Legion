@@ -19,6 +19,7 @@ import com.akakim.legion.R
 import com.akakim.legion.adapter.list.RoutineAdapter
 import com.akakim.legion.data.BreatheRoutineCycleItem
 import com.akakim.legion.data.RecordItem
+import com.akakim.legion.util.DefaultDecorator
 
 import kotlinx.android.synthetic.main.fragment_routine_input.*
 import kotlinx.android.synthetic.main.share_layout_timer.*
@@ -71,8 +72,9 @@ class RoutineInputFragment : Fragment() {
 
 
             routineAdapter       = RoutineAdapter(context,routineList )
-            rvPreView.adapter         = routineAdapter
-            rvPreView.layoutManager   = LinearLayoutManager( context)
+        rvPreView.layoutManager   = LinearLayoutManager( context)
+        rvPreView.addItemDecoration( DefaultDecorator(context))
+        rvPreView.adapter         = routineAdapter
 
 //        routineAdapter
 

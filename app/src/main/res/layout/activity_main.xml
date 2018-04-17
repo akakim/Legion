@@ -21,7 +21,8 @@
         android:fitsSystemWindows="true"
         app:elevation="90dp"
         app:itemTextColor="#fff"
-        app:itemBackground="@color/colorPrimary"
+        app:itemBackground="@drawable/btn_selector"
+
         app:menu="@menu/main_menu">
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

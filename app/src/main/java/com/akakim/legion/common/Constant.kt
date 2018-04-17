@@ -9,8 +9,13 @@ package com.akakim.legion.common
 
 class Constant{
     companion object {
-        open val defaultDirectory = "/Recorder/RecordDir"
+        const val defaultDirectory = "/Recorder/RecordDir"
 
+
+        const val typeBest = "b"
+        const val typePronunciation = "p"
+        const val typeVoice = "v"
+        const val typeBreath = "br"
 
 
     }

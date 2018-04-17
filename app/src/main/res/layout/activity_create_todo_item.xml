@@ -25,6 +25,67 @@
                 android:hint="할일 제목 "/>
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/defaultPadding"
+            android:text="연습 타입 "
+            />
+
+
+        <RadioGroup
+            android:id="@+id/typeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnBest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발음/발성"
+                android:checked="true"/>
+
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnPronunciation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발음"/>
+
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발성"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnBreath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="호흡" />
+
+
+        </RadioGroup>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textImeMultiLine"
+                android:hint="메모 "/>
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+        <!-- TODO: 발음 , 발성, 호흡 -->
 
         <Button
             android:id="@+id/btnConfirm"

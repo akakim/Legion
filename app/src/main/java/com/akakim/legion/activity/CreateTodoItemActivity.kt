@@ -2,54 +2,92 @@ package com.akakim.legion.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
+import android.text.format.DateUtils
+import android.view.View
+import android.widget.RadioGroup
 import com.akakim.legion.R
+import com.akakim.legion.common.Constant
 import com.akakim.legion.data.TodoListItem
 import kotlinx.android.synthetic.main.activity_create_todo_item.*
 
-class CreateTodoItemActivity : BaseActivity() {
+class CreateTodoItemActivity : BaseActivity() , View.OnClickListener ,RadioGroup.OnCheckedChangeListener{
+
+
+
+    var practiceType = Constant.typeBest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_todo_item)
 
-        btnConfirm.setOnClickListener {
+        btnConfirm.setOnClickListener (this )
+
+        typeRadioGroup.setOnCheckedChangeListener( this )
+    }
+
+
+    override fun onClick(v: View?) {
+
+        when( v?.id ){
+            R.id.btnConfirm ->{
+                val resultTime = DateUtils.formatElapsedTime(SystemClock.elapsedRealtime())
+
+                val aNewItem = TodoListItem(
+                        "pk",
+                        edTitle.text.clearSpans().toString(),
+                        edContent.text.toString(),
+                        resultTime,
+                        0
+                )
 
 
 
+                val bundle = Bundle()
 
-            val aNewItem = TodoListItem(
-                    "pk",
-                    edTitle.text.clearSpans().toString(),
-                    "content",
-                    "2018-01-01",
-                    0
-            )
+                bundle.putParcelable(  CREATED_ITEM_KEY ,aNewItem)
+
+                var  i = Intent()
+                i.putExtra(CREATE_BUNDLE_ITEM_KEY,bundle)
+                setResult( Activity.RESULT_OK  )
+
+                finish()
+
+            }
+        }
 
 
+    }
 
-            val bundle = Bundle()
 
-            bundle.putParcelable(  CREATED_ITEM_KEY ,aNewItem)
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
 
-            var  i = Intent()
-            i.putExtra(CREATE_BUNDLE_ITEM_KEY,bundle)
-//            var i = Intent()
-//            i.extras = bundle
-            setResult( Activity.RESULT_OK  )
+        when ( checkedId ){
+            R.id.btnBest ->{
+                practiceType = Constant.typeBest
+
+            }
+            R.id.btnPronunciation->{
+                practiceType = Constant.typePronunciation
+
+            }
+            R.id.btnVoice ->{
+                practiceType = Constant.typeVoice
+
+            }
+            R.id.btnBreath ->{
+                practiceType = Constant.typeBreath
+            }
 
         }
     }
 
 
 
-
-
-
     companion object {
 
-        val  CREATE_BUNDLE_ITEM_KEY = "bundleItem"
-        val  CREATED_ITEM_KEY       = "todo_item"
+       const val  CREATE_BUNDLE_ITEM_KEY = "bundleItem"
+       const val  CREATED_ITEM_KEY       = "todo_item"
     }
 }

@@ -112,16 +112,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         navigationView.setNavigationItemSelectedListener( this )
-        Log.d(MainActivity::javaClass.name,"app > MainActiviyt ... " )
-//        navigationView.setOnClickListener {
-//            Log.d(MainActivity::javaClass.name,"onClickListenre... " )
-//        }
-//        navigationView.setNavigationItemSelectedListener {
-//            Log.d(this.localClassName, " onNavigation Item Selected")
-//
-//            true
-//        }
-        navigationView.setCheckedItem( R.id.menuTodoList )
+
+
+        navigationView.menu.getItem(0).setChecked( true )
+
+        onNavigationItemSelected( navigationView.menu.getItem(0) )
+//        navigationView.
+//        navigationView.setCheckedItem( R.id.menuTodoList )
+//        navigationView.menu.
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -129,7 +127,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         //TODO : TodoListFragment를 위한 onActivityResult 처리
 
-//        fragmentManager.get
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group
+        android:id="@+id/groupList">
 
+        <item
+            android:id="@+id/menuTodoList"
+            android:title="할일 목록">
+        </item>
+        <item
+            android:id="@+id/menuFeedBackList"
+            android:title="피드백 리스트">
+        </item>
 
-    <item
-        android:id="@+id/menuTodoList"
-        android:title="할일 목록">
-
-    </item>
+        <item
+            android:id="@+id/menuBreathRoutineList"
+            android:title="호흡 루틴 리스트">
+        </item>
+    </group>
 
     <item
         android:id="@+id/menuTimerChecker"
-        android:title="복식 호흡 시간 체커 "
-        ></item>
+        android:title="복식 호흡 시간 체커 ">
+
+    </item>
 
     <group
 
