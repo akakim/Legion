@@ -44,14 +44,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     // input test Data
                     val todoList = ArrayList<TodoListItem>()
 
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
-                    todoList.add( TodoListItem("pk1","복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(1,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(2,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(3,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(4,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(5,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(6,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(7,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
+                    todoList.add( TodoListItem(8,"복식 호흡","3초에 한번 4초에 한번 등등 ","2018-03-25",0))
 
                     val todoListFrag = TodoListFragment()
                     it.putParcelableArrayList( TodoListFragment.LIST_KEY, todoList )

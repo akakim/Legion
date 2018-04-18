@@ -2,6 +2,7 @@ package com.akakim.legion.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.BaseColumns
 import java.time.Period
 
 /**
@@ -23,14 +24,14 @@ import java.time.Period
  */
 
  data class TodoListItem (
-        val pk : String,
+        val pk : Int,
         val todoTitle : String ,
         val todoDetailContent : String,
         val date : String,
         var checked : Int
         ): Parcelable{
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
+            parcel.readInt(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -39,7 +40,7 @@ import java.time.Period
     override fun writeToParcel(dest: Parcel?, flags: Int) {
 
         dest?.apply {
-            writeString( pk)
+            writeInt( pk)
             writeString( todoTitle)
             writeString( todoDetailContent)
             writeString( date)
@@ -56,6 +57,18 @@ import java.time.Period
     }
 
     companion object CREATOR : Parcelable.Creator<TodoListItem> {
+
+
+        // 테이블 명
+        val TABLE_TODO_LIST             = "todoListItem"        //  to
+
+        val pk                  : Pair<String,String> = Pair( DatabaseColumn._ID,       DatabaseColumn.INTEGER_TYPE)
+        val todoTitle           : Pair<String,String> = Pair( "todoTitle",              DatabaseColumn.TEXT_TYPE)
+        val todoDetailContent   : Pair<String,String> = Pair( "todoDetailContent",      DatabaseColumn.TEXT_TYPE)
+        val date                : Pair<String,String> = Pair( "date",                   DatabaseColumn.TEXT_TYPE)
+        var checked             : Pair<String,String> = Pair( "checked",                DatabaseColumn.INTEGER_TYPE)
+
+
         override fun createFromParcel(parcel: Parcel): TodoListItem {
             return TodoListItem(parcel)
         }
@@ -64,5 +77,7 @@ import java.time.Period
             return arrayOfNulls(size)
         }
     }
+
+
 
 }

@@ -27,7 +27,12 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
         val DATABASE_VERSION = 1
 
         // 테이블 명
-        val TABLE_NAME="saved_recording"
+        val TABLE_NAME                  = "savedRecording"            //  녹음파일
+        val TABLE_TODO_LIST             = "todoListItem"        //  to
+        val TABLE_BREATH_REOUTINE_LIST  = "breathRoutine"  //
+        val TABLE_CHECK_LIST            = "checklistTable"
+
+
 
         // 컬럼명
         val COLUMN_NAME_RECORDING_NAME = "recording_name"
@@ -134,6 +139,6 @@ open class DBHelper : SQLiteOpenHelper,BaseColumns{
         val cv = ContentValues()
 
         return 0L
-//        cv.put( COLUMN_NAME_RECORDING_FILE_PATH)
+
     }
 }

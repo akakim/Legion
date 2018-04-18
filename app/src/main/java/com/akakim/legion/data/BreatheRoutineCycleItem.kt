@@ -14,17 +14,20 @@ import android.os.Parcelable
 
 
 data class BreatheRoutineCycleItem(
+        var pk : Int,
         var doThat : String ,
         var term : Int,
         var color: Int
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
+            parcel.readInt(),
             parcel.readString(),
             parcel.readInt(),
             parcel.readInt()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt( pk )
         parcel.writeString( doThat )
         parcel.writeInt( term )
         parcel.writeInt( color )
