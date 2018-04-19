@@ -1,11 +1,13 @@
 package com.akakim.legion.data
 
+import android.content.ContentValues
 import android.os.Parcel
 import android.os.Parcelable
 
 /**
  * Created by RyoRyeong Kim on 2018-04-17.
  *
+ * PK 값은 , groupName과 순번으로 정하자.
  * gruop
  * sequence
  * viewtype  = 0 인경우 Y /N
@@ -21,6 +23,23 @@ data class CheckList(
         var viewType :Int,
         var content : String,
         var  score : Int ) : Parcelable,DataInterface{
+
+    override fun getPK(): String {
+
+        return groupName + sequence
+    }
+
+    override fun getContentValue(): ContentValues {
+
+        val contentValue = ContentValues()
+            contentValue.put(GROUP_NAME_COLUMN.first,groupName )
+            contentValue.put(SEQUNCE_COLUMN.first,sequence )
+            contentValue.put(VIEW_TYPE_COLUMN.first,viewType )
+            contentValue.put(CONTENT_COLUMN.first,content )
+            contentValue.put(SCORE_COLUMN.first,score )
+
+        return contentValue
+    }
 
 
     constructor(parcel: Parcel) : this(
@@ -47,17 +66,19 @@ data class CheckList(
 
     companion object CREATOR : Parcelable.Creator<CheckList> {
         open val TABLE_CHECKLIST                                = "checkListTable"
-        open val PK                      : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+
+        // PK 값이 Group Column과, Sequence값으로 변경
+        open val PK                      : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.TEXT_TYPE)
 
         open val GROUP_NAME_COLUMN       : Pair<String,String>  = Pair( "groupName",          DataInterface.TEXT_TYPE)
         open val SEQUNCE_COLUMN          : Pair<String,String>  = Pair( "sequence",           DataInterface.INTEGER_TYPE)
 
         open val VIEW_TYPE_COLUMN        : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
         open val CONTENT_COLUMN          : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
-        open val SCORE                   : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+        open val SCORE_COLUMN: Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
 
 
-        open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( GROUP_NAME_COLUMN, SEQUNCE_COLUMN,VIEW_TYPE_COLUMN,CONTENT_COLUMN, SCORE )
+        open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( GROUP_NAME_COLUMN, SEQUNCE_COLUMN,VIEW_TYPE_COLUMN,CONTENT_COLUMN, SCORE_COLUMN)
 
 
         const val VALUE_YES = 0

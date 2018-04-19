@@ -8,7 +8,7 @@ import android.os.Parcelable
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-03-25
+ * @DATE_COLUMN 2018-03-25
  *  boolean type은 Parcelable에서 지원하지 않는다. 따라서 타입캐스팅을하낟.
  *  할일 제목
  *  세부 할일
@@ -33,14 +33,17 @@ import android.os.Parcelable
 
     override fun getPK(): String {
 
-
+        return pk.toString()
     }
 
     override fun getContentValue(): ContentValues {
 
-        val contentValues : ContentValues
-        contentValues.put
+        val contentValues : ContentValues = ContentValues()
 
+
+        contentValues.put( )
+
+        return contentValues
     }
 
     constructor(parcel: Parcel) : this(
@@ -77,13 +80,13 @@ import android.os.Parcelable
         // 테이블 명
         val TABLE_TODO_LIST             = "todoListItem"        //  to
 
-        val pk                  : Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
-        val todoTitle           : Pair<String,String> = Pair( "todoTitle",              DataInterface.TEXT_TYPE)
-        val todoDetailContent   : Pair<String,String> = Pair( "todoDetailContent",      DataInterface.TEXT_TYPE)
-        val date                : Pair<String,String> = Pair( "date",                   DataInterface.TEXT_TYPE)
-        var checked             : Pair<String,String> = Pair( "checked",                DataInterface.INTEGER_TYPE)
+        val PK                          : Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        val TODO_LIST_TITLE_COLUMN      : Pair<String,String> = Pair( "TODO_LIST_TITLE_COLUMN",              DataInterface.TEXT_TYPE)
+        val TODO_DETAIL_CONTENT_COLUMN  : Pair<String,String> = Pair( "TODO_DETAIL_CONTENT_COLUMN",      DataInterface.TEXT_TYPE)
+        val DATE_COLUMN                 : Pair<String,String> = Pair( "DATE_COLUMN",                   DataInterface.TEXT_TYPE)
+        val CHECKED_COLUMN              : Pair<String,String> = Pair( "CHECKED_COLUMN",                DataInterface.INTEGER_TYPE)
 
-        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( todoTitle, todoDetailContent,date,checked )
+        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf(TODO_LIST_TITLE_COLUMN, TODO_DETAIL_CONTENT_COLUMN, DATE_COLUMN, CHECKED_COLUMN)
 
         override fun createFromParcel(parcel: Parcel): TodoListItem {
             return TodoListItem(parcel)

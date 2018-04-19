@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-04-15
+ * @DATE_COLUMN 2018-04-15
  *
  * 사용하지 않는다.
  */

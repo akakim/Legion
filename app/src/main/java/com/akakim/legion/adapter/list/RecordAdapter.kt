@@ -14,7 +14,7 @@ import com.akakim.utillibrary.database.OnDatabaseChangedListener
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-03-20
+ * @DATE_COLUMN 2018-03-20
  */
 class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedListener{
     override fun onNewDatabaseEntryAdded() {

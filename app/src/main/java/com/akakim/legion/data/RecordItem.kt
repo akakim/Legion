@@ -6,7 +6,7 @@ import android.content.ContentValues
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-03-21
+ * @DATE_COLUMN 2018-03-21
  *
  *  리스트에 파일을 보여주는 것과 sqlite에 지정할 파일 정보도 지정할 것 ,
  */
@@ -19,23 +19,31 @@ data class RecordItem (
         val recordFilePath :String
 ) : DataInterface{
     override fun getPK(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return pk.toString()
     }
 
     override fun getContentValue(): ContentValues {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        val contentValue = ContentValues()
+
+        contentValue.put(RECORD_FILE_NAME_COLUMN.first,recordFileName)
+        contentValue.put(RECORD_LENGTH.first,recordLength)
+        contentValue.put(RECORD_DATE.first,recordDate)
+        contentValue.put(RECORD_FILE_PATH.first,recordFilePath)
+
+        return contentValue
     }
 
     companion object {
         val TABLE_RECORD             = "tableRecord"        //  to
 
-        val pk                  : Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
-        val recordFileName      : Pair<String,String> = Pair( "recordFileName",              DataInterface.TEXT_TYPE)
-        val recordLength        : Pair<String,String> = Pair( "recordLength",      DataInterface.TEXT_TYPE)
-        val recordDate          : Pair<String,String> = Pair( "recordDate",                   DataInterface.TEXT_TYPE)
-        var recordFilePath      : Pair<String,String> = Pair( "recordFilePath",                DataInterface.TEXT_TYPE)
+        val PK: Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        val RECORD_FILE_NAME_COLUMN: Pair<String,String> = Pair( "RECORD_FILE_NAME_COLUMN",              DataInterface.TEXT_TYPE)
+        val RECORD_LENGTH: Pair<String,String> = Pair( "RECORD_LENGTH",      DataInterface.TEXT_TYPE)
+        val RECORD_DATE: Pair<String,String> = Pair( "RECORD_DATE",                   DataInterface.TEXT_TYPE)
+        val RECORD_FILE_PATH: Pair<String,String> = Pair( "RECORD_FILE_PATH",                DataInterface.TEXT_TYPE)
 
 
-        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( recordFileName,recordLength, recordDate, recordFileName )
+        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf(RECORD_FILE_NAME_COLUMN, RECORD_LENGTH, RECORD_DATE, RECORD_FILE_NAME_COLUMN)
     }
 }

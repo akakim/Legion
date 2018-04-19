@@ -13,7 +13,7 @@ import com.akakim.legion.data.TodoListItem
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-03-25
+ * @DATE_COLUMN 2018-03-25
  */
 class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
@@ -40,7 +40,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
         holder?.cbTodo?.apply {
 
-//            if ( todoListItem.checked == 1 ){
+//            if ( todoListItem.CHECKED_COLUMN == 1 ){
 //                check( true )
 //            }else {
 //                check(false )

@@ -10,7 +10,7 @@ import com.akakim.legion.data.*
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-03-10
+ * @DATE_COLUMN 2018-03-10
  */
 
 class DBHelper :SQLiteOpenHelper{
@@ -39,8 +39,8 @@ class DBHelper :SQLiteOpenHelper{
 
             execSQL( createTableUsingPrimaryKey( TodoListItem.TABLE_TODO_LIST,                  TodoListItem.COLUMN_LIST ))
             execSQL( createTableUsingPrimaryKey( RecordItem.TABLE_RECORD,                       RecordItem.COLUMN_LIST ))
-            execSQL( createTableUsingPrimaryKey( CheckList.TABLE_CHECKLIST,                     CheckList.COLUMN_LIST ))
-            execSQL( createTableUsingPrimaryKey( BreatheRoutineCycleItem.TABLE_BREATH_ROUTINE,  BreatheRoutineCycleItem.COLUMN_LIST ))
+            execSQL( createTableNotUseAutoIncrement( CheckList.TABLE_CHECKLIST,                     CheckList.COLUMN_LIST ))
+            execSQL( createTableNotUseAutoIncrement( BreatheRoutineCycleItem.TABLE_BREATH_ROUTINE,  BreatheRoutineCycleItem.COLUMN_LIST ))
         }
 
 
@@ -63,6 +63,32 @@ class DBHelper :SQLiteOpenHelper{
 
         builder.append( DataInterface._ID )
         builder.append( " " + DataInterface.INTEGER_TYPE)
+        builder.append( " PRIMARY KEY," )   // autoIncrement
+
+        for( aItem in columnPair ){
+            builder.append(aItem.first+ " " + aItem.second+",")
+        }
+
+        val middle : CharSequence = builder.removeRange( builder.length-1 , builder.length)
+
+        val lastBuilder = StringBuilder( middle )
+
+
+        lastBuilder.append(")")
+
+
+        return lastBuilder.toString()
+    }
+
+    private fun createTableNotUseAutoIncrement(tableName: String,columnPair: Array< Pair<String,String>>) : String{
+        val builder =StringBuilder()
+
+        builder.append("CREATE TABLE ")
+        builder.append(tableName)
+        builder.append("(")
+
+        builder.append( DataInterface._ID )
+        builder.append( " " + DataInterface.TEXT_TYPE)
         builder.append( " PRIMARY KEY," )
 
         for( aItem in columnPair ){
@@ -101,12 +127,15 @@ class DBHelper :SQLiteOpenHelper{
     }
 
 
+    /**
+     * 인터페이스를 이용하여
+     */
     open fun addItem( tableName: String ,items :DataInterface) : Long{
 
         val db = writableDatabase
 
         val rowId = db.insert( tableName,null,items.getContentValue() )
-        databaseChangeListener?.onDatabaseEntryRemoved()
+
 
         return rowId
     }
@@ -117,7 +146,11 @@ class DBHelper :SQLiteOpenHelper{
 
     }
 
+
+
     open fun getRecordItemItem ( position : Int ) : RecordItem {
 
     }
+
+    open fun getCheckListItem
 }

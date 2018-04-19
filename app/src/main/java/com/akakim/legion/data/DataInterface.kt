@@ -7,7 +7,7 @@ import android.provider.BaseColumns
  * @author KIM
  * @version 0.0.1
  * @since 0.0.1
- * @date 2018-04-18
+ * @DATE_COLUMN 2018-04-18
  *
  * 규격은 정해 져있지만 타입은 알수가없어서..
  * getItem같은걸 할때도 타입에 대해서 알 수가 없다.
