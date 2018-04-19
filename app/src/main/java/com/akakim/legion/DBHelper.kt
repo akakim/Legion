@@ -141,16 +141,19 @@ class DBHelper :SQLiteOpenHelper{
     }
 
     // Parcelable로 일단 입력하고 객체를 만드는 방법은 없을까??
-    open fun getItemAtTodoListItem ( position : Int ) : TodoListItem{
-
-
-    }
-
-
-
-    open fun getRecordItemItem ( position : Int ) : RecordItem {
-
-    }
-
-    open fun getCheckListItem
+//    open fun getItemAtTodoListItem ( position : Int ) : TodoListItem{
+//
+//
+//
+//        val db = writableDatabase
+//
+//        db.query( TodoListItem.TABLE_TODO_LIST,null,null,null,null,null,null,null)
+//    }
+//
+//
+//
+//    open fun getRecordItemItem ( position : Int ) : RecordItem {
+//
+//    }
+//
 }

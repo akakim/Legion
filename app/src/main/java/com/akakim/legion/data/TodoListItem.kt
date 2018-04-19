@@ -41,7 +41,7 @@ import android.os.Parcelable
         val contentValues : ContentValues = ContentValues()
 
 
-        contentValues.put( )
+//        contentValues.put( )
 
         return contentValues
     }
