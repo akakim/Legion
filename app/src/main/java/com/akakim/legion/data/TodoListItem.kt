@@ -1,9 +1,8 @@
 package com.akakim.legion.data
 
+import android.content.ContentValues
 import android.os.Parcel
 import android.os.Parcelable
-import android.provider.BaseColumns
-import java.time.Period
 
 /**
  * @author KIM
@@ -17,10 +16,10 @@ import java.time.Period
  *
  *  TODO : 체크리스트 아이템과 묶어서 생각하기
  *  TODO : 엑셀처럼 정리된 형식의 파일 출력을 염두해두기
- *  TODO : 프라이머리키값은 뭘로하지?
  *  TODO : 알람 기간
  *  TODO : 알람 시간
  *  TODO : 다른 앱을 참고해서, 데이터를 더 만들어보기 .
+ *  TODO : 체크리스트나, 호흡 루틴을 연결시키는 무엇이 없을까.. ?
  */
 
  data class TodoListItem (
@@ -29,7 +28,21 @@ import java.time.Period
         val todoDetailContent : String,
         val date : String,
         var checked : Int
-        ): Parcelable{
+        ): Parcelable , DataInterface{
+
+
+    override fun getPK(): String {
+
+
+    }
+
+    override fun getContentValue(): ContentValues {
+
+        val contentValues : ContentValues
+        contentValues.put
+
+    }
+
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readString(),
@@ -45,8 +58,6 @@ import java.time.Period
             writeString( todoDetailContent)
             writeString( date)
             writeInt( checked)
-
-
         }
 
 
@@ -61,16 +72,18 @@ import java.time.Period
 
     companion object CREATOR : Parcelable.Creator<TodoListItem> {
 
+        // 인터페이스로 연결할수 있다면 참 좋을거같은데
 
         // 테이블 명
         val TABLE_TODO_LIST             = "todoListItem"        //  to
 
-        val pk                  : Pair<String,String> = Pair( DatabaseColumn._ID,       DatabaseColumn.INTEGER_TYPE)
-        val todoTitle           : Pair<String,String> = Pair( "todoTitle",              DatabaseColumn.TEXT_TYPE)
-        val todoDetailContent   : Pair<String,String> = Pair( "todoDetailContent",      DatabaseColumn.TEXT_TYPE)
-        val date                : Pair<String,String> = Pair( "date",                   DatabaseColumn.TEXT_TYPE)
-        var checked             : Pair<String,String> = Pair( "checked",                DatabaseColumn.INTEGER_TYPE)
+        val pk                  : Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        val todoTitle           : Pair<String,String> = Pair( "todoTitle",              DataInterface.TEXT_TYPE)
+        val todoDetailContent   : Pair<String,String> = Pair( "todoDetailContent",      DataInterface.TEXT_TYPE)
+        val date                : Pair<String,String> = Pair( "date",                   DataInterface.TEXT_TYPE)
+        var checked             : Pair<String,String> = Pair( "checked",                DataInterface.INTEGER_TYPE)
 
+        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( todoTitle, todoDetailContent,date,checked )
 
         override fun createFromParcel(parcel: Parcel): TodoListItem {
             return TodoListItem(parcel)

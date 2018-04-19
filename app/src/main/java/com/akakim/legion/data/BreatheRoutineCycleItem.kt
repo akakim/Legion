@@ -1,5 +1,6 @@
 package com.akakim.legion.data
 
+import android.content.ContentValues
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -17,13 +18,28 @@ data class BreatheRoutineCycleItem(
         var pk : Int,
         var doThat : String ,
         var term : Int,
-        var color: Int
-) : Parcelable{
+        var color: Int,
+        var groupId : String
+) : Parcelable,DataInterface{
+    override fun getContentValue(): ContentValues {
+
+        val resultValue = ContentValues()
+
+        resultValue.put(DO_THAT_COLUMN.first, doThat)
+        resultValue.put(TERM_COLUMN.first, term)
+        resultValue.put(COLOR_COLUMN.first, color)
+        resultValue.put(GROUP_ID_COLUMN.first, groupId)
+
+
+        return resultValue
+    }
+
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readString(),
             parcel.readInt(),
-            parcel.readInt()) {
+            parcel.readInt(),
+            parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -31,6 +47,7 @@ data class BreatheRoutineCycleItem(
         parcel.writeString( doThat )
         parcel.writeInt( term )
         parcel.writeInt( color )
+        parcel.writeString( groupId )
     }
 
     override fun describeContents(): Int {
@@ -38,6 +55,17 @@ data class BreatheRoutineCycleItem(
     }
 
     companion object CREATOR : Parcelable.Creator<BreatheRoutineCycleItem> {
+
+        open val TABLE_BREATH_ROUTINE                                = "breathRoutine"
+        open val PK                         : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        open val DO_THAT_COLUMN             : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
+        open val TERM_COLUMN                       : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
+        open val COLOR_COLUMN                      : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+        open val GROUP_ID_COLUMN                   : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+
+
+        open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( DO_THAT_COLUMN, TERM_COLUMN, COLOR_COLUMN ,GROUP_ID_COLUMN)
+
         override fun createFromParcel(parcel: Parcel): BreatheRoutineCycleItem {
             return BreatheRoutineCycleItem(parcel)
         }

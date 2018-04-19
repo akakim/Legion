@@ -129,7 +129,7 @@ class RoutineInputFragment : Fragment() {
             if( !"".equals( edRoutine.text.toString())){
 
 
-                val aItem = BreatheRoutineCycleItem(
+                val aItem = BreatheRoutineCycleItem(0,
                                 edRoutine.text.toString(),
                                 numberPicker.value,
                                 selectedColor)

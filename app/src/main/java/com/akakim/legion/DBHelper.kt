@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.akakim.legion.data.TodoListItem
+import com.akakim.legion.data.*
 
 /**
  * @author KIM
@@ -15,37 +15,109 @@ import com.akakim.legion.data.TodoListItem
 
 class DBHelper :SQLiteOpenHelper{
 
+    var databaseChangeListener : OnDatabaseChangedListener? = null
+
+
     companion object {
         open val LOG_TAG ="DBHelper"
-        open val TABLE_NAME= " saving_void"
 
-        open val COLUMN_NAME_RECORDING_NAME = "recording_name"
-        open val COLUMN_NAME_RECORDING_FILE_PATH = "file_path"
-        open val COLUMN_NAME_RECODDING_LENGTH= "length"
-        open val COLUMN_NAME_TIME_ADDED = "time_added"
-
-             val TEXT_TYPE = "TEXT"
+        private val DATABASE_VERSION = 1
 
     }
 
 
 
-    constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : super(context, name, factory, version)
+    // default Cursor를 이용한다.
+    constructor(context: Context?, name: String?, version: Int) : super(context, name, null, version)
     constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int, errorHandler: DatabaseErrorHandler?) : super(context, name, factory, version, errorHandler)
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
+        db?.apply {
+
+            execSQL( createTableUsingPrimaryKey( TodoListItem.TABLE_TODO_LIST,                  TodoListItem.COLUMN_LIST ))
+            execSQL( createTableUsingPrimaryKey( RecordItem.TABLE_RECORD,                       RecordItem.COLUMN_LIST ))
+            execSQL( createTableUsingPrimaryKey( CheckList.TABLE_CHECKLIST,                     CheckList.COLUMN_LIST ))
+            execSQL( createTableUsingPrimaryKey( BreatheRoutineCycleItem.TABLE_BREATH_ROUTINE,  BreatheRoutineCycleItem.COLUMN_LIST ))
+        }
+
+
     }
+
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
     }
 
-    fun createTableUsingPrimaryKey(tableName: String,columnPair: Pair<String,String>) : String{
+    private fun createTableUsingPrimaryKey(tableName: String,columnPair: Array< Pair<String,String> >) : String{
 
         val builder =StringBuilder()
 
-        return builder.toString()
+        builder.append("CREATE TABLE ")
+        builder.append(tableName)
+        builder.append("(")
+
+        builder.append( DataInterface._ID )
+        builder.append( " " + DataInterface.INTEGER_TYPE)
+        builder.append( " PRIMARY KEY," )
+
+        for( aItem in columnPair ){
+            builder.append(aItem.first+ " " + aItem.second+",")
+        }
+
+        val middle : CharSequence = builder.removeRange( builder.length-1 , builder.length)
+
+        val lastBuilder = StringBuilder( middle )
+
+
+        lastBuilder.append(")")
+
+
+        return lastBuilder.toString()
+    }
+
+    private fun dropTable( tableName : String) :String{
+
+        var strBuilder = StringBuilder()
+        strBuilder.append("DROP TABLE IF EXISTS ")
+        strBuilder.append(tableName)
+        return strBuilder.toString()
+    }
+
+
+    open fun getCount( tableName : String , position : Int ) : Int {
+
+        val db = readableDatabase
+        val projection = arrayOf( DataInterface._ID)
+        val cursor = db.query( tableName, projection,null,null,null,null,null)
+        val count = cursor.count
+
+        cursor.close()
+        return count
+    }
+
+
+    open fun addItem( tableName: String ,items :DataInterface) : Long{
+
+        val db = writableDatabase
+
+        val rowId = db.insert( tableName,null,items.getContentValue() )
+        databaseChangeListener?.onDatabaseEntryRemoved()
+
+        return rowId
+    }
+
+    // Parcelable로 일단 입력하고 객체를 만드는 방법은 없을까??
+    open fun getItemAtTodoListItem ( position : Int ) : TodoListItem{
+
+
+    }
+
+    open fun getRecordItemItem ( position : Int ) : RecordItem {
+
     }
 }

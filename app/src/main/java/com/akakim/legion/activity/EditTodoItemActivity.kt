@@ -27,7 +27,7 @@ class EditTodoItemActivity : BaseActivity(){
             val resultTime = DateUtils.formatElapsedTime(SystemClock.elapsedRealtime())
 
             val aNewItem = TodoListItem(
-                    "pk",
+                    0,
                     edTitle.text.clearSpans().toString(),
                     edContent.text.toString(),
                     resultTime,

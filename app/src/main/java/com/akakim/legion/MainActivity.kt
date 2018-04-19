@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.activity.TimerActivity
 import com.akakim.legion.common.FragmentConstant
+import com.akakim.legion.data.CheckList
+import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.TodoListItem
 import com.akakim.legion.fragment.*
 import com.akakim.legion.fragment.record.FileViewerFragment
@@ -117,9 +119,39 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navigationView.menu.getItem(0).setChecked( true )
 
         onNavigationItemSelected( navigationView.menu.getItem(0) )
-//        navigationView.
-//        navigationView.setCheckedItem( R.id.menuTodoList )
-//        navigationView.menu.
+
+
+
+        val checkList =  CheckList(1,"숨쉬기",10)
+
+    }
+
+
+    fun createTableUsingPrimaryKey(tableName: String,columnPair: Array< Pair<String,String> >) : String{
+
+        val builder =StringBuilder()
+
+        builder.append("CREATE TABLE ")
+        builder.append(tableName)
+        builder.append("(")
+
+        builder.append( DataInterface._ID )
+        builder.append( " " + DataInterface.INTEGER_TYPE)
+        builder.append( " PRIMARY KEY," )
+
+        for( aItem in columnPair ){
+            builder.append(aItem.first+ " " + aItem.second+",")
+        }
+
+        val middle : CharSequence = builder.removeRange( builder.length-1 , builder.length)
+
+        val lastBuilder = StringBuilder( middle )
+
+
+        lastBuilder.append(")")
+
+
+        return lastBuilder.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
