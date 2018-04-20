@@ -5,21 +5,26 @@ import android.app.Fragment
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.akakim.legion.DBHelper
 
 import com.akakim.legion.R
 import com.akakim.legion.activity.CreateTodoItemActivity
 import com.akakim.legion.adapter.list.TodoListAdapter
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
+import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.TodoListItem
 import com.akakim.legion.util.DefaultDecorator
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 
 
 class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
+
+    lateinit var dbHelper: DBHelper
     override fun onClick(position: Int) {
 
     }
@@ -36,22 +41,11 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
+        dbHelper = DBHelper( context )
 
-        val view = inflater?.inflate(R.layout.fragment_todo_list, container, false)
-        val layoutManger = LinearLayoutManager( context )
 
-        layoutManger.orientation = LinearLayoutManager.VERTICAL
 
-        val adapter  = TodoListAdapter(context, todoList ,this )
-
-        val rv : RecyclerView = view!!.findViewById( R.id.rvTodoList )
-
-        rv.layoutManager = layoutManger
-        rv.addItemDecoration( DefaultDecorator(context))
-
-        rv.adapter =  adapter
-
-        return view
+        return inflater?.inflate(R.layout.fragment_todo_list, container, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -60,23 +54,27 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
         when (requestCode ) {
 
             TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE ->{
-                val result = data?.extras
-
-                if ( result == null ){
-
-                    // TODO : 오류 보고로 올림
-                    Toast.makeText(context,"Unexpedtec Error" ,Toast.LENGTH_SHORT).show()
-                }else {
 
 
-                    val bundle = result.getBundle( CreateTodoItemActivity.CREATE_BUNDLE_ITEM_KEY)
-                    val aNewItem : TodoListItem = bundle.getParcelable<TodoListItem>(CreateTodoItemActivity.CREATED_ITEM_KEY)
-//
+                Log.d("onActiviytResult", data?.getParcelableExtra<TodoListItem>(CreateTodoItemActivity.CREATED_ITEM_KEY).toString())
 
-                    this.todoList.add(aNewItem)
-                    this.rvTodoList.adapter.notifyItemInserted(todoList.size )
 
-                }
+
+
+                    val aItem = data?.getParcelableExtra<TodoListItem>( CreateTodoItemActivity.CREATED_ITEM_KEY)
+
+                    Log.d( "onActivityResult " , aItem.toString())
+                    if( dbHelper.addItem( TodoListItem.TABLE_TODO_LIST, aItem as DataInterface ) != -1L) {
+
+                        rvTodoList.adapter.itemCount.let {
+                            rvTodoList.adapter.notifyItemInserted(it)
+                        }
+                    }else {
+                        Toast.makeText( context,"새로운 할일목록 생성 실패 ",Toast.LENGTH_SHORT ).show()
+                    }
+
+
+
             }
             else ->{
 
@@ -89,6 +87,18 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
+        val layoutManger = LinearLayoutManager( context )
+
+        layoutManger.orientation = LinearLayoutManager.VERTICAL
+
+        val adapter  = TodoListAdapter(context, this )
+
+        rvTodoList.layoutManager = layoutManger
+        rvTodoList.addItemDecoration( DefaultDecorator(context))
+
+        rvTodoList.adapter =  adapter
         fbAdd.setOnClickListener {
             val i = Intent( context, CreateTodoItemActivity::class.java )
             activity.startActivityForResult( i ,TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE )

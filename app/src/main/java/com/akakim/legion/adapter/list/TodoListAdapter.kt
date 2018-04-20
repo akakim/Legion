@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.akakim.legion.DBHelper
 import com.akakim.legion.R
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
 import com.akakim.legion.adapter.list.viewholder.TodoViewHolder
@@ -18,36 +19,27 @@ import com.akakim.legion.data.TodoListItem
 class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
     val context : Context
-    val todoArrayList : ArrayList<TodoListItem>
+
+    val dbHelper : DBHelper
 
 //    val multiSelectionList : SparseBooleanArray
 
     var listener : OnSingleItemClickListener? = null
-    constructor(context : Context,todoArrayList : ArrayList<TodoListItem> ,listener : OnSingleItemClickListener?) : super(){
+    constructor(context : Context,listener : OnSingleItemClickListener?) : super(){
 
         this.context = context
-        this.todoArrayList = todoArrayList
-        this. listener = listener
-//        this.multiSelectionList = SparseBooleanArray( this.todoArrayList.size )
+        this.dbHelper = DBHelper( context )
+        this.listener = listener
+
     }
     override fun onBindViewHolder(holder: TodoViewHolder?, position: Int) {
 
 
-        val todoListItem = todoArrayList.get( position )
+        val todoListItem = dbHelper.getItemAtTodoListItem( position )
 
-        holder?.tvTitle?.text = todoListItem.todoTitle
-
-
-        holder?.cbTodo?.apply {
-
-//            if ( todoListItem.CHECKED_COLUMN == 1 ){
-//                check( true )
-//            }else {
-//                check(false )
-//            }
-
-            setOnCheckedChangeListener { buttonView, isChecked ->
-
+        holder?.apply {
+            tvTitle?.text = todoListItem.todoTitle
+            cbTodo?.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked) {
                     todoListItem.checked = 1
@@ -58,17 +50,19 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
         }
 
 
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TodoViewHolder {
 
-        val v = TodoViewHolder (LayoutInflater.from(context).inflate( R.layout.item_todo, null,false ))
+        val v = TodoViewHolder(LayoutInflater.from(context).inflate( R.layout.item_todo, null,false ))
         return v
     }
 
-    override fun getItemCount(): Int {
 
-        return todoArrayList.size
+
+    override fun getItemCount(): Int {
+        return dbHelper.getCount(TodoListItem.TABLE_TODO_LIST)
     }
 
 

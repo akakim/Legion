@@ -22,11 +22,13 @@ open interface DataInterface {
 //    recordTableName :String "saved_recording"
 
     companion object {
-        const val _ID           = "_id"
+        const val _ID           = "_id"             // 공통 PK 컬럼명.
         const val _COUNT        = "_count"
         const val INTEGER_TYPE  = "INTEGER"
         const val TEXT_TYPE     ="TEXT"
         const val BLOB_TYPE     = "BLOB"
+
+        const val DELUMINITER   = "_"
     }
 
     fun getPK() : String

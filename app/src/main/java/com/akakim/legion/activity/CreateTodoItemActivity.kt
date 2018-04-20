@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_create_todo_item.*
 
 class CreateTodoItemActivity : BaseActivity() , View.OnClickListener ,RadioGroup.OnCheckedChangeListener{
 
-
-
     var practiceType = Constant.typeBest
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,26 +30,27 @@ class CreateTodoItemActivity : BaseActivity() , View.OnClickListener ,RadioGroup
 
         when( v?.id ){
             R.id.btnConfirm ->{
-                val resultTime = DateUtils.formatElapsedTime(SystemClock.elapsedRealtime())
-
-                val aNewItem = TodoListItem(
-                        0,
-                        edTitle.text.clearSpans().toString(),
-                        edContent.text.toString(),
-                        resultTime,
-                        0
-                )
 
 
 
-                val bundle = Bundle()
 
-                bundle.putParcelable(  CREATED_ITEM_KEY ,aNewItem)
+                val i = Intent().apply {
 
-                var  i = Intent()
-                i.putExtra(CREATE_BUNDLE_ITEM_KEY,bundle)
-                setResult( Activity.RESULT_OK  )
+                    val resultTime = DateUtils.formatElapsedTime(SystemClock.elapsedRealtime())
 
+                    val aNewItem = TodoListItem(
+                            0,
+                            edTitle.text.toString(),
+                            edContent.text.toString(),
+                            resultTime,
+                            0
+                    )
+
+                    putExtra( CREATED_ITEM_KEY, aNewItem)
+                }
+
+
+                setResult( Activity.RESULT_OK,  i )
                 finish()
 
             }

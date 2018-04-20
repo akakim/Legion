@@ -15,12 +15,17 @@ import android.os.Parcelable
 
 
 data class BreatheRoutineCycleItem(
-        var pk : Int,
-        var doThat : String ,
+        var sequence : Int,
+        var doThat : String,
         var term : Int,
         var color: Int,
         var groupId : String
 ) : Parcelable,DataInterface{
+    override fun getPK(): String {
+        return groupId + sequence
+    }
+
+    constructor() : this (-1,"",-1,-1,"")
     override fun getContentValue(): ContentValues {
 
         val resultValue = ContentValues()
@@ -43,7 +48,7 @@ data class BreatheRoutineCycleItem(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt( pk )
+        parcel.writeInt( sequence )
         parcel.writeString( doThat )
         parcel.writeInt( term )
         parcel.writeInt( color )
@@ -57,11 +62,11 @@ data class BreatheRoutineCycleItem(
     companion object CREATOR : Parcelable.Creator<BreatheRoutineCycleItem> {
 
         open val TABLE_BREATH_ROUTINE                                = "breathRoutine"
-        open val PK                         : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        open val SEQUENCE                         : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
         open val DO_THAT_COLUMN             : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
         open val TERM_COLUMN                       : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
         open val COLOR_COLUMN                      : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
-        open val GROUP_ID_COLUMN                   : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+        open val GROUP_ID_COLUMN                   : Pair<String,String>  = Pair( "groupId",                  DataInterface.INTEGER_TYPE)
 
 
         open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( DO_THAT_COLUMN, TERM_COLUMN, COLOR_COLUMN ,GROUP_ID_COLUMN)

@@ -32,7 +32,7 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
 
         if (divider == null) return
 
-        Log.d("onDrawOver()","divider not null ")
+//        Log.d("onDrawOver()","divider not null ")
 
 
         parent?.apply {
@@ -80,7 +80,7 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
         if (view.layoutManager is LinearLayoutManager) {
             val layoutManager = view.layoutManager as LinearLayoutManager
 
-            Log.d("getOrientation,", "layoutManager is LinearLayout")
+//            Log.d("getOrientation,", "layoutManager is LinearLayout")
             return layoutManager.orientation
         } else
             throw IllegalStateException("Divider Item Decoration can only be used with a LinearLaoutManager")
@@ -96,7 +96,7 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
     override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        Log.d("getItemOffset()","")
+//        Log.d("getItemOffset()","")
 
         if( parent != null ) {
 

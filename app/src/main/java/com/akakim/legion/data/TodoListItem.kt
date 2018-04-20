@@ -14,7 +14,6 @@ import android.os.Parcelable
  *  세부 할일
  *  날짜
  *
- *  TODO : 체크리스트 아이템과 묶어서 생각하기
  *  TODO : 엑셀처럼 정리된 형식의 파일 출력을 염두해두기
  *  TODO : 알람 기간
  *  TODO : 알람 시간
@@ -23,13 +22,14 @@ import android.os.Parcelable
  */
 
  data class TodoListItem (
-        val pk : Int,
-        val todoTitle : String ,
-        val todoDetailContent : String,
-        val date : String,
+        var pk : Int,
+        var todoTitle : String ,
+        var todoDetailContent : String,
+        var date : String,
         var checked : Int
         ): Parcelable , DataInterface{
 
+    constructor() : this ( -1,"","","",0)
 
     override fun getPK(): String {
 
@@ -40,8 +40,11 @@ import android.os.Parcelable
 
         val contentValues : ContentValues = ContentValues()
 
+        contentValues.put(TODO_LIST_TITLE_COLUMN.first,todoTitle )
+        contentValues.put(TODO_DETAIL_CONTENT_COLUMN.first,todoDetailContent )
+        contentValues.put(DATE_COLUMN.first,date )
+        contentValues.put(CHECKED_COLUMN.first,checked )
 
-//        contentValues.put( )
 
         return contentValues
     }
@@ -70,7 +73,9 @@ import android.os.Parcelable
         return 0
     }
 
-
+    override fun toString(): String {
+        return "TodoListItem(pk=$pk, todoTitle='$todoTitle', todoDetailContent='$todoDetailContent', date='$date', checked=$checked)"
+    }
 
 
     companion object CREATOR : Parcelable.Creator<TodoListItem> {
@@ -96,6 +101,7 @@ import android.os.Parcelable
             return arrayOfNulls(size)
         }
     }
+
 
 
 

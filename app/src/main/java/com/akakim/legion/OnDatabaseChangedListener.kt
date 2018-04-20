@@ -8,6 +8,6 @@ package com.akakim.legion
 open interface OnDatabaseChangedListener{
 
     fun onNewDatabaseEntryAdded()
-    fun onDatabaseEntryRenamed()
+    fun onDatabaseEntryRenamed(affectRow : Int )
     fun onDatabaseEntryRemoved()
 }

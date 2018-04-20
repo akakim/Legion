@@ -126,19 +126,19 @@ class RoutineInputFragment : Fragment() {
 
             // 필수값 체크
 
-            if( !"".equals( edRoutine.text.toString())){
-
-
-                val aItem = BreatheRoutineCycleItem(0,
-                                edRoutine.text.toString(),
-                                numberPicker.value,
-                                selectedColor)
-
-                this.routineList . add( aItem )
-
-                val itemSize : Int = routineAdapter.itemCount
-                routineAdapter.notifyDataSetChanged()
-            }
+//            if( !"".equals( edRoutine.text.toString())){
+//
+//
+//                val aItem = BreatheRoutineCycleItem(0,
+//                                edRoutine.text.toString(),
+//                                numberPicker.value,
+//                                selectedColor)
+//
+//                this.routineList . add( aItem )
+//
+//                val itemSize : Int = routineAdapter.itemCount
+//                routineAdapter.notifyDataSetChanged()
+//            }
 
         }
     }

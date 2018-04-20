@@ -12,7 +12,7 @@ import android.os.Parcelable
  * sequence
  * viewtype  = 0 인경우 Y /N
  *           = 1 인경우 1 - 5 까지 선택
- * score     = Y / N 인경우 0 또는 1 의값 ( 1 이면
+ * score     = Y / N 인경우 1 또는 0 의값 ( 1
  *           = 1 ~ 5 1 점부터 5점까지 체크
  *
  */
@@ -24,6 +24,7 @@ data class CheckList(
         var content : String,
         var  score : Int ) : Parcelable,DataInterface{
 
+    constructor() : this ( "", -1,0,"",0)
     override fun getPK(): String {
 
         return groupName + sequence
@@ -75,7 +76,7 @@ data class CheckList(
 
         open val VIEW_TYPE_COLUMN        : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
         open val CONTENT_COLUMN          : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
-        open val SCORE_COLUMN: Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+        open val SCORE_COLUMN            : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
 
 
         open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( GROUP_NAME_COLUMN, SEQUNCE_COLUMN,VIEW_TYPE_COLUMN,CONTENT_COLUMN, SCORE_COLUMN)

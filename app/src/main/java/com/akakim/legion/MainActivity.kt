@@ -11,7 +11,6 @@ import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.activity.TimerActivity
 import com.akakim.legion.common.FragmentConstant
-import com.akakim.legion.data.CheckList
 import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.TodoListItem
 import com.akakim.legion.fragment.*
@@ -59,11 +58,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     it.putParcelableArrayList( TodoListFragment.LIST_KEY, todoList )
 
                     todoListFrag.arguments = it
-
+                    currentFragmentTAG =  FragmentConstant.TODO_LIST_FRAGMENT
                     supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.flMain, todoListFrag as Fragment, FragmentConstant.TODO_LIST_FRAGMENT)
+                            .replace(R.id.flMain, todoListFrag as Fragment, currentFragmentTAG)
                             .commit()
+
                 }
 
 
@@ -122,7 +122,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 
 
-        val checkList =  CheckList(1,"숨쉬기",10)
+//        val checkList =  CheckList(1,"숨쉬기",10)
 
     }
 
@@ -159,6 +159,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         //TODO : TodoListFragment를 위한 onActivityResult 처리
 
+        supportFragmentManager.findFragmentByTag( currentFragmentTAG).apply {
+            this.onActivityResult( requestCode,resultCode,data )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
