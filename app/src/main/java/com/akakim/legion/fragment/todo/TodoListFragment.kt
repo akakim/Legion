@@ -1,4 +1,4 @@
-package com.akakim.legion.fragment
+package com.akakim.legion.fragment.todo
 
 import android.os.Bundle
 import android.content.Intent
@@ -16,6 +16,7 @@ import com.akakim.legion.adapter.list.TodoListAdapter
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
 import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.TodoListItem
+import com.akakim.legion.fragment.BaseFragment
 import com.akakim.legion.util.DefaultDecorator
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 
@@ -32,7 +33,7 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            todoList = arguments.getParcelableArrayList( LIST_KEY )
+            todoList = arguments.getParcelableArrayList(LIST_KEY)
         }
     }
 
@@ -64,8 +65,8 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
                     Log.d( "onActivityResult " , aItem.toString())
                     if( dbHelper.addItem( TodoListItem.TABLE_TODO_LIST, aItem as DataInterface ) != -1L) {
 
-                        rvTodoList.adapter.itemCount.let {
-                            rvTodoList.adapter.notifyItemInserted(it)
+                        rvTodoList.adapter.itemCount.apply {
+                            rvTodoList.adapter.notifyItemInserted( this )
                         }
                     }else {
                         Toast.makeText( context,"새로운 할일목록 생성 실패 ",Toast.LENGTH_SHORT ).show()
@@ -99,7 +100,7 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
         rvTodoList.adapter =  adapter
         fbAdd.setOnClickListener {
             val i = Intent( context, CreateTodoItemActivity::class.java )
-            activity.startActivityForResult( i ,TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE )
+            activity.startActivityForResult( i , TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE)
         }
 
 
@@ -115,7 +116,7 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
             val fragment = TodoListFragment()
             val args = Bundle()
 
-            args.putParcelableArrayList( LIST_KEY , todoList )
+            args.putParcelableArrayList(LIST_KEY, todoList )
             fragment.arguments = args
             return fragment
         }

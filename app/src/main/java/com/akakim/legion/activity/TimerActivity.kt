@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.akakim.legion.R
 import com.akakim.legion.fragment.BaseFragment
-import com.akakim.legion.fragment.timer.RoutineInputFragment
-import com.akakim.legion.fragment.timer.TimerRoutineFragment
+import com.akakim.legion.fragment.routine.RoutineInputFragment
+import com.akakim.legion.fragment.routine.TimerRoutineFragment
 
 class TimerActivity :
         AppCompatActivity(),

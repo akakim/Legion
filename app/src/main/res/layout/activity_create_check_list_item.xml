@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.akakim.legion.activity.CreateCheckListItemActivity"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="피드백 리스트 제목"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/defaultPadding"
+            android:text="항목 타입  "
+            />
+
+
+        <RadioGroup
+            android:id="@+id/typeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnPronunciation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발음"/>
+
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발성"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/btnBreath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="호흡" />
+
+
+        </RadioGroup>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edFeedBackTi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textImeMultiLine"
+                android:hint="피드백 리스트 항목"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+        <!-- TODO: 발음 , 발성, 호흡 -->
+
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="항목 더하기"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCheckListItem"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_below="@id/titleLayout">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="피드백 생성"
+        />
+
+</RelativeLayout>

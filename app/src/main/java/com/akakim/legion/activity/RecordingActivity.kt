@@ -7,10 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import com.akakim.legion.R
-import com.akakim.legion.adapter.fragment.RecordingFragmentAdapter
 import com.akakim.legion.fragment.record.RecordFragment
-import com.akakim.legion.fragment.timer.RoutineInputFragment
-import kotlinx.android.synthetic.main.activity_recording.*
 import kotlinx.android.synthetic.main.toolbar_recording.*
 
 class RecordingActivity : AppCompatActivity() {

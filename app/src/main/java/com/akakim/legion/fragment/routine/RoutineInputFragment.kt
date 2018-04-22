@@ -1,28 +1,22 @@
-package com.akakim.legion.fragment.timer
+package com.akakim.legion.fragment.routine
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.akakim.legion.R
 import com.akakim.legion.adapter.list.RoutineAdapter
 import com.akakim.legion.data.BreatheRoutineCycleItem
-import com.akakim.legion.data.RecordItem
 import com.akakim.legion.util.DefaultDecorator
 
-import kotlinx.android.synthetic.main.fragment_routine_input.*
-import kotlinx.android.synthetic.main.share_layout_timer.*
+import kotlinx.android.synthetic.main.shared_routine_input.*
 
 
 /**
@@ -64,7 +58,7 @@ class RoutineInputFragment : Fragment() {
 
 
 
-        return inflater.inflate(R.layout.fragment_routine_input, container, false)
+        return inflater.inflate(R.layout.shared_routine_input, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

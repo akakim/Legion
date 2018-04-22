@@ -41,13 +41,13 @@ data class RecordItem (
     companion object {
         val TABLE_RECORD             = "tableRecord"        //  to
 
-        val PK: Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
-        val RECORD_FILE_NAME_COLUMN: Pair<String,String> = Pair( "RECORD_FILE_NAME_COLUMN",              DataInterface.TEXT_TYPE)
-        val RECORD_LENGTH: Pair<String,String> = Pair( "RECORD_LENGTH",      DataInterface.TEXT_TYPE)
-        val RECORD_DATE: Pair<String,String> = Pair( "RECORD_DATE",                   DataInterface.TEXT_TYPE)
-        val RECORD_FILE_PATH: Pair<String,String> = Pair( "RECORD_FILE_PATH",                DataInterface.TEXT_TYPE)
+        val PK                      : Pair<String,String> = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        val RECORD_FILE_NAME_COLUMN : Pair<String,String> = Pair( "RECORD_FILE_NAME_COLUMN",              DataInterface.TEXT_TYPE)
+        val RECORD_LENGTH           : Pair<String,String> = Pair( "RECORD_LENGTH",      DataInterface.TEXT_TYPE)
+        val RECORD_DATE             : Pair<String,String> = Pair( "RECORD_DATE",                   DataInterface.TEXT_TYPE)
+        val RECORD_FILE_PATH        : Pair<String,String> = Pair( "RECORD_FILE_PATH",                DataInterface.TEXT_TYPE)
 
 
-        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf(RECORD_FILE_NAME_COLUMN, RECORD_LENGTH, RECORD_DATE, RECORD_FILE_PATH)
+        val COLUMN_LIST             : Array<Pair<String,String>> = arrayOf(RECORD_FILE_NAME_COLUMN, RECORD_LENGTH, RECORD_DATE, RECORD_FILE_PATH)
     }
 }

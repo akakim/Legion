@@ -43,8 +43,12 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
                 if (isChecked) {
                     todoListItem.checked = 1
+                    dbHelper.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem )
+
                 } else {
                     todoListItem.checked = 0
+                    dbHelper.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem )
+
                 }
             }
         }

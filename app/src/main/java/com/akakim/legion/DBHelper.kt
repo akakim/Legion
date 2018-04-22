@@ -222,6 +222,14 @@ class DBHelper :SQLiteOpenHelper{
         return affectRow
     }
 
+    open fun updateItem( tableName: String, dataInterface: DataInterface) : Int {
+        val affectRow = writableDatabase.update( tableName, dataInterface.getContentValue(), DataInterface._ID+"="+dataInterface.getPK(),null)
+
+
+        databaseChangeListener?.onDatabaseEntryRenamed( affectRow )
+
+        return affectRow
+    }
     /**
      *
      *

@@ -1,4 +1,4 @@
-package com.akakim.legion.fragment.timer
+package com.akakim.legion.fragment.routine
 
 import android.content.DialogInterface
 import android.os.Bundle
