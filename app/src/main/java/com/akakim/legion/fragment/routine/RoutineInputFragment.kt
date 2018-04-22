@@ -30,7 +30,7 @@ class RoutineInputFragment : Fragment() {
 
               var mListenerRoutine  : OnRoutineFragmentInteractionListener? = null
 
-    lateinit  var routineAdapter           : RoutineAdapter
+    lateinit  var routineAdapter    : RoutineAdapter
               var routineList       : ArrayList<BreatheRoutineCycleItem> = ArrayList<BreatheRoutineCycleItem>()
 
 
