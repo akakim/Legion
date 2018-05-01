@@ -1,4 +1,4 @@
-package com.akakim.legion
+package com.akakim.legion.common
 
 /**
  * Created by RyoRyeong Kim on 2018-04-19.

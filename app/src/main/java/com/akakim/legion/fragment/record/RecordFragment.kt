@@ -122,19 +122,22 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
 
 
                 // stop Recording
+                // TODO : 버튼 이미지 설정
 
-//            btn
 
+
+                //  시간 기록
                 chronometer.stop()
-                chronometer.base = SystemClock.elapsedRealtime()
+                chronometer.base = SystemClock.elapsedRealtime()    //  초기화
 
                 timeWhenPaused = 0
                 tvRecordingStatus.text = " 버튼을 클릭하시면 녹음이 시작됩니다."
 
-                context.startService( it )
+
+                context.stopService( it )
 
                 // keep screen on while recording
-                activity.window.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
+                activity.window.clearFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
             }
         }
 
