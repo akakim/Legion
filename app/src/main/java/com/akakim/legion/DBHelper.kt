@@ -130,7 +130,12 @@ class DBHelper :SQLiteOpenHelper{
      * 인터페이스를 이용하여
      */
     open fun addItem( tableName: String ,items :DataInterface) : Long{
-       return writableDatabase.insert( tableName,null,items.getContentValue() )
+
+        val rowId : Long = writableDatabase.insert( tableName,null,items.getContentValue() )
+
+        databaseChangeListener?.onNewDatabaseEntryAdded()
+
+        return rowId
     }
 
 

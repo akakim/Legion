@@ -19,5 +19,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Notifications -->
+    <string name="notification_recording">녹음중 .... </string>
 
 </resources>
