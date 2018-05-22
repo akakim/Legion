@@ -1,30 +1,40 @@
 package com.akakim.legion
 
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.*
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.activity.TimerActivity
 import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.DataInterface
+import com.akakim.legion.data.RecordItem
 import com.akakim.legion.fragment.*
 import com.akakim.legion.fragment.record.FileViewerFragment
 import com.akakim.legion.fragment.record.RecordFragment
 import com.akakim.legion.fragment.todo.TodoListFragment
+import com.akakim.legion.widget.FileNameDialog
 import kotlinx.android.synthetic.main.activity_main.*
-
-
-
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.jar.Manifest
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener
-                    ,BaseFragment.OnFragmentInteractionListener {
+                    ,BaseFragment.OnFragmentInteractionListener
+                    ,FileNameDialog.OnFileInterface{
 
+
+    var reciever : BroadcastReceiver?           = null
+    lateinit var serviceFilter : IntentFilter
     override fun onFragmentInteraction(fragmentTag: String, uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -96,7 +106,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
             }
 
-
+//        navigationView.
         return true
     }
 
@@ -116,13 +126,52 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         onNavigationItemSelected( navigationView.menu.getItem(0) )
 
 
+        serviceFilter   = IntentFilter(RecordService.ACTION_TEMP_FILE_READY)
+        reciever        = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
 
-//        val checkList =  CheckList(1,"숨쉬기",10)
+                when(intent?.action){
+                    RecordService.ACTION_TEMP_FILE_READY ->{
+
+                        val sdf = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
+                        val currentDate = sdf.format( Date())
+
+                        val fileNameDialog = FileNameDialog( this@MainActivity,false,currentDate,this@MainActivity )
+
+                        fileNameDialog.window.setGravity(Gravity.CENTER)
+                        fileNameDialog.show()
+                    }
+                }
+
+            }
+
+        }
+
+
+
+
+        ActivityCompat.requestPermissions( this ,permissionList, requestCode)
+
 
     }
 
+    override fun onResume() {
 
-    fun createTableUsingPrimaryKey(tableName: String,columnPair: Array< Pair<String,String> >) : String{
+
+        super.onResume()
+
+        registerReceiver( reciever ,serviceFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if ( reciever != null ) {
+            unregisterReceiver(reciever)
+        }
+    }
+
+    fun createTableUsingPrimaryKey(tableName: String, columnPair: Array< Pair<String,String> >) : String{
 
         val builder =StringBuilder()
 
@@ -165,5 +214,66 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return super.onOptionsItemSelected(item)
 
 
+    }
+
+    /**
+     *
+     */
+    override fun fileNameConfirmed(fileName: String, fileLength : Long ) {
+
+        try{
+            val item = RecordItem(-1,fileName,elapseMillis,
+                    System.currentTimeMillis() ,
+                    this.baseContext.filesDir.absolutePath
+
+                    filePath.toString())
+
+            this.db?.addItem( RecordItem.TABLE_RECORD , item as DataInterface )
+
+
+            Toast.makeText(this,"레코딩 성공 ",Toast.LENGTH_SHORT).show()
+        }catch ( e : Exception){
+            e.printStackTrace()
+        }
+
+//        Toast.makeText(this,fileName+" is Created", Toast.LENGTH_SHORT ).show()
+    }
+
+    override fun fileNameCanceled() {
+        Toast.makeText(this," is canceld", Toast.LENGTH_SHORT ).show()
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode){
+            requestCode ->{
+
+                var isGranted = true
+
+                for ( i in grantResults ){
+
+                    if ( i == android.content.pm.PackageManager.PERMISSION_DENIED ){
+                        isGranted = false
+                    }
+                }
+
+
+                // TODO 권한에 맞게끔 다를 수있겠지만 일단 pass
+                if( !isGranted ){
+
+                    val builder = AlertDialog.Builder( this )
+
+                    builder.setTitle( " 알림 " )
+                    builder.setMessage( "파일 저장과 녹음이 되어야만 앱을 사용할 수 있습니다.")
+                    builder.setPositiveButton( "확인" ,DialogInterface.OnClickListener { dialog, which ->
+
+                        finish()
+                    })
+                }
+
+            }
+        }
     }
 }

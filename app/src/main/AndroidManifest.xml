@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.CreateTodoItemActivity"
             android:screenOrientation="portrait" />
@@ -43,7 +44,10 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <!-- <service android:name="com.akakim.utillibrary.service.RecordingService"/> -->
+        <service android:name=".RecordService"></service>
+        <!--<service android:name=".RecordService"></service>-->
+         <!--<service android:name="com.akakim.le"/>-->
+
         <activity
             android:name=".testNavigtaion"
             android:label="@string/title_activity_test_navigtaion"

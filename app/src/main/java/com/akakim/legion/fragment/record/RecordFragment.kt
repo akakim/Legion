@@ -13,7 +13,8 @@ import android.widget.Toast
 import com.akakim.legion.R
 import com.akakim.legion.common.Constant
 import com.akakim.legion.fragment.BaseFragment
-import com.akakim.utillibrary.service.RecordingService
+import com.akakim.legion.RecordService
+
 import kotlinx.android.synthetic.main.fragment_record.*
 import java.io.File
 
@@ -82,7 +83,7 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
 
 
 
-        var intent = Intent( context, RecordingService::class.java).let {
+        var intent = Intent( context, RecordService::class.java)
 
             if ( start ){
 
@@ -108,7 +109,7 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                     }
                 }
 
-                context.startService( it )
+                context.startService( intent )
 
                 // keep screen on while recording
                 activity.window.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
@@ -116,7 +117,6 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                 tvRecordingStatus.text= "녹음중..."
 
 
-//            context.startService( intent )
 
             } else {
 
@@ -134,12 +134,12 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                 tvRecordingStatus.text = " 버튼을 클릭하시면 녹음이 시작됩니다."
 
 
-                context.stopService( it )
+                context.stopService( intent )
 
                 // keep screen on while recording
                 activity.window.clearFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
             }
-        }
+
 
 
 
