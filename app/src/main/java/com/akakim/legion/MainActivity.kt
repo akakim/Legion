@@ -14,6 +14,7 @@ import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.DataInterface
 import com.akakim.legion.fragment.*
 import com.akakim.legion.fragment.record.FileViewerFragment
+import com.akakim.legion.fragment.record.RecordFragment
 import com.akakim.legion.fragment.todo.TodoListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -63,11 +64,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
                 R.id.menuRecord -> {
 
-//                    val recordFragment = RecordFragment()
-//                    supportFragmentManager
-//                            .beginTransaction()
-//                            .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-//                            .commit()
+                    val recordFragment = RecordFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+                            .commit()
 
                 }
                 R.id.menuTimerChecker -> {

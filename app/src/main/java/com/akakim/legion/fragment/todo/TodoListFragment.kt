@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_todo_list.*
 
 class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
 
-    lateinit var dbHelper: DBHelper
+    var dbHelper: DBHelper? = null
     override fun onClick(position: Int) {
 
     }
@@ -40,7 +40,7 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        dbHelper = DBHelper( context )
+        dbHelper = DBHelper.getInstance( context )
 
 
 
@@ -63,7 +63,12 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
                     val aItem = data?.getParcelableExtra<TodoListItem>( CreateTodoItemActivity.CREATED_ITEM_KEY)
 
                     Log.d( "onActivityResult " , aItem.toString())
-                    if( dbHelper.addItem( TodoListItem.TABLE_TODO_LIST, aItem as DataInterface ) != -1L) {
+
+
+
+                    if( aItem == null ){
+                        Toast.makeText( context,"새로운 할일목록 생성 실패 ",Toast.LENGTH_SHORT ).show()
+                    } else if( dbHelper?.addItem( TodoListItem.TABLE_TODO_LIST, aItem as DataInterface ) != -1L) {
 
                         rvTodoList.adapter.itemCount.apply {
                             rvTodoList.adapter.notifyItemInserted( this )

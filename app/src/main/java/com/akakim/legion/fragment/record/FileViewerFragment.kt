@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.akakim.legion.R
-import com.akakim.legion.common.Constant
-import com.akakim.legion.data.OnEventListener
-import com.akakim.legion.data.RecordFileObserver
+import com.akakim.legion.adapter.list.RecordAdapter
+import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
+
 import com.akakim.legion.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_file_viewr.*
 
@@ -25,13 +25,12 @@ import kotlinx.android.synthetic.main.fragment_file_viewr.*
  * Use the [FileViewrFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FileViewerFragment : BaseFragment(),OnEventListener{
+class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
 
 
     private var paramPos : Int = -1
 
-    var observer : RecordFileObserver? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +52,10 @@ class FileViewerFragment : BaseFragment(),OnEventListener{
         return view
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        rvRecordList.adapter
+        rvRecordList.adapter = RecordAdapter( context , this )
 
 
         val layoutManager = LinearLayoutManager(context)
@@ -71,27 +70,27 @@ class FileViewerFragment : BaseFragment(),OnEventListener{
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+    }
+
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        observer = RecordFileObserver (context.getExternalFilesDir( Constant.defaultDirectory ).toString(), this )
 
     }
 
 
-    override fun onEvent(event: Int, file: String?) {
 
-        when (event){
-
-            FileObserver.DELETE ->{
-
-            }
+    override fun onClick(position: Int) {
 
 
-        }
     }
+
 
     companion object {
 
@@ -107,4 +106,4 @@ class FileViewerFragment : BaseFragment(),OnEventListener{
             return fragment
         }
     }
-}// Required empty public constructor
+}

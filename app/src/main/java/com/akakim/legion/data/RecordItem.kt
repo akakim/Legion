@@ -38,6 +38,11 @@ data class RecordItem (
         return contentValue
     }
 
+    override fun toString(): String {
+        return "RecordItem(pk=$pk, recordFileName='$recordFileName', recordLength=$recordLength, recordDate=$recordDate, recordFilePath='$recordFilePath')"
+    }
+
+
     companion object {
         val TABLE_RECORD             = "tableRecord"        //  to
 

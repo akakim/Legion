@@ -20,19 +20,36 @@ class DBHelper :SQLiteOpenHelper{
 
 
     companion object {
-        open val LOG_TAG ="DBHelper"
+        open    val LOG_TAG ="DBHelper"
 
         private val DATABASE_VERSION = 1
-        val DATABASE_NAME = "archive.db"
+        private val DATABASE_NAME = "archive.db"
+
+        private var dbInstance : DBHelper? = null
+
+        open fun getInstance(context: Context) : DBHelper? {
+
+
+
+            if( dbInstance == null ){
+                dbInstance = DBHelper( context )
+            }
+
+
+            return dbInstance
+
+        }
+
+
     }
 
 
 
     // default Cursor를 이용한다.
 
-    constructor(context: Context?) :this ( context, DATABASE_NAME,null, DATABASE_VERSION)
-    constructor(context: Context?, name: String?,factory: SQLiteDatabase.CursorFactory?, version: Int) : super(context, name, factory, version)
-    constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int, errorHandler: DatabaseErrorHandler?) : super(context, name, factory, version, errorHandler)
+    private constructor(context: Context?) :this ( context, DATABASE_NAME,null, DATABASE_VERSION)
+    private constructor(context: Context?, name: String?,factory: SQLiteDatabase.CursorFactory?, version: Int) : super(context, name, factory, version)
+//    constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int, errorHandler: DatabaseErrorHandler?) : super(context, name, factory, version, errorHandler)
 
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -116,12 +133,18 @@ class DBHelper :SQLiteOpenHelper{
 
 
     open fun getCount( tableName : String ) : Int {
-        readableDatabase.query( tableName, arrayOf( DataInterface._ID ),null,null,null,null,null).let {
+        val count = readableDatabase.query( tableName, arrayOf( DataInterface._ID ),null,null,null,null,null).count
 
-            val count = it.count
-            it.close()
-            return count
-        }
+        readableDatabase.close()
+
+
+        return count
+//                .let {
+//
+//            val count = it.count
+//            it.close()
+//            return count
+//        }
 
     }
 
@@ -173,8 +196,8 @@ class DBHelper :SQLiteOpenHelper{
                         aItem.pk                        =  it.getInt( it.getColumnIndex( RecordItem.PK.first ))
                         aItem.recordFileName            =  it.getString ( it.getColumnIndex( RecordItem.RECORD_FILE_NAME_COLUMN.first ))
                         aItem.recordFilePath            =  it.getString( it.getColumnIndex( RecordItem.RECORD_FILE_PATH.first ))
-                        aItem.recordDate                =  it.getString (  it.getColumnIndex( RecordItem.RECORD_DATE.first ))
-                        aItem.recordLength              =  it.getString ( it.getColumnIndex( RecordItem.RECORD_LENGTH.first ))
+                        aItem.recordDate                =  it.getLong (  it.getColumnIndex( RecordItem.RECORD_DATE.first ))
+                        aItem.recordLength              =  it.getLong ( it.getColumnIndex( RecordItem.RECORD_LENGTH.first ))
                     }
 
                 }
@@ -218,19 +241,35 @@ class DBHelper :SQLiteOpenHelper{
         return aItem
     }
 
-    open fun renameItem(tableName: String, dataInterface: DataInterface) : Int {
+    /**
+     * 반영된 열이 없으므로 -1 을 반환한다.
+     * 반영된 열이 있다면, 있는 수만큼 반영이된다.
+     */
+    open fun renameItem(tableName: String, dataInterface: DataInterface?) : Int {
+
+        if( dataInterface == null ){
+            return -1
+        }
+
+
         val affectRow = writableDatabase.update( tableName, dataInterface.getContentValue(), DataInterface._ID+"="+dataInterface.getPK(),null)
-
-
         databaseChangeListener?.onDatabaseEntryRenamed( affectRow )
 
         return affectRow
     }
 
-    open fun updateItem( tableName: String, dataInterface: DataInterface) : Int {
+
+    /**
+     * 반영된 열이 없으므로 -1 을 반환한다.
+     * 반영된 열이 있다면, 있는 수만큼 반영이된다.
+     */
+    open fun updateItem( tableName: String, dataInterface: DataInterface?) : Int {
+
+        if( dataInterface == null ){
+            return -1
+        }
+
         val affectRow = writableDatabase.update( tableName, dataInterface.getContentValue(), DataInterface._ID+"="+dataInterface.getPK(),null)
-
-
         databaseChangeListener?.onDatabaseEntryRenamed( affectRow )
 
         return affectRow

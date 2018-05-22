@@ -59,7 +59,7 @@ class RecordService : Service(){
     override fun onCreate() {
         super.onCreate()
 
-        db = DBHelper(applicationContext)
+        db = DBHelper.getInstance(applicationContext)
     }
 
 
@@ -108,6 +108,13 @@ class RecordService : Service(){
             e.printStackTrace()
         }
 
+
+//        try{
+//            db?.addItem(RecordItem.TABLE_RECORD, )
+//        }catch ( e : Exception ){
+//            e.printStackTrace()
+//        }
+
     }
 
 
@@ -131,7 +138,15 @@ class RecordService : Service(){
 
 
     fun startRecording(){
-        setFileNameAndPath("someName")
+
+
+
+        val sdf = SimpleDateFormat("yyyy/M/dd hh:mm:ss")
+        val currentDate = sdf.format( Date())
+
+
+
+        setFileNameAndPath(currentDate + " someName")
 
 
         recorder = MediaRecorder()
@@ -159,7 +174,7 @@ class RecordService : Service(){
             // 시간 기록
             startTimeMillis = System.currentTimeMillis()
         }catch ( e : IOException){
-
+            e.printStackTrace()
         }
 
 

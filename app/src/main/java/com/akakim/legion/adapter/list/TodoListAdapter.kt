@@ -8,6 +8,7 @@ import com.akakim.legion.DBHelper
 import com.akakim.legion.R
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
 import com.akakim.legion.adapter.list.viewholder.TodoViewHolder
+import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.TodoListItem
 
 /**
@@ -20,7 +21,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
     val context : Context
 
-    val dbHelper : DBHelper
+    val dbHelper : DBHelper?
 
 //    val multiSelectionList : SparseBooleanArray
 
@@ -28,26 +29,32 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
     constructor(context : Context,listener : OnSingleItemClickListener?) : super(){
 
         this.context = context
-        this.dbHelper = DBHelper( context )
+        this.dbHelper = DBHelper.getInstance( context )
         this.listener = listener
 
     }
     override fun onBindViewHolder(holder: TodoViewHolder?, position: Int) {
 
 
-        val todoListItem = dbHelper.getItemAtTodoListItem( position )
+//        dbHelper?.getItemAtTodoListItem( position ).apply {
+//            holder?.tvTitle!!.text = todoTitle
+//
+//
+//        }
+
+        val todoListItem = dbHelper?.getItemAtTodoListItem( position )
 
         holder?.apply {
-            tvTitle?.text = todoListItem.todoTitle
+            tvTitle?.text = todoListItem?.todoTitle
             cbTodo?.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked) {
-                    todoListItem.checked = 1
-                    dbHelper.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem )
+                    todoListItem?.checked = 1
+                    dbHelper?.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem as? DataInterface)
 
                 } else {
-                    todoListItem.checked = 0
-                    dbHelper.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem )
+                    todoListItem?.checked = 0
+                    dbHelper?.updateItem( TodoListItem.TABLE_TODO_LIST , todoListItem )
 
                 }
             }
@@ -66,7 +73,14 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
 
     override fun getItemCount(): Int {
-        return dbHelper.getCount(TodoListItem.TABLE_TODO_LIST)
+
+        val count : Int?  = dbHelper?.getCount( TodoListItem.TABLE_TODO_LIST )
+
+        if (count == null ){
+            return 0
+        }
+
+        return count
     }
 
 
