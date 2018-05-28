@@ -2,6 +2,7 @@ package com.akakim.legion
 
 import android.app.AlertDialog
 import android.content.*
+import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
 import com.akakim.legion.activity.TimerActivity
+import com.akakim.legion.common.Constant
 import com.akakim.legion.common.FragmentConstant
 import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.RecordItem
@@ -23,9 +25,12 @@ import com.akakim.legion.fragment.record.RecordFragment
 import com.akakim.legion.fragment.todo.TodoListFragment
 import com.akakim.legion.widget.FileNameDialog
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
+
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener
@@ -56,7 +61,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     currentFragmentTAG =  FragmentConstant.TODO_LIST_FRAGMENT
                     supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.flMain, TodoListFragment() as Fragment, currentFragmentTAG)
+                            .replace(R.id.flMain, TodoListFragment() as Fragment, TodoListFragment::class.java.simpleName)
                             .commit()
 
                 }
@@ -77,16 +82,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     val recordFragment = RecordFragment()
                     supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.flMain, recordFragment , FragmentConstant.TODO_LIST_FRAGMENT)
+                            .replace(R.id.flMain, recordFragment , RecordFragment::class.java.simpleName)
                             .commit()
 
                 }
                 R.id.menuTimerChecker -> {
-//                    val timerFragment = TimerRoutineFragment()
-//                    supportFragmentManager
-//                            .beginTransaction()
-//                            .replace(R.id.flMain, timerFragment , FragmentConstant.TODO_LIST_FRAGMENT)
-//                            .commit()
+
 
                     val i = Intent ( this , TimerActivity::class.java )
 
@@ -95,14 +96,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
                 R.id.menuRecordList ->{
 
+                    val dbHelper = DBHelper.getInstance( this )
+
+                    val list = ArrayList<RecordItem> ()
+                    if( dbHelper != null ){
+
+                        list.addAll( dbHelper.getRecordItemList() )
+                    }
+
                     supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.flMain,  FileViewerFragment() , FragmentConstant.TODO_LIST_FRAGMENT)
+                            .replace(R.id.flMain,  FileViewerFragment.newInstance( list  ) , FileViewerFragment::class.java.simpleName)
                             .commit()
                 }
 
                 else -> {
-                    Toast.makeText(this,"noting selected.. .",Toast.LENGTH_SHORT).show()
+
+                    Log.e("MainActivity","onItemSelected unexpected error occured")
+//                    Toast.makeText(this,"noting selected.. .",Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -133,10 +144,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 when(intent?.action){
                     RecordService.ACTION_TEMP_FILE_READY ->{
 
-                        val sdf = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
-                        val currentDate = sdf.format( Date())
 
-                        val fileNameDialog = FileNameDialog( this@MainActivity,false,currentDate,this@MainActivity )
+                        var recordItem  = intent.getParcelableExtra<RecordItem>( Constant.recordItemKey)
+
+
+                        val fileNameDialog = FileNameDialog( this@MainActivity,false,recordItem,this@MainActivity )
 
                         fileNameDialog.window.setGravity(Gravity.CENTER)
                         fileNameDialog.show()
@@ -156,8 +168,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onResume() {
-
-
         super.onResume()
 
         registerReceiver( reciever ,serviceFilter)
@@ -219,28 +229,64 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     /**
      *
      */
-    override fun fileNameConfirmed(fileName: String, fileLength : Long ) {
+    override fun fileNameConfirmed( recordItem: RecordItem , targetName : String  ) {
+
+
+        val resourceFile                        = File ( recordItem.recordFilePath,recordItem.recordFileName)
+
 
         try{
-            val item = RecordItem(-1,fileName,elapseMillis,
-                    System.currentTimeMillis() ,
-                    this.baseContext.filesDir.absolutePath
 
-                    filePath.toString())
+            val file                            = File ( recordItem.recordFilePath,targetName)
 
-            this.db?.addItem( RecordItem.TABLE_RECORD , item as DataInterface )
+            // copy 에서 알아서 처리가 되어있으므로 신경쓰지않아도 된다.
+            // 버퍼 사이즈는 . 8kb이다.
+            resourceFile.copyTo(file, true, DEFAULT_BUFFER_SIZE)
+            recordItem.recordFileName           = targetName
+
+
+            DBHelper.getInstance(this)?.addItem( RecordItem.TABLE_RECORD , recordItem as DataInterface )
 
 
             Toast.makeText(this,"레코딩 성공 ",Toast.LENGTH_SHORT).show()
-        }catch ( e : Exception){
+
+
+            //
+            val fragment = supportFragmentManager.findFragmentByTag(FileViewerFragment::class.java.simpleName) as FileViewerFragment
+
+            fragment.notifyNewItemInserted( recordItem )
+
+
+            if(resourceFile.exists()){
+                resourceFile.delete()
+            }
+
+
+        }catch (e: FileNotFoundException ){
             e.printStackTrace()
+            Toast.makeText(this,"파일 생성을 실패 했습니다. ", Toast.LENGTH_SHORT ).show()
+        }
+        catch ( e: FileAlreadyExistsException){
+            e.printStackTrace()
+            Toast.makeText(this,"파일 생성을 실패 했습니다. ", Toast.LENGTH_SHORT ).show()
+        } catch ( e : Exception){
+            e.printStackTrace()
+            Toast.makeText(this,"파일 생성을 실패 했습니다. ", Toast.LENGTH_SHORT ).show()
         }
 
-//        Toast.makeText(this,fileName+" is Created", Toast.LENGTH_SHORT ).show()
+
     }
 
-    override fun fileNameCanceled() {
-        Toast.makeText(this," is canceld", Toast.LENGTH_SHORT ).show()
+    override fun fileNameCanceled( recordItem: RecordItem ) {
+        val resourceFile = File ( recordItem.recordFilePath,recordItem.recordFileName)
+
+        if(resourceFile.exists()){
+            resourceFile.delete()
+
+        }
+
+
+        Toast.makeText(this,"파일 생성이 취소되었습니다. ", Toast.LENGTH_SHORT ).show()
 
     }
 

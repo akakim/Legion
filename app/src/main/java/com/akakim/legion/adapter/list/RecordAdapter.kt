@@ -22,18 +22,20 @@ import com.akakim.utillibrary.database.OnDatabaseChangedListener
  * @DATE_COLUMN 2018-03-20
  */
 class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedListener, OnEventListener {
+
+
     override fun onEvent(event: Int, file: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onNewDatabaseEntryAdded() {
 
         notifyItemInserted( itemCount - 1 )
-        //TODO  scroll using LinearLayoutManger
+
     }
 
     override fun onDatabaseEntryRenamed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 
@@ -48,20 +50,28 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedL
 
     var observer : RecordFileObserver? = null
 
-    constructor(context : Context,listener : OnSingleItemClickListener): super(){
+    var recordList =  ArrayList< RecordItem >()
+
+
+    constructor(context : Context,recordList : ArrayList< RecordItem >,listener : OnSingleItemClickListener): super(){
 
         this.context = context
         this.dbHelper = DBHelper.getInstance( context )
         this.listener = listener
+        this.recordList = recordList        // call by reference로 임시로 작업. ->  call by value로 변경하고 옵저버 등록에 대한 조사 필요
+
+
 
         observer = RecordFileObserver (context.getExternalFilesDir( Constant.defaultDirectory ).toString(), this )
 
-        Log.d( "RecordAdapter", "is Created")
+//        Log.d( "RecordAdapter", "is Created")
     }
+
+
     override fun onBindViewHolder(holder: RecordViewHolder?, position: Int) {
 
 
-        val item = this.dbHelper?.getRecordItemItem( position )
+        val item = this.recordList.get( position )
         holder?.apply {
             itemView.setOnClickListener{
                 val preSelcted = selected
@@ -95,13 +105,13 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedL
 
     override fun getItemCount(): Int {
 
-        val count = this.dbHelper?.getCount( RecordItem.TABLE_RECORD)
-        Log.d( "RecordAdapter", count.toString())
+//        val count = this.dbHelper?.getCount( RecordItem.TABLE_RECORD)
+//        Log.d( "RecordAdapter", count.toString())
 
-        if( count == null ){
-            return 0
-        }
-        return count
+//        if( count == null ){
+//            return 0
+//        }
+        return recordList.size
     }
 
 

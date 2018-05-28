@@ -17,8 +17,13 @@ class Constant{
         const val typeVoice         = "v"
         const val typeBreath        = "br"
 
+
+
         const val tempFileNameKey   = "fileNameKey"
         const val tempFilePathKey   = "filePathKey"
         const val tempFileLength    = "length"
+
+
+        const val recordItemKey = "recordItem"
     }
 }

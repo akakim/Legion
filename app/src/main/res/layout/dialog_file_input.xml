@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp">
+
+    >
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="알림"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="17sp"
+            android:textColor="#fff"
+            android:background="@color/colorPrimary"
+            />
+
         <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:columnCount="2"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_margin="30dp">
 
 
             <android.support.design.widget.TextInputLayout
@@ -33,7 +54,9 @@
                 android:id="@+id/btnConfirm"
                 android:text=" 확인 "
                 android:layout_columnWeight="0.5"
-                android:layout_gravity="fill"/>
+                android:layout_gravity="fill"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#fff"/>
 
             <Button
                 android:id="@+id/btnCancel"
@@ -44,4 +67,7 @@
 
 
         </GridLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+    </FrameLayout>

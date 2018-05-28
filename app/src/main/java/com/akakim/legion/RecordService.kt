@@ -10,10 +10,8 @@ import android.media.MediaRecorder
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.util.Log
-import android.widget.Toast
 import com.akakim.legion.common.Constant
 import com.akakim.legion.common.OnTimerChangedListener
-import com.akakim.legion.data.DataInterface
 import com.akakim.legion.data.RecordItem
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -65,10 +63,21 @@ class RecordService : Service(){
 
 
     val REQUEST_ALARM_CODE                      = 1001
+
+    val sdf = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
+
+    lateinit var tempFilePath       : String
+    lateinit var tempFileName       : String
+
     override fun onCreate() {
         super.onCreate()
 
+        val currentDate = sdf.format( Date())
         db = DBHelper.getInstance(applicationContext)
+
+
+        tempFilePath     = baseContext.dataDir.absolutePath
+        tempFileName    =  sdf.format( Date()) + ".mp4"
     }
 
 
@@ -108,10 +117,16 @@ class RecordService : Service(){
         recorder            = null
 
 
-        val readyTempActionIntent = Intent( ACTION_TEMP_FILE_READY )
-        readyTempActionIntent.putExtra( Constant.tempFileNameKey, fileName)
-        readyTempActionIntent.putExtra( Constant.tempFilePathKey, filePath)
-        readyTempActionIntent.putExtra( Constant.tempFileLength , elapseMillis)
+        val readyTempActionIntent   = Intent( ACTION_TEMP_FILE_READY )
+        val sdf                     = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
+        val currentDate             = sdf.format( Date())
+
+
+
+        val recrodItem = RecordItem (-1, tempFileName,elapseMillis,currentDate.toString(),tempFilePath)
+
+
+        readyTempActionIntent.putExtra( Constant.recordItemKey  , recrodItem)
 
         sendBroadcast( readyTempActionIntent )
 
@@ -131,8 +146,8 @@ class RecordService : Service(){
 
         Log.d( "absoulePath", baseContext.dataDir.absolutePath)
 
-        fileName = builder.toString()
-        filePath = baseContext.dataDir.absolutePath + "/" + builder.toString()
+//        fileName = builder.toString()
+//        filePath = baseContext.dataDir.absolutePath + "/" + builder.toString()
 
         Log.d( "setFileName", fileName)
         Log.d( "setFilePath", filePath)
@@ -150,7 +165,7 @@ class RecordService : Service(){
 
 
 
-        setFileNameAndPath(currentDate)
+//        setFileNameAndPath(currentDate)
 
 
         recorder = MediaRecorder()
@@ -158,7 +173,7 @@ class RecordService : Service(){
 
             it.setAudioSource( MediaRecorder.AudioSource.MIC)
             it.setOutputFormat( MediaRecorder.OutputFormat.MPEG_4)
-            it.setOutputFile( filePath )
+            it.setOutputFile(tempFilePath + "/" + tempFileName)
             it.setAudioEncoder( MediaRecorder.AudioEncoder.AAC )
             it.setAudioChannels( 1 )
 

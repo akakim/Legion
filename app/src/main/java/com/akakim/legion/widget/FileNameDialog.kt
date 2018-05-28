@@ -4,8 +4,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.TextView
 import com.akakim.legion.R
+import com.akakim.legion.data.RecordItem
 import kotlinx.android.synthetic.main.dialog_file_input.*
 
 /**
@@ -23,31 +25,27 @@ import kotlinx.android.synthetic.main.dialog_file_input.*
 class FileNameDialog : AlertDialog{
 
     val isAdInDialog        : Boolean
-    val initFileName        : String
-    val initLength            : Long
+    var recievedData        : RecordItem
+
     var onFileNameInterface : OnFileInterface?
 
 
     constructor(context: Context?,isAdInDialog :Boolean,
-                initFileName: String ,
-                initLength : Long,
+                recievedData: RecordItem,
                 onFileNameInterface : OnFileInterface?)
-            : this(context,true, null ,isAdInDialog, initFileName ,initLength,onFileNameInterface)
-
-
-    constructor(context: Context?, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?,
-                isAdInDialog :Boolean,initFileName: String,initLength : Long,onFileNameInterface : OnFileInterface?)
-            : super(context, cancelable, cancelListener){
+            : super(context){
 
         this.isAdInDialog = isAdInDialog
         this.onFileNameInterface = onFileNameInterface
-        this.initFileName = initFileName
-        this.initLength = initLength
+
+        this.recievedData = recievedData
 
 
-
-
+//        val view = LayoutInflater.from(context).inflate( R.layout.dialog_file_input,null )
+//
+//        setView(view)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +53,7 @@ class FileNameDialog : AlertDialog{
         setContentView ( R.layout.dialog_file_input)
 
 
-        edFileName.setText( initFileName,TextView.BufferType.EDITABLE)
+        edFileName.setText( recievedData.recordFileName,TextView.BufferType.EDITABLE)
 
 
         btnConfirm.setOnClickListener{
@@ -63,22 +61,25 @@ class FileNameDialog : AlertDialog{
             // "" 인경위 처리는 Cancel과 동일하게 .
 
             if( "".equals( edFileName.text.toString() )){
-                onFileNameInterface?.fileNameCanceled()
+                onFileNameInterface?.fileNameCanceled(recievedData)
+
             }else {
-                onFileNameInterface?.fileNameConfirmed(edFileName.text.toString() )
+                onFileNameInterface?.fileNameConfirmed( recievedData , edFileName.text.toString() )
+
             }
             dismiss()
 
         }
 
         btnCancel.setOnClickListener{
-            onFileNameInterface?.fileNameCanceled()
+            onFileNameInterface?.fileNameCanceled(recievedData)
             dismiss()
+
         }
     }
 
     open interface OnFileInterface{
-        fun fileNameConfirmed(fileName : String , length : Long )
-        fun fileNameCanceled()
+        fun fileNameConfirmed(recordItem : RecordItem,targetPath : String)
+        fun fileNameCanceled(recordItem : RecordItem)
     }
 }

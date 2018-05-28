@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.akakim.legion.R
 import com.akakim.legion.adapter.list.RecordAdapter
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
+import com.akakim.legion.data.RecordItem
 
 import com.akakim.legion.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_file_viewr.*
@@ -29,15 +30,17 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
 
 
-    private var paramPos : Int = -1
+    // TODO 개선방향 : observer가 필요하다.......
 
+//    private var paramPos : Int = -1
 
+    val fileList  = ArrayList<RecordItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            paramPos = arguments.getInt(ARG_POSITION)
-//            mParam2 = arguments.getString(ARG_PARAM2)
+
+            fileList.addAll(  arguments.getParcelableArrayList<RecordItem>(ARG_RECORD_LIST ) )
         }
     }
 
@@ -55,7 +58,7 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        rvRecordList.adapter = RecordAdapter( context , this )
+        rvRecordList.adapter = RecordAdapter( context, fileList , this )
 
 
         val layoutManager = LinearLayoutManager(context)
@@ -76,7 +79,13 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
     }
 
+    open fun notifyNewItemInserted(recordItem : RecordItem ){
 
+
+        this.fileList.add(0,recordItem)
+        rvRecordList.adapter.notifyItemInserted( 0 )
+
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -95,13 +104,13 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
     companion object {
 
 
-        val ARG_POSITION : String = "position"
+        val ARG_RECORD_LIST : String = "recordList"
 
-        fun newInstance(pos: Int): FileViewerFragment {
+        fun newInstance(recordList: ArrayList<RecordItem>): FileViewerFragment {
             val fragment = FileViewerFragment()
             val args = Bundle()
 
-            args.putInt(ARG_POSITION, pos)
+            args.putParcelableArrayList(ARG_RECORD_LIST, recordList)
             fragment.arguments = args
             return fragment
         }
