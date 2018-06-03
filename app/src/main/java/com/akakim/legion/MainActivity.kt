@@ -24,10 +24,12 @@ import com.akakim.legion.fragment.record.FileViewerFragment
 import com.akakim.legion.fragment.record.RecordFragment
 import com.akakim.legion.fragment.todo.TodoListFragment
 import com.akakim.legion.widget.FileNameDialog
+import com.akakim.utillibrary.service.RecordingService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +49,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
 
-        Log.d(this.localClassName, " onNavigation Item Selected")
 
 
             when(item.itemId){
@@ -102,6 +103,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     if( dbHelper != null ){
 
                         list.addAll( dbHelper.getRecordItemList() )
+
                     }
 
                     supportFragmentManager
@@ -113,10 +115,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 else -> {
 
                     Log.e("MainActivity","onItemSelected unexpected error occured")
-//                    Toast.makeText(this,"noting selected.. .",Toast.LENGTH_SHORT).show()
+
                 }
             }
 
+
+//        navigationView.cl
 //        navigationView.
         return true
     }
@@ -130,14 +134,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         navigationView.setNavigationItemSelectedListener( this )
-
+//        navigationView.is
+//        navigationView
 
         navigationView.menu.getItem(0).setChecked( true )
 
         onNavigationItemSelected( navigationView.menu.getItem(0) )
 
 
-        serviceFilter   = IntentFilter(RecordService.ACTION_TEMP_FILE_READY)
+        serviceFilter   = IntentFilter(RecordService.ACTION_TEMP_FILE_READY )
+        serviceFilter.addAction( RecordService.ACTION_RECORDING_ERROR )
+
         reciever        = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
 
@@ -152,6 +159,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                         fileNameDialog.window.setGravity(Gravity.CENTER)
                         fileNameDialog.show()
+                    }
+                    RecordService.ACTION_RECORDING_ERROR->{
+
+
+                        val what = intent.getIntExtra("what",-1)
+                        val extra = intent.getIntExtra("extra",-1)
+
+                        Log.d("onReceive","what : " + what + " extra : " + extra )
                     }
                 }
 
@@ -229,6 +244,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     /**
      *
      */
+    // copy 에서 알아서 처리가 되어있으므로 신경쓰지않아도 된다.
+    // 버퍼 사이즈는 . 8kb이다.
     override fun fileNameConfirmed( recordItem: RecordItem , targetName : String  ) {
 
 
@@ -237,31 +254,54 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         try{
 
-            val file                            = File ( recordItem.recordFilePath,targetName)
-
-            // copy 에서 알아서 처리가 되어있으므로 신경쓰지않아도 된다.
-            // 버퍼 사이즈는 . 8kb이다.
-            resourceFile.copyTo(file, true, DEFAULT_BUFFER_SIZE)
-            recordItem.recordFileName           = targetName
+            if( targetName.equals( recordItem.recordFileName )){
 
 
-            DBHelper.getInstance(this)?.addItem( RecordItem.TABLE_RECORD , recordItem as DataInterface )
+                val resultRow = DBHelper.getInstance(this)?.addItem(RecordItem.TABLE_RECORD, recordItem as DataInterface)
+
+                Log.d(javaClass.simpleName,"result Row " + resultRow  )
+
+                Toast.makeText(this, "레코딩 성공 ", Toast.LENGTH_SHORT).show()
 
 
-            Toast.makeText(this,"레코딩 성공 ",Toast.LENGTH_SHORT).show()
+
+            }else {
+                val file = File(recordItem.recordFilePath, targetName)
 
 
-            //
-            val fragment = supportFragmentManager.findFragmentByTag(FileViewerFragment::class.java.simpleName) as FileViewerFragment
+                // 중복 파일 처리
 
-            fragment.notifyNewItemInserted( recordItem )
+                if (!file.exists()) {
+                    file.createNewFile()
+                }
 
 
-            if(resourceFile.exists()){
-                resourceFile.delete()
+                if (resourceFile.exists()) {
+                    resourceFile.copyTo(file, true, DEFAULT_BUFFER_SIZE)
+                    recordItem.recordFileName = targetName
+
+
+                    val resultRow = DBHelper.getInstance(this)?.addItem(RecordItem.TABLE_RECORD, recordItem as DataInterface)
+
+
+                    Toast.makeText(this, "레코딩 성공 ", Toast.LENGTH_SHORT).show()
+
+
+                    Log.d(javaClass.simpleName,"result Row " + resultRow  )
+
+                    resourceFile.delete()
+                } else {
+                    throw FileNotFoundException("file is not exist")
+                }
             }
+//            if(resourceFile.exists()){
+//                resourceFile.delete()
+//            }
 
 
+        }catch(e: IOException){
+            e.printStackTrace()
+            Toast.makeText(this,"파일 생성을 실패 했습니다. ", Toast.LENGTH_SHORT ).show()
         }catch (e: FileNotFoundException ){
             e.printStackTrace()
             Toast.makeText(this,"파일 생성을 실패 했습니다. ", Toast.LENGTH_SHORT ).show()

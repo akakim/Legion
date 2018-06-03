@@ -79,7 +79,8 @@ class FileNameDialog : AlertDialog{
     }
 
     open interface OnFileInterface{
-        fun fileNameConfirmed(recordItem : RecordItem,targetPath : String)
+
+        fun fileNameConfirmed(resource : RecordItem,targetPath : String)
         fun fileNameCanceled(recordItem : RecordItem)
     }
 }

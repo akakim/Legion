@@ -34,12 +34,13 @@ import java.util.*
  */
 
 
-class RecordService : Service(){
+class RecordService : Service(),MediaRecorder.OnErrorListener{
 
 
 
     companion object {
         open val ACTION_TEMP_FILE_READY         = "com.akakim.legion.RecordService.ACTION_TEMP_FILE_READY"
+        open val ACTION_RECORDING_ERROR         = "com.akakim.legion.RecordService.ACTION_RECORDING_ERROR"
     }
     val TAG                                     = "com.akakim.legion.RecordService"
     var fileName            : String?           = null
@@ -88,7 +89,6 @@ class RecordService : Service(){
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.d(javaClass.simpleName,"onStartCommand")
         startRecording()
         return START_STICKY
 
@@ -118,6 +118,7 @@ class RecordService : Service(){
 
 
         val readyTempActionIntent   = Intent( ACTION_TEMP_FILE_READY )
+
         val sdf                     = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
         val currentDate             = sdf.format( Date())
 
@@ -135,37 +136,25 @@ class RecordService : Service(){
     }
 
 
-    /**
-     * TODO : 파일 path 정하기 .
-     */
-    fun setFileNameAndPath(name : String ) : Boolean {
-
-        val builder : StringBuilder = StringBuilder( name )
-        builder.append(".mp4")
-//         = File ( baseContext.filesDir, builder.toString())
-
-        Log.d( "absoulePath", baseContext.dataDir.absolutePath)
-
-//        fileName = builder.toString()
-//        filePath = baseContext.dataDir.absolutePath + "/" + builder.toString()
-
-        Log.d( "setFileName", fileName)
-        Log.d( "setFilePath", filePath)
-
-        return true
-    }
+//    /**
+//     * TODO : 파일 path 정하기 .
+//     */
+//    fun setFileNameAndPath(name : String ) : Boolean {
+//
+//        val builder : StringBuilder = StringBuilder( name )
+//        builder.append(".mp4")
+//
+//
+//
+//        Log.d( "setFileName", fileName)
+//        Log.d( "setFilePath", filePath)
+//
+//        return true
+//    }
 
 
     fun startRecording(){
 
-
-
-        val sdf = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
-        val currentDate = sdf.format( Date())
-
-
-
-//        setFileNameAndPath(currentDate)
 
 
         recorder = MediaRecorder()
@@ -184,6 +173,8 @@ class RecordService : Service(){
             it.setAudioEncodingBitRate( 192000 )
 
 
+            it.setOnErrorListener( this@RecordService )
+
         }
 
         try{
@@ -201,52 +192,66 @@ class RecordService : Service(){
 
     }
 
-    fun startTimer(){
+//    fun startTimer(){
+//
+//        timer = Timer()
+//
+//        incrementTimerTask = object:TimerTask(){
+//            override fun run() {
+//                elapsedSeconds++
+//
+//                onTimerChangeListener?.onTimerChanged( elapsedSeconds )
+//
+//                val mgr : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//
+//
+//                mgr.notify(     REQUEST_ALARM_CODE,createNotification())
+//
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//        }
+//
+//        timer?.scheduleAtFixedRate( incrementTimerTask,1000,1000)
+//    }
+//
+//    fun stopTimer(){
+//        timer?.cancel()
+//    }
 
-        timer = Timer()
 
-        incrementTimerTask = object:TimerTask(){
-            override fun run() {
-                elapsedSeconds++
+//    fun createNotification() : Notification{
+//
+//        val builder = NotificationCompat.Builder( applicationContext , channelid )
+//                .setSmallIcon( R.drawable.ic_mic_white_36dp)
+//                .setContentTitle( getString(R.string.notification_recording))
+//                .setContentText(timerFormat.format( elapsedSeconds * 1000))
+//                .setOngoing( true )
+//
+//
+//        builder.setContentIntent( PendingIntent.getActivity(
+//
+//                applicationContext,REQUEST_ALARM_CODE,
+//                 Intent( applicationContext,MainActivity::class.java ),
+//                        0
+//        ))
+//
+//        return builder.build()
+//    }
 
-                onTimerChangeListener?.onTimerChanged( elapsedSeconds )
 
-                val mgr : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    override fun onError(mr: MediaRecorder?, what: Int, extra: Int) {
+
+        val errorActionIntent = Intent( ACTION_RECORDING_ERROR )
+        mr?.release()
 
 
-                mgr.notify(     REQUEST_ALARM_CODE,createNotification())
+        errorActionIntent.putExtra( "what",what )
+        errorActionIntent.putExtra( "extra",extra )
 
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+        sendBroadcast( errorActionIntent )
 
-        }
-
-        timer?.scheduleAtFixedRate( incrementTimerTask,1000,1000)
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    fun stopTimer(){
-        timer?.cancel()
-    }
-
-
-    fun createNotification() : Notification{
-
-        val builder = NotificationCompat.Builder( applicationContext , channelid )
-                .setSmallIcon( R.drawable.ic_mic_white_36dp)
-                .setContentTitle( getString(R.string.notification_recording))
-                .setContentText(timerFormat.format( elapsedSeconds * 1000))
-                .setOngoing( true )
-
-
-        builder.setContentIntent( PendingIntent.getActivity(
-
-                applicationContext,REQUEST_ALARM_CODE,
-                 Intent( applicationContext,MainActivity::class.java ),
-                        0
-        ))
-
-        return builder.build()
-    }
-
 
 }
