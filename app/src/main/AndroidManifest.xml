@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.CreateTodoItemActivity"
             android:screenOrientation="portrait" />
@@ -44,9 +43,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <service android:name=".RecordService"></service>
-        <!--<service android:name=".RecordService"></service>-->
-         <!--<service android:name="com.akakim.le"/>-->
+        <service android:name=".service.RecordService" />
+        <!-- <service android:name=".RecordService"></service> -->
+        <!-- <service android:name="com.akakim.le"/> -->
 
         <activity
             android:name=".testNavigtaion"
@@ -59,7 +58,8 @@
         <activity android:name=".activity.TimerActivity" />
         <activity android:name=".activity.EditTodoItemActivity" />
         <activity android:name=".activity.CreateCheckListItemActivity" />
-        <activity android:name=".activity.CreateRoutineActivity"></activity>
+        <activity android:name=".activity.CreateRoutineActivity" />
+        <activity android:name=".activity.PlayerActivity"></activity>
     </application>
 
 </manifest>

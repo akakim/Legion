@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.akakim.legion.R
 import com.akakim.legion.common.Constant
 import com.akakim.legion.fragment.BaseFragment
-import com.akakim.legion.RecordService
+import com.akakim.legion.service.RecordService
 
 import kotlinx.android.synthetic.main.fragment_record.*
 import java.io.File

@@ -1,15 +1,10 @@
-package com.akakim.legion
+package com.akakim.legion.service
 
-import android.app.Notification
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
-import android.util.Log
+import com.akakim.legion.DBHelper
 import com.akakim.legion.common.Constant
 import com.akakim.legion.common.OnTimerChangedListener
 import com.akakim.legion.data.RecordItem
@@ -39,10 +34,10 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
 
 
     companion object {
-        open val ACTION_TEMP_FILE_READY         = "com.akakim.legion.RecordService.ACTION_TEMP_FILE_READY"
-        open val ACTION_RECORDING_ERROR         = "com.akakim.legion.RecordService.ACTION_RECORDING_ERROR"
+        open val ACTION_TEMP_FILE_READY         = "com.akakim.legion.service.RecordService.ACTION_TEMP_FILE_READY"
+        open val ACTION_RECORDING_ERROR         = "com.akakim.legion.service.RecordService.ACTION_RECORDING_ERROR"
     }
-    val TAG                                     = "com.akakim.legion.RecordService"
+    val TAG                                     = "com.akakim.legion.service.RecordService"
     var fileName            : String?           = null
     var filePath            : String?           = null
 
@@ -60,7 +55,7 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
     // interface
     var onTimerChangeListener : OnTimerChangedListener? = null
 
-    val channelid                               = "com.akakim.legion.RecordService"
+    val channelid                               = "com.akakim.legion.service.RecordService"
 
 
     val REQUEST_ALARM_CODE                      = 1001
@@ -117,7 +112,7 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
         recorder            = null
 
 
-        val readyTempActionIntent   = Intent( ACTION_TEMP_FILE_READY )
+        val readyTempActionIntent   = Intent(ACTION_TEMP_FILE_READY)
 
         val sdf                     = SimpleDateFormat("yyyy_M_dd_hh_mm_ss")
         val currentDate             = sdf.format( Date())
@@ -242,7 +237,7 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
 
     override fun onError(mr: MediaRecorder?, what: Int, extra: Int) {
 
-        val errorActionIntent = Intent( ACTION_RECORDING_ERROR )
+        val errorActionIntent = Intent(ACTION_RECORDING_ERROR)
         mr?.release()
 
 

@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import com.akakim.legion.R
 import com.akakim.legion.data.RecordItem
@@ -24,6 +28,7 @@ import kotlinx.android.synthetic.main.dialog_file_input.*
 
 class FileNameDialog : AlertDialog{
 
+
     val isAdInDialog        : Boolean
     var recievedData        : RecordItem
 
@@ -41,9 +46,6 @@ class FileNameDialog : AlertDialog{
         this.recievedData = recievedData
 
 
-//        val view = LayoutInflater.from(context).inflate( R.layout.dialog_file_input,null )
-//
-//        setView(view)
     }
 
 
@@ -54,7 +56,6 @@ class FileNameDialog : AlertDialog{
 
 
         edFileName.setText( recievedData.recordFileName,TextView.BufferType.EDITABLE)
-
 
         btnConfirm.setOnClickListener{
 
@@ -78,9 +79,19 @@ class FileNameDialog : AlertDialog{
         }
     }
 
+
+    override fun show() {
+        super.show()
+
+        this.window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        this.window.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+    }
+
     open interface OnFileInterface{
 
         fun fileNameConfirmed(resource : RecordItem,targetPath : String)
         fun fileNameCanceled(recordItem : RecordItem)
     }
 }
+
+

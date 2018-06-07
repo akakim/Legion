@@ -18,14 +18,7 @@ import com.akakim.legion.data.RecordItem
 import com.akakim.legion.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_file_viewr.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [FileViewrFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [FileViewrFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
 
@@ -97,6 +90,8 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
     override fun onClick(position: Int) {
 
+
+        context.startActivity( Intent ())
 
     }
 

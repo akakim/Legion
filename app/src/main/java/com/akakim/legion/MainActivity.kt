@@ -2,9 +2,7 @@ package com.akakim.legion
 
 import android.app.AlertDialog
 import android.content.*
-import android.database.DatabaseUtils
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
@@ -23,14 +21,12 @@ import com.akakim.legion.fragment.*
 import com.akakim.legion.fragment.record.FileViewerFragment
 import com.akakim.legion.fragment.record.RecordFragment
 import com.akakim.legion.fragment.todo.TodoListFragment
+import com.akakim.legion.service.RecordService
 import com.akakim.legion.widget.FileNameDialog
-import com.akakim.utillibrary.service.RecordingService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -134,8 +130,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         navigationView.setNavigationItemSelectedListener( this )
-//        navigationView.is
-//        navigationView
 
         navigationView.menu.getItem(0).setChecked( true )
 
@@ -159,6 +153,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                         fileNameDialog.window.setGravity(Gravity.CENTER)
                         fileNameDialog.show()
+
+                        // TODO: 알아보기 .
+
+
                     }
                     RecordService.ACTION_RECORDING_ERROR->{
 
