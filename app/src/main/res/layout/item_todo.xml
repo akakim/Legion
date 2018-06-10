@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,21 +10,20 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         style="@style/tvHeaderStyle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_centerVertical="true"
         tools:text="기본 연습내용.mp4"
         />
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/cbTodo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true">
 
     </android.support.v7.widget.AppCompatCheckBox>
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

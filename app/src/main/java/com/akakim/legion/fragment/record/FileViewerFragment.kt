@@ -9,13 +9,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.akakim.legion.DBHelper
 
 import com.akakim.legion.R
+import com.akakim.legion.activity.PlayerActivity
 import com.akakim.legion.adapter.list.RecordAdapter
 import com.akakim.legion.adapter.list.`interface`.OnSingleItemClickListener
 import com.akakim.legion.data.RecordItem
 
 import com.akakim.legion.fragment.BaseFragment
+import com.akakim.legion.util.DefaultDecorator
 import kotlinx.android.synthetic.main.fragment_file_viewr.*
 
 
@@ -62,7 +65,9 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
         layoutManager.stackFromEnd = true
 
 
+//        rvRecordList.addItemDecoration( DefaultDecorator( context ))
         rvRecordList.layoutManager = layoutManager
+
 
     }
 
@@ -83,7 +88,6 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-
     }
 
 
@@ -91,7 +95,13 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
     override fun onClick(position: Int) {
 
 
-        context.startActivity( Intent ())
+
+        val intent = Intent(context, PlayerActivity::class.java )
+        intent.putExtra( PlayerActivity.PLAY_ITEM, DBHelper.getInstance( context )?.getRecordItemItem( position ))
+
+        startActivity( intent )
+        activity?.overridePendingTransition( android.R.anim.slide_in_left,android.R.anim.slide_out_right)
+
 
     }
 

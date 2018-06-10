@@ -9,6 +9,6 @@
     <dimen name="defaultItemSize">40dp</dimen>
 
     <dimen name="defaultChronometerSize">60sp</dimen>
-    <!--<dimen name="defaultEdHeight">wrap_content</dimen>-->
+    \
 
 </resources>

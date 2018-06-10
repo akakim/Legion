@@ -13,6 +13,7 @@ import com.akakim.legion.common.Constant
 import com.akakim.legion.data.OnEventListener
 import com.akakim.legion.data.RecordFileObserver
 import com.akakim.legion.data.RecordItem
+import com.akakim.legion.util.Util
 import com.akakim.utillibrary.database.OnDatabaseChangedListener
 
 /**
@@ -40,26 +41,26 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedL
 
 
     val context             : Context
-
-
     val listener            : OnSingleItemClickListener?
-
     val dbHelper            : DBHelper?
     var selected            = -1
 
 
-    var observer : RecordFileObserver? = null
+
+
+
+//    var observer : RecordFileObserver? = null
 
     var recordList =  ArrayList< RecordItem >()
 
 
     constructor(context : Context,recordList : ArrayList< RecordItem >,listener : OnSingleItemClickListener): super(){
 
-        this.context = context
-        this.dbHelper = DBHelper.getInstance( context )
-        this.listener = listener
+        this.context    = context
+        this.dbHelper   = DBHelper.getInstance( context )
+        this.listener   = listener
         this.recordList = recordList        // call by reference로 임시로 작업. ->  call by value로 변경하고 옵저버 등록에 대한 조사 필요
-        observer = RecordFileObserver (context.getExternalFilesDir( Constant.defaultDirectory ).toString(), this )
+//        observer = RecordFileObserver (context.getExternalFilesDir( Constant.defaultDirectory ).toString(), this )
 
 
     }
@@ -71,25 +72,17 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedL
         val item = this.recordList.get( position )
         holder?.apply {
             itemView.setOnClickListener{
-                val preSelcted = selected
 
-                if( selected == -1 ){
-                    selected = position
-                    notifyItemChanged( selected )
-                }else {
-                    selected = position
-                    notifyItemChanged( preSelcted )
-                    notifyItemChanged( selected )
+                listener?.onClick( position )
 
-                }
 
             }
 
-            tvRecordFileName?.text  = item?.recordFileName
-            tvFileLength?.text      = item?.recordLength.toString()
-            tvDate?.text            = item?.recordDate.toString()
+            tvRecordFileName?.text  = "제목 : " + Util.removeExtension( item.recordFileName)
+            tvFileLength?.text      = " 파일길이 : " + item.recordLength.toString()
+//            tvDate?.text            = item.recordDate
 
-            listener?.onClick( position )
+
         }
 
         //TODO : Database 구축 이후의 처리 .

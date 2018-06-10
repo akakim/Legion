@@ -4,6 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ExoPlayerFactory
 
 /**
  * @author KIM
@@ -16,6 +19,8 @@ open class MediaPlayerService: Service() {
 
 
     lateinit var mediaPlayer : MediaPlayer
+
+    lateinit var exoPlayer: ExoPlayer
     override fun onBind(intent: Intent?): IBinder? {
 
         return null
@@ -27,6 +32,33 @@ open class MediaPlayerService: Service() {
 
     override fun onCreate() {
         super.onCreate()
+        mediaPlayer = MediaPlayer()
 
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if( mediaPlayer != null){
+            mediaPlayer.release()
+//            mediaPlayer = null
+        }
+    }
+
+    fun initializePlayer(){
+//        exoPlayer = ExoPlayerFactory.newInstance(
+//                DefaultRenderersFactory ( this ),
+//        )
+
+    }
+
+    companion object {
+        val STATE_IDLE= "idle"
+        val STATE_INIT= "init"
+        val STATE_PREPARE= "prepare"
+        val STATE_STARTED="started"
+        val STATE_PAUSED="paused"
+        val STATE_STOPPED="stop"
+        val STATE_PLAYBACK_COMPLETED="playbackComplete"
     }
 }

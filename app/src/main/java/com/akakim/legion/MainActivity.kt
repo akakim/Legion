@@ -154,7 +154,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         fileNameDialog.window.setGravity(Gravity.CENTER)
                         fileNameDialog.show()
 
-                        // TODO: 알아보기 .
+
 
 
                     }
@@ -226,9 +226,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         //TODO : TodoListFragment를 위한 onActivityResult 처리
 
-        supportFragmentManager.findFragmentByTag( currentFragmentTAG).apply {
-            this.onActivityResult( requestCode,resultCode,data )
-        }
+
+
+
+
+        supportFragmentManager.findFragmentByTag( TodoListFragment::class.java.simpleName)?.onActivityResult( requestCode,resultCode,data )
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

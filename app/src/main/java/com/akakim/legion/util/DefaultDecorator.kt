@@ -2,6 +2,8 @@ package com.akakim.legion.util
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.ColorFilter
+import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.LinearLayoutManager
@@ -25,6 +27,7 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
         this.context = context;
 
         divider = context.getDrawable( R.drawable.divider )
+
     }
 
     override fun onDrawOver(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
@@ -32,15 +35,12 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
 
         if (divider == null) return
 
-//        Log.d("onDrawOver()","divider not null ")
-
-
         parent?.apply {
             if (getOrientation( this ) == LinearLayoutManager.VERTICAL) {
 
-                val left = parent.paddingLeft
-                val right = this.getWidth() - this.getPaddingRight() - convertToDpToPixel(10)
-                val childCount = this.getChildCount()
+                val left        = parent.paddingLeft
+                val right       = this.getWidth() - this.getPaddingRight()
+                val childCount  = this.getChildCount()
 
                 for (i in 1 until childCount) {
 
@@ -80,7 +80,7 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
         if (view.layoutManager is LinearLayoutManager) {
             val layoutManager = view.layoutManager as LinearLayoutManager
 
-//            Log.d("getOrientation,", "layoutManager is LinearLayout")
+
             return layoutManager.orientation
         } else
             throw IllegalStateException("Divider Item Decoration can only be used with a LinearLaoutManager")
@@ -88,7 +88,6 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
 
     override fun onDraw(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
         super.onDraw(c, parent, state)
-
 
 
     }
@@ -100,15 +99,17 @@ class DefaultDecorator : RecyclerView.ItemDecoration {
 
         if( parent != null ) {
 
-            if (getOrientation(parent) == LinearLayoutManager.VERTICAL)
-                outRect?.top = divider.intrinsicHeight
-            else
-                outRect?.left = divider.intrinsicWidth
-        }
-    }
+            if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
+                outRect?.top = Util.convertToDpToPixel(context,10)
 
-    private fun convertToDpToPixel(dp: Int): Int {
-        val density = context.resources.displayMetrics.density
-        return dp * density.toInt()
+            }
+            else {
+                outRect?.left = divider.intrinsicWidth
+//                view?.background = divider
+            }
+
+
+        }
+
     }
 }
