@@ -7,14 +7,22 @@
     tools:context="com.akakim.legion.activity.PlayerActivity">
 
 
-    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:id="@+id/videoView"
+    <com.google.android.exoplayer2.ui.PlaybackControlView
+        android:id="@+id/playBackControllerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        ></com.google.android.exoplayer2.ui.PlaybackControlView>
+    <!--<com.google.android.exoplayer2.ui.SimpleExoPlayerView-->
+        <!--android:id="@+id/videoView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--android:visibility="invisible"/>-->
 
     <!--<android.support.v7.widget.AppCompatSeekBar-->
         <!--android:id="@+id/seekBar"-->

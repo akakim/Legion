@@ -21,34 +21,33 @@ interface PlayerEventListener : Player.EventListener{
       val tag = "PlayEventListener"
     }
     override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPlayerError(error: ExoPlaybackException?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onLoadingChanged(isLoading: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPositionDiscontinuity() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onRepeatModeChanged(repeatMode: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

@@ -19,26 +19,26 @@ interface AudioEventListener : AudioRendererEventListener{
 
 
     override fun onAudioEnabled(counters: DecoderCounters?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAudioInputFormatChanged(format: Format?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAudioTrackUnderrun(bufferSize: Int, bufferSizeMs: Long, elapsedSinceLastFeedMs: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAudioSessionId(audioSessionId: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAudioDecoderInitialized(decoderName: String?, initializedTimestampMs: Long, initializationDurationMs: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onAudioDisabled(counters: DecoderCounters?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

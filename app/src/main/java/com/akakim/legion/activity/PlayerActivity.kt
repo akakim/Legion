@@ -25,7 +25,10 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import kotlinx.android.synthetic.main.activity_player.*
 import java.io.IOException
 import java.util.*
@@ -117,10 +120,34 @@ class PlayerActivity : AppCompatActivity(),
 
             override fun onPlayerError(error: ExoPlaybackException?) {
                 super.onPlayerError(error)
+
+                error?.printStackTrace()
             }
 
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 super.onPlayerStateChanged(playWhenReady, playbackState)
+
+
+                if( playWhenReady){
+                    Log.d( PlayerEventListener.tag,"isReady status " + playbackState )
+                }else {
+                    Log.d( PlayerEventListener.tag,"is Not Ready status " + playbackState )
+                }
+
+                when (playbackState ){
+                    Player.STATE_IDLE ->{
+                        Log.d( PlayerEventListener.tag," STATE_IDLE ")
+                    }
+                    Player.STATE_BUFFERING->{
+                        Log.d( PlayerEventListener.tag," STATE_BUFFERING ")
+                    }
+                    Player.STATE_READY->{
+                        Log.d( PlayerEventListener.tag," STATE_READY ")
+                    }
+                    Player.STATE_ENDED->{
+                        Log.d( PlayerEventListener.tag," STATE_ENDED ")
+                    }
+                }
             }
 
             override fun onLoadingChanged(isLoading: Boolean) {
@@ -180,15 +207,42 @@ class PlayerActivity : AppCompatActivity(),
 
 
 
-            videoView.player = initPlayer
+            playBackControllerView.player = initPlayer
             exoPlayer.playWhenReady = playWhenReady
 
 
-            val uri = Uri.parse( "android.resource://"+packageName+"/raw/second_run.mp3")
+            val uri = Uri.parse( "android.resource://"+packageName+"/raw/second_run")
 
-            val mediaSource = buildMediaSource( uri )
+            val rawResourceDataSou : RawResourceDataSource = RawResourceDataSource( this )
+            val dataSpec : DataSpec = DataSpec(RawResourceDataSource.buildRawResourceUri( R.raw.second_run ) )
 
-        exoPlayer.prepare(mediaSource,true,false)
+            try{
+
+                rawResourceDataSou.open(dataSpec)
+
+                val factory = object : DataSource.Factory{
+                    override fun createDataSource(): DataSource {
+
+                        return rawResourceDataSou
+                    }
+                }
+
+//                factory.
+                val mediaSource : MediaSource = ExtractorMediaSource(
+                        rawResourceDataSou.uri,
+                        factory,
+                        DefaultExtractorsFactory(),
+                        musicHandler,this
+                )
+                exoPlayer.prepare(mediaSource,true,false)
+
+
+            }catch ( e :RawResourceDataSource.RawResourceDataSourceException ){
+                e.printStackTrace()
+            }
+
+
+
 
     }
 
