@@ -12,46 +12,34 @@ import android.view.View
 import android.widget.SeekBar
 import com.akakim.legion.R
 import com.akakim.legion.data.RecordItem
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ExoPlayerFactory
+import com.akakim.legion.util.AudioEventListener
+import com.akakim.legion.util.MusicHandler
+import com.akakim.legion.util.PlayerEventListener
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.Player.EventListener
+import com.google.android.exoplayer2.decoder.DecoderCounters
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.ExtractorMediaSource.EventListener
+
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.activity_player.*
 import java.io.IOException
 import java.util.*
 
-class PlayerActivity : AppCompatActivity(),SeekBar.OnSeekBarChangeListener,View.OnClickListener,EventListener {
+class PlayerActivity : AppCompatActivity(),
+                        SeekBar.OnSeekBarChangeListener,
+                        View.OnClickListener,
+                        ExtractorMediaSource.EventListener{
 
 
 
 
-    val musicHandler = object : Handler(){
-        override fun sendMessageAtTime(msg: Message?, uptimeMillis: Long): Boolean {
-            return super.sendMessageAtTime(msg, uptimeMillis)
-        }
+    lateinit var musicHandler : MusicHandler
 
-        override fun dispatchMessage(msg: Message?) {
-            super.dispatchMessage(msg)
-        }
-
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-        }
-
-        override fun getMessageName(message: Message?): String {
-            return super.getMessageName(message)
-        }
-
-        override fun toString(): String {
-            return super.toString()
-        }
-    }
     lateinit var getMediaItem : RecordItem
     lateinit var mediaPlayer : MediaPlayer
 
@@ -61,53 +49,122 @@ class PlayerActivity : AppCompatActivity(),SeekBar.OnSeekBarChangeListener,View.
     var playWhenReady : Boolean = false
 
 
+    lateinit var playerEventListener : PlayerEventListener
+    lateinit var audioEventListener : AudioEventListener
 
     override fun onClick(v: View?) {
 
 
-        when (v?.id){
-            R.id.btnPrevSeek->{
-
-            }
-            R.id.btnPlay ->{
-
-            }
-            R.id.btnPause->{
-
-            }
-            R.id.btnNextSeek->{
-
-            }
-        }
+//        when (v?.id){
+//            R.id.btnPrevSeek->{
+//
+//            }
+//            R.id.btnPlay ->{
+//
+//
+//            }
+//            R.id.btnPause->{
+//
+//            }
+//            R.id.btnNextSeek->{
+//
+//            }
+//        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        musicHandler = MusicHandler()
+
 
 
 
         setContentView(R.layout.activity_player)
 
 
-        seekBar.setOnSeekBarChangeListener( this )
+//        seekBar.setOnSeekBarChangeListener( this )
 
 //        seekBar.setOnHoverListener()
 
-        btnPrevSeek.setOnClickListener( this )
-        btnPlay.setOnClickListener( this )
-        btnPause.setOnClickListener( this )
-        btnNextSeek.setOnClickListener( this )
+//        btnPrevSeek.setOnClickListener( this )
+//        btnPlay.setOnClickListener( this )
+//        btnPause.setOnClickListener( this )
+//        btnNextSeek.setOnClickListener( this )
 
         getMediaItem = intent.getParcelableExtra<RecordItem>( PLAY_ITEM )
 
 
 
-
+        initializePlayer()
 
 
     }
 
     fun initializePlayer(){
+
+
+
+        playerEventListener = object : PlayerEventListener{
+            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
+                super.onPlaybackParametersChanged(playbackParameters)
+                Log.d(PlayerEventListener.tag,"onPlaybackParameter")
+            }
+
+            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
+                super.onTracksChanged(trackGroups, trackSelections)
+            }
+
+            override fun onPlayerError(error: ExoPlaybackException?) {
+                super.onPlayerError(error)
+            }
+
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                super.onPlayerStateChanged(playWhenReady, playbackState)
+            }
+
+            override fun onLoadingChanged(isLoading: Boolean) {
+                super.onLoadingChanged(isLoading)
+            }
+
+            override fun onPositionDiscontinuity() {
+                super.onPositionDiscontinuity()
+            }
+
+            override fun onRepeatModeChanged(repeatMode: Int) {
+                super.onRepeatModeChanged(repeatMode)
+            }
+
+            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
+                super.onTimelineChanged(timeline, manifest)
+            }
+        }
+        audioEventListener = object : AudioEventListener{
+            override fun onAudioEnabled(counters: DecoderCounters?) {
+                super.onAudioEnabled(counters)
+            }
+
+            override fun onAudioInputFormatChanged(format: Format?) {
+                super.onAudioInputFormatChanged(format)
+            }
+
+            override fun onAudioTrackUnderrun(bufferSize: Int, bufferSizeMs: Long, elapsedSinceLastFeedMs: Long) {
+                super.onAudioTrackUnderrun(bufferSize, bufferSizeMs, elapsedSinceLastFeedMs)
+            }
+
+            override fun onAudioSessionId(audioSessionId: Int) {
+                super.onAudioSessionId(audioSessionId)
+            }
+
+            override fun onAudioDecoderInitialized(decoderName: String?, initializedTimestampMs: Long, initializationDurationMs: Long) {
+                super.onAudioDecoderInitialized(decoderName, initializedTimestampMs, initializationDurationMs)
+            }
+
+            override fun onAudioDisabled(counters: DecoderCounters?) {
+                super.onAudioDisabled(counters)
+            }
+        }
+
 
         val initPlayer = ExoPlayerFactory.newSimpleInstance(
 
@@ -117,7 +174,10 @@ class PlayerActivity : AppCompatActivity(),SeekBar.OnSeekBarChangeListener,View.
 
 
         )
+        initPlayer.addListener( playerEventListener )
+        initPlayer.setAudioDebugListener( audioEventListener )
         exoPlayer = initPlayer
+
 
 
             videoView.player = initPlayer
@@ -140,7 +200,7 @@ class PlayerActivity : AppCompatActivity(),SeekBar.OnSeekBarChangeListener,View.
                 uri,
                 DefaultDataSourceFactory(this,"second_run"),
                 DefaultExtractorsFactory(),
-                null,
+                musicHandler,
                 this
         )
     }
@@ -149,6 +209,12 @@ class PlayerActivity : AppCompatActivity(),SeekBar.OnSeekBarChangeListener,View.
 
         if ( musicHandler != null ){
             musicHandler.removeCallbacksAndMessages( null )
+
+        }
+
+        if( exoPlayer != null){
+            exoPlayer.release()
+
         }
     }
 
