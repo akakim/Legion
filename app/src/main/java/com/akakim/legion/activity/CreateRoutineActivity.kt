@@ -11,7 +11,7 @@ import com.akakim.legion.adapter.list.RoutineAdapter
 import com.akakim.legion.data.BreatheRoutineCycleItem
 import com.akakim.legion.fragment.routine.TimerRoutineFragment
 import com.akakim.legion.util.DefaultDecorator
-import kotlinx.android.synthetic.main.shared_routine_input.*
+import kotlinx.android.synthetic.main.shared_layout_routine_input.*
 
 
 class CreateRoutineActivity : BaseActivity() , View.OnClickListener{

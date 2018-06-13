@@ -2,14 +2,14 @@ apply plugin: 'com.android.feature'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 26
+    compileSdkVersion ext.compileSdkVersion
 
 
     baseFeature true
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 26
+        minSdkVersion ext.minSdkVersion
+        targetSdkVersion ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 

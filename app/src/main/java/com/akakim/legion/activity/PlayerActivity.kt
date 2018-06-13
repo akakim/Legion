@@ -10,13 +10,13 @@ import android.os.Message
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import com.akakim.legion.R
 import com.akakim.legion.data.RecordItem
 import com.akakim.legion.util.AudioEventListener
 import com.akakim.legion.util.MusicHandler
 import com.akakim.legion.util.PlayerEventListener
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.Player.EventListener
 import com.google.android.exoplayer2.decoder.DecoderCounters
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -49,7 +49,7 @@ class PlayerActivity : AppCompatActivity(),
     lateinit var exoPlayer: ExoPlayer
 
 
-    var playWhenReady : Boolean = false
+    var playWhenReady : Boolean = true
 
 
     lateinit var playerEventListener : PlayerEventListener
@@ -86,14 +86,6 @@ class PlayerActivity : AppCompatActivity(),
         setContentView(R.layout.activity_player)
 
 
-//        seekBar.setOnSeekBarChangeListener( this )
-
-//        seekBar.setOnHoverListener()
-
-//        btnPrevSeek.setOnClickListener( this )
-//        btnPlay.setOnClickListener( this )
-//        btnPause.setOnClickListener( this )
-//        btnNextSeek.setOnClickListener( this )
 
         getMediaItem = intent.getParcelableExtra<RecordItem>( PLAY_ITEM )
 
@@ -101,7 +93,8 @@ class PlayerActivity : AppCompatActivity(),
 
         initializePlayer()
 
-
+        playBackControllerView.show()
+//        playBackControllerVie
     }
 
     fun initializePlayer(){
@@ -129,7 +122,7 @@ class PlayerActivity : AppCompatActivity(),
 
 
                 if( playWhenReady){
-                    Log.d( PlayerEventListener.tag,"isReady status " + playbackState )
+                    Log.d( PlayerEventListener.tag,"is Ready status " + playbackState )
                 }else {
                     Log.d( PlayerEventListener.tag,"is Not Ready status " + playbackState )
                 }
@@ -203,6 +196,7 @@ class PlayerActivity : AppCompatActivity(),
         )
         initPlayer.addListener( playerEventListener )
         initPlayer.setAudioDebugListener( audioEventListener )
+        initPlayer.playWhenReady = true
         exoPlayer = initPlayer
 
 
@@ -227,18 +221,22 @@ class PlayerActivity : AppCompatActivity(),
                     }
                 }
 
-//                factory.
+
                 val mediaSource : MediaSource = ExtractorMediaSource(
                         rawResourceDataSou.uri,
                         factory,
                         DefaultExtractorsFactory(),
                         musicHandler,this
                 )
+
                 exoPlayer.prepare(mediaSource,true,false)
 
 
             }catch ( e :RawResourceDataSource.RawResourceDataSourceException ){
                 e.printStackTrace()
+
+                // TODO :
+                Toast.makeText(this,"파일 재생을 실패했습니다. ",Toast.LENGTH_SHORT).show()
             }
 
 
