@@ -61,5 +61,21 @@ open class CheapSoundFile {
 
     companion object {
 
+        val subclassFactories = arrayOf(
+                CheapMP3.getFactory()
+        )
+
+        open var supportedExtnesions = ArrayList<String>()
+        open var extensionMap = HashMap<String,Factory>().apply {
+
+            for( f in subclassFactories ){
+                for( extension in f.getSupportExtensions() ) {
+                    supportedExtnesions.add(extension)
+                    put(extension,f)
+                }
+            }
+        }
+
+
     }
 }

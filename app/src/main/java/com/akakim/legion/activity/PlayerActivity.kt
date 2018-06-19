@@ -33,6 +33,10 @@ import kotlinx.android.synthetic.main.activity_player.*
 import java.io.IOException
 import java.util.*
 
+
+/*
+* https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_playback_control_view.xml
+* */
 class PlayerActivity : AppCompatActivity(),
                         SeekBar.OnSeekBarChangeListener,
                         View.OnClickListener,

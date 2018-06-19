@@ -14,7 +14,7 @@ import com.akakim.legion.data.OnEventListener
 import com.akakim.legion.data.RecordFileObserver
 import com.akakim.legion.data.RecordItem
 import com.akakim.legion.util.Util
-import com.akakim.utillibrary.database.OnDatabaseChangedListener
+//import com.akakim.utillibrary.database.OnDatabaseChangedListener
 
 /**
  * @author KIM
@@ -22,22 +22,22 @@ import com.akakim.utillibrary.database.OnDatabaseChangedListener
  * @since 0.0.1
  * @DATE_COLUMN 2018-03-20
  */
-class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> ,OnDatabaseChangedListener, OnEventListener {
+class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> , OnEventListener {
 
 
     override fun onEvent(event: Int, file: String?) {
 
     }
 
-    override fun onNewDatabaseEntryAdded() {
-
-        notifyItemInserted( itemCount - 1 )
-
-    }
-
-    override fun onDatabaseEntryRenamed() {
-
-    }
+//    override fun onNewDatabaseEntryAdded() {
+//
+//        notifyItemInserted( itemCount - 1 )
+//
+//    }
+//
+//    override fun onDatabaseEntryRenamed() {
+//
+//    }
 
 
     val context             : Context

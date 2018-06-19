@@ -3,7 +3,10 @@ package com.akakim.legion.service
 import android.app.Service
 import android.content.Intent
 import android.media.MediaRecorder
+import android.os.Build
+import android.os.Environment
 import android.os.IBinder
+import android.provider.MediaStore
 import com.akakim.legion.DBHelper
 import com.akakim.legion.common.Constant
 import com.akakim.legion.common.OnTimerChangedListener
@@ -72,7 +75,12 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
         db = DBHelper.getInstance(applicationContext)
 
 
-        tempFilePath     = baseContext.dataDir.absolutePath
+        // FilePath Issue Nougat 이상에서는 이 코드를 써도된다.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tempFilePath     = baseContext.dataDir.absolutePath
+        }else {
+            tempFilePath    =  Environment.getExternalStorageDirectory().absolutePath
+        }
         tempFileName    =  sdf.format( Date()) + ".mp4"
     }
 
