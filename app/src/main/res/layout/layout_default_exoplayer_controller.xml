@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark">
 
-
-
-    
     <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.exoplayer2.ui.DefaultTimeBar
+            android:layout_alignParentStart="true"
+            android:id="@id/exo_progress"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="26dp"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/layoutSeekText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/layoutController"
+        android:gravity="center">
+
+        <TextView
+            android:id="@id/exo_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:includeFontPadding="true"
+            android:textColor="#FFBEBEBE"
+            android:padding="@dimen/defaultPadding"
+            tools:text="00:00"/>
+
+        <TextView
+            android:id="@id/exo_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:includeFontPadding="true"
+            android:padding="@dimen/defaultPadding"
+            android:textColor="#FFBEBEBE"
+            tools:text="00:00"
+            />
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@id/layoutController"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

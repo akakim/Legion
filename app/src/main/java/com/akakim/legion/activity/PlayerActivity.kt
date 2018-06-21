@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Message
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.Toast
 import com.akakim.legion.R
@@ -97,7 +98,12 @@ class PlayerActivity : AppCompatActivity(),
 
         initializePlayer()
 
+//        playBackControllerView.visibility = View.VISIBLE
+
+
+//        playBackControllerView.findViewById<ImageButton>(R.id.exo_play).visibility = View.VISIBLE
         playBackControllerView.show()
+        playBackControllerView.showTimeoutMs = -1
 //        playBackControllerVie
     }
 

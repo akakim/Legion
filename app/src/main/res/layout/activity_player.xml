@@ -15,6 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:show_timeout="-1"
+        app
         ></com.google.android.exoplayer2.ui.PlaybackControlView>
     <!--<com.google.android.exoplayer2.ui.SimpleExoPlayerView-->
         <!--android:id="@+id/videoView"-->
