@@ -17,6 +17,8 @@
 
 package com.akakim.soundlibrary.soundfile
 
+import java.io.File
+
 /**
  * @author KIM
  * @version 0.0.1
@@ -76,6 +78,13 @@ open class CheapSoundFile {
             }
         }
 
+    }
+
+    protected
+
+    open fun ReadFile( inputFile : File) {
 
     }
+
+
 }

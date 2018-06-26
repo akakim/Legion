@@ -17,6 +17,7 @@
 
 package com.akakim.soundlibrary.soundfile
 
+import java.io.File
 import java.util.*
 
 /**
@@ -81,5 +82,10 @@ open class CheapMP3 : CheapSoundFile{
     fun getFileType() : String { return "MP3"}
 
 
+    fun readFile( inputFile : File) {
+
+
+
+    }
 }
 

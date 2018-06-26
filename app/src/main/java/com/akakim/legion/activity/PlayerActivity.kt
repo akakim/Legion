@@ -43,73 +43,28 @@ class PlayerActivity : AppCompatActivity(),
                         View.OnClickListener,
                         ExtractorMediaSource.EventListener{
 
-
-
-
     lateinit var musicHandler : MusicHandler
-
     lateinit var getMediaItem : RecordItem
-    lateinit var mediaPlayer : MediaPlayer
-
     lateinit var exoPlayer: ExoPlayer
-
+    lateinit var playerEventListener : PlayerEventListener
+    lateinit var audioEventListener : AudioEventListener
 
     var playWhenReady : Boolean = true
 
 
-    lateinit var playerEventListener : PlayerEventListener
-    lateinit var audioEventListener : AudioEventListener
 
-    override fun onClick(v: View?) {
-
-
-//        when (v?.id){
-//            R.id.btnPrevSeek->{
-//
-//            }
-//            R.id.btnPlay ->{
-//
-//
-//            }
-//            R.id.btnPause->{
-//
-//            }
-//            R.id.btnNextSeek->{
-//
-//            }
-//        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        musicHandler = MusicHandler()
-
-
-
-
         setContentView(R.layout.activity_player)
-
-
-
+        musicHandler = MusicHandler()
         getMediaItem = intent.getParcelableExtra<RecordItem>( PLAY_ITEM )
-
-
-
         initializePlayer()
-
-//        playBackControllerView.visibility = View.VISIBLE
-
-
-//        playBackControllerView.findViewById<ImageButton>(R.id.exo_play).visibility = View.VISIBLE
         playBackControllerView.show()
-        playBackControllerView.showTimeoutMs = -1
-//        playBackControllerVie
+
     }
 
     fun initializePlayer(){
-
-
 
         playerEventListener = object : PlayerEventListener{
             override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
@@ -195,7 +150,6 @@ class PlayerActivity : AppCompatActivity(),
             }
         }
 
-
         val initPlayer = ExoPlayerFactory.newSimpleInstance(
 
                 DefaultRenderersFactory(this),
@@ -207,49 +161,47 @@ class PlayerActivity : AppCompatActivity(),
         initPlayer.addListener( playerEventListener )
         initPlayer.setAudioDebugListener( audioEventListener )
         initPlayer.playWhenReady = true
+
         exoPlayer = initPlayer
 
+        playBackControllerView.player = initPlayer
+
+        exoPlayer.playWhenReady = playWhenReady
 
 
-            playBackControllerView.player = initPlayer
-            exoPlayer.playWhenReady = playWhenReady
+        val uri = Uri.parse( "android.resource://"+packageName+"/raw/second_run")
 
+        val rawResourceDataSou : RawResourceDataSource = RawResourceDataSource( this )
+        val dataSpec : DataSpec = DataSpec(RawResourceDataSource.buildRawResourceUri( R.raw.second_run ) )
 
-            val uri = Uri.parse( "android.resource://"+packageName+"/raw/second_run")
+        try{
 
-            val rawResourceDataSou : RawResourceDataSource = RawResourceDataSource( this )
-            val dataSpec : DataSpec = DataSpec(RawResourceDataSource.buildRawResourceUri( R.raw.second_run ) )
+            rawResourceDataSou.open(dataSpec)
 
-            try{
+            val factory = object : DataSource.Factory{
+                override fun createDataSource(): DataSource {
 
-                rawResourceDataSou.open(dataSpec)
-
-                val factory = object : DataSource.Factory{
-                    override fun createDataSource(): DataSource {
-
-                        return rawResourceDataSou
-                    }
+                    return rawResourceDataSou
                 }
-
-
-                val mediaSource : MediaSource = ExtractorMediaSource(
-                        rawResourceDataSou.uri,
-                        factory,
-                        DefaultExtractorsFactory(),
-                        musicHandler,this
-                )
-
-                exoPlayer.prepare(mediaSource,true,false)
-
-
-            }catch ( e :RawResourceDataSource.RawResourceDataSourceException ){
-                e.printStackTrace()
-
-                // TODO :
-                Toast.makeText(this,"파일 재생을 실패했습니다. ",Toast.LENGTH_SHORT).show()
             }
 
 
+            val mediaSource : MediaSource = ExtractorMediaSource(
+                    rawResourceDataSou.uri,
+                    factory,
+                    DefaultExtractorsFactory(),
+                    musicHandler,this
+            )
+
+            exoPlayer.prepare(mediaSource,true,false)
+
+
+        }catch ( e :RawResourceDataSource.RawResourceDataSourceException ){
+            e.printStackTrace()
+
+            // TODO :
+            Toast.makeText(this,"파일 재생을 실패했습니다. ",Toast.LENGTH_SHORT).show()
+        }
 
 
     }
@@ -281,15 +233,15 @@ class PlayerActivity : AppCompatActivity(),
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 
@@ -298,9 +250,14 @@ class PlayerActivity : AppCompatActivity(),
         if( error == null ){
             Log.e( javaClass.simpleName,"IOException is NPE, Unexpected")
         }else {
-            error?.printStackTrace()
+            error.printStackTrace()
         }
     }
+
+    override fun onClick(v: View?) {
+
+    }
+
 
     companion object {
 
