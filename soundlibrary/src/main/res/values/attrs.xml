@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="WaveformView">
+
+
+    </declare-styleable>
+
+
+    <declare-styleable name="WaveFormThumbView">
+        <attr name="wf_wave_form_color"/>
+        <attr name="wf_waveform_highlight_color" format="color"/>
+
+    </declare-styleable>
+
+</resources>

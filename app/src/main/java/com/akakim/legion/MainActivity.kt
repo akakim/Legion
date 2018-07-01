@@ -100,8 +100,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     if( dbHelper != null ){
 
                         list.addAll( dbHelper.getRecordItemList() )
-
                     }
+
 
                     supportFragmentManager
                             .beginTransaction()
@@ -112,6 +112,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 else -> {
 
                     Log.e("MainActivity","onItemSelected unexpected error occured")
+
 
                 }
             }
