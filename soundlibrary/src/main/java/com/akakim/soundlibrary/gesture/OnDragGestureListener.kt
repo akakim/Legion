@@ -25,5 +25,5 @@ package com.akakim.soundlibrary.gesture
  */
 
 interface OnDragGestureListener{
-    fun onDrag(dx: Float, dy: Float)
+    fun onDrag(dx: Double, dy: Double)
 }

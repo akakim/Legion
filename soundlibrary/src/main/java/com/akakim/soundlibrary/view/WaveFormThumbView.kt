@@ -41,19 +41,21 @@ import com.akakim.soundlibrary.gesture.OnDragGestureListener
 
 open class WaveFormThumbView : View , OnDragGestureListener {
 
+
     private val waveFormPaint           : Paint             = Paint()
     private val waveFormHigLightPaint   : Paint             = Paint()
     private val bean                    : WaveForamInfo?    = null
     private var totalSecond             : Double            = 0.0
 
-    private var thumbScale              : Float             = 0.0f
+    private var thumbScale              : Double             = 0.0
     private var thumbStartSecond        : Double            = 0.0
     private var thumbDuration           : Double            = 0.0
-    private var dragDetector           : DragDetector?     = null
+    private var dragDetector            : DragDetector?     = null
     private var mThumbStartTimePixel    : Int               = 0
     private var mThumbEndTimePixel      : Int               = 0
 
 
+    // TODO: JVM Override 확인해보기
     var onDragThumbListener : OnDragThumbListener? = null
 
     constructor(context: Context?) : this(context, null )
@@ -105,49 +107,93 @@ open class WaveFormThumbView : View , OnDragGestureListener {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        if( bean != null ){
-            drawWave( canvas , bean )
-        }
+        bean?.apply{ drawWave( canvas , bean )  }
     }
 
-
+    // 말그대로 초기 Wave를 그린다.
     private fun drawWave(canvas : Canvas?, bean : WaveForamInfo ){
 
-//        measuredWidth
-//        measuredHeight
 
-        val data  = bean.data
-        val dataLength = bean.data.size
-        val is8Bit = bean.bits == 8
+        val data        = bean.data
+        val dataLength  = bean.data.size
+        val is8Bit      = bean.bits == 8
 
-        val dataPixel = 0
-        var axisX = 0.0
+        val dataPixel   = 0
+        var axisX       = 0.0
 
-        var finalAxis = -1
-        var low = 0
-        var high = 0
-        var lowY = 0
-        var highY = 0
+        var finalAxisX  = -1
+        var low         = 0
+        var high        = 0
+        var lowY        = 0
+        var highY       = 0
 
-
-        while( 0 < measuredWidth.toFloat()){
+        // x 축 처음부터 마지막까지 1씩 증가하면서 Line을 그려준다.
+        while( axisX < measuredWidth.toFloat()){
 
             if ( dataPixel < 0 || dataPixel >= dataLength ){
                 break
             }
+
+            var nearestAxisX = axisX.toInt()
+
+            if( nearestAxisX != finalAxisX ){
+                finalAxisX = nearestAxisX
+
+                if ( is8Bit ){
+                    low = data.get(dataPixel * 2) * 256
+                    high = data.get(dataPixel * 2 + 1 ) * 256
+                }else {
+                    low = data.get(dataPixel * 2) * 32768
+                    high = data.get(dataPixel * 2 + 1 ) + 32768
+                }
+
+                // TODO : RangeTo를 응용하면 코틀린스러우지않을까한다.
+                if( dataPixel >= mThumbEndTimePixel && dataPixel <= mThumbEndTimePixel) {
+
+                    canvas?.drawLine( finalAxisX.toFloat(),lowY.toFloat(),finalAxisX.toFloat(),highY.toFloat(),waveFormHigLightPaint)
+
+                }else {
+                    canvas?.drawLine( finalAxisX.toFloat(),lowY.toFloat(),finalAxisX.toFloat(),highY.toFloat(),waveFormPaint)
+                }
+
+            }
+
+
+            axisX += thumbScale
+            dataPixel.inc()
         }
     }
-    override fun onDrag(dx: Float, dy: Float) {
+
+    open fun updateThumb( thumbStartSecond: Double, thumbEndSecond : Double ){
+        bean?.apply {
+            this@WaveFormThumbView.thumbStartSecond = thumbStartSecond
+            this@WaveFormThumbView.thumbDuration = thumbEndSecond - thumbStartSecond
+
+            this@WaveFormThumbView.mThumbStartTimePixel =
+                    WaveUtil.secondsToPixels( thumbStartSecond,sampleRate,samplePerPixel,1f)
+            this@WaveFormThumbView.mThumbEndTimePixel =
+                    WaveUtil.secondsToPixels( thumbEndSecond,sampleRate,samplePerPixel,1f)
+
+            var thumbRectLeft = mThumbStartTimePixel * thumbScale
+            var thumbRectRight = mThumbEndTimePixel * thumbScale
+
+            dragDetector?.setEnableRect( (mThumbStartTimePixel * thumbScale).toFloat(),
+                                        0f,
+                                        (mThumbEndTimePixel * thumbScale).toFloat(),
+                                        height.toFloat() )
+            invalidate()
+        }
+    }
+
+    override fun onDrag(dx: Double, dy: Double) {
 
         if ( bean == null ){
             return
         }
 
+        thumbStartSecond+=
+                WaveUtil.pixelsToSeconds(dx.toFloat(), bean.sampleRate,bean.samplePerPixel ,thumbScale.toFloat())
 
-
-        thumbStartSecond.plus(
-                WaveUtil.pixelsToSeconds(dx, bean.sampleRate,bean.samplePerPixel ,thumbScale)
-        )
 
         // 오른쪽
         if( thumbStartSecond + thumbDuration > totalSecond ){
@@ -163,10 +209,10 @@ open class WaveFormThumbView : View , OnDragGestureListener {
 
     }
 
-    fun setOnDragThumbListener(onDragGestureListener: OnDragGestureListener ){
-        this.onDragThumbListener = onDragThumbListener
-
-    }
+//    fun setOnDragThumbListener(onDragThumbListener: OnDragThumbListener? ){
+//        this.onDragThumbListener = onDragThumbListener
+//
+//    }
 
     interface OnDragThumbListener{
         fun onDrag( startTime : Double )

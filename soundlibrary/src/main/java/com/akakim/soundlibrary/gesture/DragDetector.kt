@@ -18,6 +18,7 @@
 package com.akakim.soundlibrary.gesture
 
 import android.content.Context
+import android.graphics.RectF
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 
@@ -34,28 +35,37 @@ open class DragDetector{
         val INVALID_POINTER_ID = -1
     }
 
-    val touchSlop : Float
-    val isDragging : Boolean
-    var lastTouchX : Float = 0f
-    var lastTouchY : Float = 0f
-    var activePointerId = INVALID_POINTER_ID
-    var activePointerIndex  = 0 ;
-    var onDragGestureListener : OnDragGestureListener? = null
-    var isDragging
+    val touchSlop  : Double
+    var isDragging : Boolean                            = false
+    var lastTouchX : Double                             = 0.0
+    var lastTouchY : Double                             = 0.0
+    var activePointerId                                 = INVALID_POINTER_ID
+    var activePointerIndex                              = 0
+    var onDragGestureListener : OnDragGestureListener?  = null
+
+    val enableRect = RectF()
 
     constructor(context : Context?, onDragGestureListener: OnDragGestureListener?) {
-        touchSlop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
+        touchSlop = ViewConfiguration.get(context).scaledTouchSlop.toDouble()
         this.onDragGestureListener = onDragGestureListener
     }
 
     /**
      *
      */
-    fun getActiveX(ev : MotionEvent) : Float {
+    fun getActiveX(ev : MotionEvent) : Double {
         try {
-            return ev.getX( activePointerIndex)
+            return ev.getX( activePointerIndex).toDouble()
         }catch ( e : Exception ){
-            return ev.x
+            return ev.x.toDouble()
+        }
+    }
+
+    fun getActiveY(ev : MotionEvent ): Double{
+        try{
+            return ev.getY( activePointerIndex ).toDouble()
+        }catch (e : Exception ){
+            return ev.y.toDouble()
         }
     }
 
@@ -92,13 +102,14 @@ open class DragDetector{
                     }
 
                     activePointerId = ev.getPointerId( newPointerIndex )
-                    lastTouchX = ev.getX( newPointerIndex ).toFloat()
-                    lastTouchY = ev.getY( newPointerIndex ).toFloat()
+                    lastTouchX = ev.getX( newPointerIndex ).toDouble()
+                    lastTouchY = ev.getY( newPointerIndex ).toDouble()
                 }
             }
 
         }
 
+        // TODO : if
         if( activePointerId != INVALID_POINTER_ID ){
             activePointerIndex = ev.findPointerIndex(
                 activePointerId
@@ -112,11 +123,33 @@ open class DragDetector{
     fun onTouchDragEvent(action : Int , ev : MotionEvent ){
         when (action){
             MotionEvent.ACTION_DOWN->{
-                lastTouchX = getActiveX( )
+                lastTouchX = getActiveX( ev )
+                lastTouchY = getActiveY( ev )
+
+                isDragging = false
             }
             MotionEvent.ACTION_MOVE ->{
 
+
+                val dx = getActiveX( ev ) - lastTouchX
+                val dy = getActiveY ( ev ) - lastTouchY
+
+                if( isDragging){
+                    onDragGestureListener?.onDrag( dx , dy)
+
+                }else {
+                    isDragging =
+                            enableRect.contains( lastTouchX.toFloat(), lastTouchY.toFloat() ).and(
+                                    Math.sqrt( (dx * dx) + ( dy * dy ) ) >= touchSlop
+                            )
+                }
+
             }
+
         }
+    }
+
+    open fun setEnableRect( left : Float , top : Float, right : Float , bottom : Float){
+        enableRect.set( left ,top,right,bottom )
     }
 }
