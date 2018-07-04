@@ -26,11 +26,11 @@ package com.akakim.soundlibrary.view
  * @date 2018-07-01
  */
 
-open class WaveForamInfo constructor
+open class WaveFormInfo constructor
 (
   var sampleRate: Int          = 0,
   var samplePerPixel :Int   = 0,
   var bits : Int            = 0,
-  var length : Int          = 0 ,
+  var length : Int          = -1 ,
   var data: ArrayList<Int> = ArrayList()
 )

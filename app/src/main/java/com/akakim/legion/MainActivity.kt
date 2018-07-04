@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.widget.Toast
 import com.akakim.legion.activity.BaseActivity
+import com.akakim.legion.activity.TestSoundActivity
 import com.akakim.legion.activity.TimerActivity
 import com.akakim.legion.common.Constant
 import com.akakim.legion.common.FragmentConstant
@@ -73,7 +74,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 R.id.menuFeedBackList->{
 
 
-
+                    startActivity( Intent(this@MainActivity, TestSoundActivity::class.java))
                 }
                 R.id.menuRecord -> {
 

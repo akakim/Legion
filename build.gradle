@@ -10,7 +10,7 @@ buildscript {
 
     ext{
         suppportLibraryVersion='26.1.0'
-        constraintLayoutVersion='1.0.2'
+        constraintLayoutVersion='1.1.2'
         exoplayerVersion = 'r2.5.1'
 
     }

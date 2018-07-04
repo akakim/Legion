@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -60,7 +60,9 @@
         <activity android:name=".activity.EditTodoItemActivity" />
         <activity android:name=".activity.CreateCheckListItemActivity" />
         <activity android:name=".activity.CreateRoutineActivity" />
-        <activity android:name=".activity.PlayerActivity"></activity>
+        <activity android:name=".activity.PlayerActivity" />
+        <activity android:name="com.akakim.soundlibrary.TestMainActivity" />
+        <activity android:name=".activity.TestSoundActivity"></activity>
     </application>
 
 </manifest>

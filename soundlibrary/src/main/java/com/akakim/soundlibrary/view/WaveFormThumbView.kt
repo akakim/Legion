@@ -23,9 +23,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Build
-import android.support.v4.content.res.TypedArrayUtils
 import android.util.AttributeSet
-import android.view.DragEvent
 import android.view.View
 import com.akakim.soundlibrary.R
 import com.akakim.soundlibrary.WaveUtil
@@ -44,8 +42,9 @@ open class WaveFormThumbView : View , OnDragGestureListener {
 
     private val waveFormPaint           : Paint             = Paint()
     private val waveFormHigLightPaint   : Paint             = Paint()
-    private val bean                    : WaveForamInfo?    = null
-    private var totalSecond             : Double            = 0.0
+    private var bean                    : WaveFormInfo?    = null
+    var totalSecond                     : Double            = 0.0
+    var startSecond                     : Double            = 0.0
 
     private var thumbScale              : Double             = 0.0
     private var thumbStartSecond        : Double            = 0.0
@@ -103,15 +102,18 @@ open class WaveFormThumbView : View , OnDragGestureListener {
         dragDetector = DragDetector( context , this )
     }
 
-
+    open fun initWave(bean : WaveFormInfo ){
+        totalSecond = WaveUtil.dataPixelsToSecond( bean.length , bean.sampleRate, bean.samplePerPixel )
+        computerMinScaleFactor()
+    }
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        bean?.apply{ drawWave( canvas , bean )  }
+        bean?.apply{ drawWave( canvas , bean!! )  }
     }
 
     // 말그대로 초기 Wave를 그린다.
-    private fun drawWave(canvas : Canvas?, bean : WaveForamInfo ){
+    private fun drawWave(canvas : Canvas?, bean : WaveFormInfo){
 
 
         val data        = bean.data
@@ -192,7 +194,7 @@ open class WaveFormThumbView : View , OnDragGestureListener {
         }
 
         thumbStartSecond+=
-                WaveUtil.pixelsToSeconds(dx.toFloat(), bean.sampleRate,bean.samplePerPixel ,thumbScale.toFloat())
+                WaveUtil.pixelsToSeconds(dx.toFloat(), bean!!.sampleRate,bean!!.samplePerPixel ,thumbScale.toFloat())
 
 
         // 오른쪽
@@ -209,11 +211,57 @@ open class WaveFormThumbView : View , OnDragGestureListener {
 
     }
 
+
+    fun computerMinScaleFactor(){
+
+
+
+        if( bean == null || measuredWidth <= 0){
+            return
+        }else {
+            (width / bean!!.length).toDouble().apply {
+                thumbScale  = this
+                configScalePaint( this )
+            }
+
+        }
+    }
+
+    fun configScalePaint( scale : Double){
+        // TODO : 좀더 코틀린스럽게 짤 수 있을 것 같다.
+        val smokeWidth = Math.ceil(scale).toInt()
+
+        Math.ceil(scale).toInt().let {
+
+            if( it < 0 ){
+                waveFormPaint.strokeWidth = 0.0f
+                waveFormHigLightPaint.strokeWidth = 0.0f
+            }else {
+                waveFormPaint.strokeWidth = it.toFloat()
+                waveFormHigLightPaint.strokeWidth = it.toFloat()
+            }
+
+        }
+
+
+    }
 //    fun setOnDragThumbListener(onDragThumbListener: OnDragThumbListener? ){
 //        this.onDragThumbListener = onDragThumbListener
 //
 //    }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        computerMinScaleFactor()
+    }
+
+    open fun setWave(bean :WaveFormInfo? ){
+
+        if( bean != null){
+            this.bean = bean
+            initWave( bean )
+            invalidate()
+        }
+    }
     interface OnDragThumbListener{
         fun onDrag( startTime : Double )
     }

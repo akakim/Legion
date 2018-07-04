@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.akakim.soundlibrary.TestMainActivity"
     android:orientation="vertical"
     android:layout_weight="10">
 
@@ -19,9 +18,10 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:background="#e1e1e1"
-        app:wf_wave_form_color="#00ffff"
-        app:wf_waveform_highlight_color="#ff11ff"
         />
+
+    <!--        app:wf_wave_form_color="#00ffff"
+        app:wf_waveform_highlight_color="#ff11ff"-->
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
