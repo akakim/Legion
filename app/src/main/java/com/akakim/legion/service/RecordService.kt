@@ -37,8 +37,8 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
 
 
     companion object {
-        open val ACTION_TEMP_FILE_READY         = "com.akakim.legion.service.RecordService.ACTION_TEMP_FILE_READY"
-        open val ACTION_RECORDING_ERROR         = "com.akakim.legion.service.RecordService.ACTION_RECORDING_ERROR"
+        val ACTION_TEMP_FILE_READY         = "com.akakim.legion.service.RecordService.ACTION_TEMP_FILE_READY"
+        val ACTION_RECORDING_ERROR         = "com.akakim.legion.service.RecordService.ACTION_RECORDING_ERROR"
     }
     val TAG                                     = "com.akakim.legion.service.RecordService"
     var fileName            : String?           = null
@@ -71,7 +71,7 @@ class RecordService : Service(),MediaRecorder.OnErrorListener{
     override fun onCreate() {
         super.onCreate()
 
-        val currentDate = sdf.format( Date())
+//        val currentDate = sdf.format( Date())
         db = DBHelper.getInstance(applicationContext)
 
 

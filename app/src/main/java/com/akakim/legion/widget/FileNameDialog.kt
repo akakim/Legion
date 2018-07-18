@@ -87,9 +87,9 @@ class FileNameDialog : AlertDialog{
         this.window.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
-    open interface OnFileInterface{
+    interface OnFileInterface{
 
-        fun fileNameConfirmed(resource : RecordItem,targetPath : String)
+        fun fileNameConfirmed(recordItem: RecordItem , targetName : String)
         fun fileNameCanceled(recordItem : RecordItem)
     }
 }

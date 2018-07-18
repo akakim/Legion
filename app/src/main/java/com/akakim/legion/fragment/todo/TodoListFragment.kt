@@ -33,18 +33,18 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            todoList = arguments.getParcelableArrayList(LIST_KEY)
+            todoList = arguments!!.getParcelableArrayList(LIST_KEY)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        dbHelper = DBHelper.getInstance( context )
+        dbHelper = DBHelper.getInstance( requireContext() )
 
 
 
-        return inflater?.inflate(R.layout.fragment_todo_list, container, false)
+        return inflater.inflate(R.layout.fragment_todo_list, container, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -93,19 +93,19 @@ class TodoListFragment : BaseFragment(),OnSingleItemClickListener {
         super.onActivityCreated(savedInstanceState)
 
 
-        val layoutManger = LinearLayoutManager( context )
+        val layoutManger = LinearLayoutManager( requireContext() )
 
         layoutManger.orientation = LinearLayoutManager.VERTICAL
 
-        val adapter  = TodoListAdapter(context, this )
+        val adapter  = TodoListAdapter(requireContext(), this )
 
         rvTodoList.layoutManager = layoutManger
-        rvTodoList.addItemDecoration( DefaultDecorator(context))
+        rvTodoList.addItemDecoration( DefaultDecorator(requireContext()))
 
         rvTodoList.adapter =  adapter
         fbAdd.setOnClickListener {
             val i = Intent( context, CreateTodoItemActivity::class.java )
-            activity.startActivityForResult( i , TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE)
+            activity?.startActivityForResult( i , TODOLIST_FRAGMENT_REQUEST_ACTIVITY_CODE)
         }
 
 

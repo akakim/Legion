@@ -33,7 +33,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
         this.listener = listener
 
     }
-    override fun onBindViewHolder(holder: TodoViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
 
 
 //        dbHelper?.getItemAtTodoListItem( position ).apply {
@@ -46,7 +46,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
         holder?.apply {
             tvTitle?.text = todoListItem?.todoTitle
-            cbTodo?.setOnCheckedChangeListener { buttonView, isChecked ->
+            cbTodo?.setOnCheckedChangeListener { _, isChecked ->
 
                 if (isChecked) {
                     todoListItem?.checked = 1
@@ -64,7 +64,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoViewHolder> {
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TodoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
 
         val v = TodoViewHolder(LayoutInflater.from(context).inflate( R.layout.item_todo, null,false ))
         return v

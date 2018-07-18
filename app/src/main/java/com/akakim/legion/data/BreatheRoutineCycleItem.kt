@@ -61,15 +61,15 @@ data class BreatheRoutineCycleItem(
 
     companion object CREATOR : Parcelable.Creator<BreatheRoutineCycleItem> {
 
-        open val TABLE_BREATH_ROUTINE                                = "breathRoutine"
-        open val SEQUENCE                         : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
-        open val DO_THAT_COLUMN             : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
-        open val TERM_COLUMN                       : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
-        open val COLOR_COLUMN                      : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
-        open val GROUP_ID_COLUMN                   : Pair<String,String>  = Pair( "groupId",                  DataInterface.INTEGER_TYPE)
+        val TABLE_BREATH_ROUTINE                                = "breathRoutine"
+        val SEQUENCE                         : Pair<String,String>  = Pair( DataInterface._ID,       DataInterface.INTEGER_TYPE)
+        val DO_THAT_COLUMN             : Pair<String,String>  = Pair( "viewType",               DataInterface.TEXT_TYPE)
+        val TERM_COLUMN                       : Pair<String,String>  = Pair( "content",                DataInterface.TEXT_TYPE)
+        val COLOR_COLUMN                      : Pair<String,String>  = Pair( "score",                  DataInterface.INTEGER_TYPE)
+        val GROUP_ID_COLUMN                   : Pair<String,String>  = Pair( "groupId",                  DataInterface.INTEGER_TYPE)
 
 
-        open val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( DO_THAT_COLUMN, TERM_COLUMN, COLOR_COLUMN ,GROUP_ID_COLUMN)
+        val COLUMN_LIST : Array<Pair<String,String>> = arrayOf( DO_THAT_COLUMN, TERM_COLUMN, COLOR_COLUMN ,GROUP_ID_COLUMN)
 
         override fun createFromParcel(parcel: Parcel): BreatheRoutineCycleItem {
             return BreatheRoutineCycleItem(parcel)

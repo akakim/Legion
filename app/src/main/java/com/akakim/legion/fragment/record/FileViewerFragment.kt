@@ -36,14 +36,14 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
 
-            fileList.addAll(  arguments.getParcelableArrayList<RecordItem>(ARG_RECORD_LIST ) )
+            fileList.addAll(  arguments!!.getParcelableArrayList<RecordItem>(ARG_RECORD_LIST ) )
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        val view  = inflater!!.inflate(R.layout.fragment_file_viewr, container, false)
+        val view  = inflater.inflate(R.layout.fragment_file_viewr, container, false)
 
 
 
@@ -54,7 +54,7 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        rvRecordList.adapter = RecordAdapter( context, fileList , this )
+        rvRecordList.adapter = RecordAdapter( requireContext(), fileList , this )
 
 
         val layoutManager = LinearLayoutManager(context)
@@ -77,7 +77,7 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
     }
 
-    open fun notifyNewItemInserted(recordItem : RecordItem ){
+    fun notifyNewItemInserted(recordItem : RecordItem ){
 
 
         this.fileList.add(0,recordItem)
@@ -97,7 +97,7 @@ class FileViewerFragment : BaseFragment(), OnSingleItemClickListener {
 
 
         val intent = Intent(context, PlayerActivity::class.java )
-        intent.putExtra( PlayerActivity.PLAY_ITEM, DBHelper.getInstance( context )?.getRecordItemItem( position ))
+        intent.putExtra( PlayerActivity.PLAY_ITEM, DBHelper.getInstance( requireContext() )?.getRecordItemItem( position ))
 
         startActivity( intent )
         activity?.overridePendingTransition( android.R.anim.slide_in_left,android.R.anim.slide_out_right)

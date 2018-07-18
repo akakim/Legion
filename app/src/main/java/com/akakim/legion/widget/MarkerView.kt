@@ -1,5 +1,5 @@
 
-package com.akakim.soundlibrary.view
+package com.akakim.legion.widget
 
 /*
  * Copyright (C) 2008 Google Inc.
@@ -64,8 +64,8 @@ open class MarkerView : AppCompatImageView {
         fun markerTouchMove(markerView: MarkerView, pos: Float)
         fun markerTouchEnd(markerView: MarkerView)
         fun markerFocus(markerView: MarkerView)
-        fun markerLeft(markerView: MarkerView,velocity : Int )
-        fun markerRight(markerView: MarkerView,velocity: Int)
+        fun markerLeft(markerView: MarkerView, velocity : Int )
+        fun markerRight(markerView: MarkerView, velocity: Int)
         fun markerEnter(markerView: MarkerView)
         fun markerKeyUp()
         fun markerDraw()

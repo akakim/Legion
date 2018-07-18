@@ -15,7 +15,7 @@
  *
  */
 
-package com.akakim.soundlibrary.gesture
+package com.akakim.legion.widget
 
 import android.content.Context
 import android.graphics.RectF
@@ -110,7 +110,7 @@ open class DragDetector{
         }
 
         // TODO : if
-        if( activePointerId != INVALID_POINTER_ID ){
+        if( activePointerId != INVALID_POINTER_ID){
             activePointerIndex = ev.findPointerIndex(
                 activePointerId
             )

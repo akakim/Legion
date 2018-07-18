@@ -38,11 +38,11 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
 
-            position = arguments.getInt(ARG_POSITION)
+            position = arguments!!.getInt(ARG_POSITION)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater?.inflate(R.layout.fragment_record, container, false)
     }
@@ -109,10 +109,11 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                     }
                 }
 
-                context.startService( intent )
+//                context
+                context?.startService( intent )
 
                 // keep screen on while recording
-                activity.window.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
+                activity?.window?.addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
 
                 tvRecordingStatus.text= "녹음중..."
 
@@ -134,10 +135,10 @@ class RecordFragment : BaseFragment(),View.OnClickListener {
                 tvRecordingStatus.text = " 버튼을 클릭하시면 녹음이 시작됩니다."
 
 
-                context.stopService( intent )
+                context?.stopService( intent )
 
                 // keep screen on while recording
-                activity.window.clearFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
+                activity?.window?.clearFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON )
             }
 
 

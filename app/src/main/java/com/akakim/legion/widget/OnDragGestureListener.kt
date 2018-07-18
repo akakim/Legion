@@ -15,7 +15,7 @@
  *
  */
 
-package com.akakim.soundlibrary.gesture
+package com.akakim.legion.widget
 
 /**
  * @author KIM

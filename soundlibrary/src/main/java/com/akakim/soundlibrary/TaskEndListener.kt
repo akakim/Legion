@@ -2,7 +2,7 @@
 
 package com.akakim.soundlibrary
 
-import com.akakim.soundlibrary.view.WaveFormInfo
+import com.akakim.legion.widget.WaveFormInfo
 
 /**
  * @author KIM

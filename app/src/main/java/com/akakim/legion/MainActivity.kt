@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     var reciever : BroadcastReceiver?           = null
     lateinit var serviceFilter : IntentFilter
-    override fun onFragmentInteraction(fragmentTag: String, uri: Uri) {
+    override fun onFragmentInteraction(tag: String, uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -357,7 +357,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
                     builder.setTitle( " 알림 " )
                     builder.setMessage( "파일 저장과 녹음이 되어야만 앱을 사용할 수 있습니다.")
-                    builder.setPositiveButton( "확인" ,DialogInterface.OnClickListener { dialog, which ->
+                    builder.setPositiveButton( "확인" ,DialogInterface.OnClickListener { _, _ ->
 
                         finish()
                     })

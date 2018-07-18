@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.annotation.ColorInt
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 
 import android.view.LayoutInflater
@@ -51,10 +52,11 @@ class RoutineInputFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        inspirationColor    = context.getColor( R.color.inspirationRoutine )
-        expirationColor     = context.getColor( R.color.expirationRoutine )
-        stopColor           = context.getColor( R.color.stopRoutine )
-        etcColor            = context.getColor( R.color.etcRoutine )
+//        ContextCompat.getColor(requireContext())
+        inspirationColor    = ContextCompat.getColor(requireContext(), R.color.inspirationRoutine )
+        expirationColor     = ContextCompat.getColor(requireContext(), R.color.expirationRoutine )
+        stopColor           = ContextCompat.getColor(requireContext(), R.color.stopRoutine )
+        etcColor            = ContextCompat.getColor(requireContext(), R.color.etcRoutine )
 
 
 
@@ -65,9 +67,9 @@ class RoutineInputFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
 
-            routineAdapter       = RoutineAdapter(context,routineList )
+            routineAdapter       = RoutineAdapter(requireContext(),routineList )
         rvPreView.layoutManager   = LinearLayoutManager( context)
-        rvPreView.addItemDecoration( DefaultDecorator(context))
+        rvPreView.addItemDecoration( DefaultDecorator(requireContext()))
         rvPreView.adapter         = routineAdapter
 
 //        routineAdapter

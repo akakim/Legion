@@ -25,6 +25,11 @@ import com.akakim.legion.util.Util
 class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> , OnEventListener {
 
 
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordViewHolder {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
+
+
     override fun onEvent(event: Int, file: String?) {
 
     }
@@ -66,7 +71,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> , OnEventListener {
     }
 
 
-    override fun onBindViewHolder(holder: RecordViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecordViewHolder, position: Int) {
 
 
         val item = this.recordList.get( position )
@@ -88,7 +93,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordViewHolder> , OnEventListener {
         //TODO : Database 구축 이후의 처리 .
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecordViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordViewHolder {
         val view = LayoutInflater.from( context ).inflate( R.layout.item_recording,null,true )
         return RecordViewHolder(view)
     }

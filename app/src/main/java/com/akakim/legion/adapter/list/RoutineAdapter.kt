@@ -28,11 +28,11 @@ class RoutineAdapter : RecyclerView.Adapter<CycleViewHolder> {
     }
 
 
-    override fun onBindViewHolder(holder: CycleViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: CycleViewHolder, position: Int) {
 
         val aItem  = routineCycleItems.get( position )
 
-        holder?.apply {
+        holder.apply {
             tvSequence?.text     = position.toString()
             tvDoThat?.text       = aItem.doThat
             tvCycleTerm?.text    = aItem.term.toString() + " 초 "           // TODO : 포맷 값을 생각하기.
@@ -53,7 +53,7 @@ class RoutineAdapter : RecyclerView.Adapter<CycleViewHolder> {
 
         return sum
     }
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CycleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CycleViewHolder {
 
         val view = LayoutInflater.from( context ).inflate(R.layout.item_breathe_routine,parent,false)
 

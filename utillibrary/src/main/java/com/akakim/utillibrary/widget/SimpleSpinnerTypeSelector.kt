@@ -43,7 +43,7 @@ class SimpleSpinnerTypeSelector : Spinner, AdapterView.OnItemSelectedListener {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs )
 
 
-    open fun setFixedData( initCode : String , codeList: Array<out String>? , valueList : Array<out String >? ){
+    fun setFixedData( initCode : String , codeList: Array<out String>? , valueList : Array<out String >? ){
         this.initCode = initCode
         selectedCode = initCode
         this.codeList = codeList

@@ -15,7 +15,7 @@
  *
  */
 
-package com.akakim.soundlibrary.view
+package com.akakim.legion.widget
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -25,10 +25,7 @@ import android.graphics.Paint
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import com.akakim.soundlibrary.R
-import com.akakim.soundlibrary.WaveUtil
-import com.akakim.soundlibrary.gesture.DragDetector
-import com.akakim.soundlibrary.gesture.OnDragGestureListener
+import com.akakim.legion.R
 
 /**
  * @author KIM
@@ -55,7 +52,7 @@ open class WaveFormThumbView : View , OnDragGestureListener {
 
 
     // TODO: JVM Override 확인해보기
-    var onDragThumbListener : OnDragThumbListener? = null
+    open var onDragThumbListener : OnDragThumbListener? = null
 
     constructor(context: Context?) : this(context, null )
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs,0)
@@ -99,10 +96,10 @@ open class WaveFormThumbView : View , OnDragGestureListener {
         waveFormHigLightPaint.style = Paint.Style.FILL_AND_STROKE
         waveFormHigLightPaint.strokeWidth = 0f
 
-        dragDetector = DragDetector( context , this )
+        dragDetector = DragDetector(context, this)
     }
 
-    open fun initWave(bean : WaveFormInfo ){
+    open fun initWave(bean : WaveFormInfo){
         totalSecond = WaveUtil.dataPixelsToSecond( bean.length , bean.sampleRate, bean.samplePerPixel )
         computerMinScaleFactor()
     }
@@ -254,7 +251,7 @@ open class WaveFormThumbView : View , OnDragGestureListener {
         computerMinScaleFactor()
     }
 
-    open fun setWave(bean :WaveFormInfo? ){
+    open fun setWave(bean : WaveFormInfo? ){
 
         if( bean != null){
             this.bean = bean

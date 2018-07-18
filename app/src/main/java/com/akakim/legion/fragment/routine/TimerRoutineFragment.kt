@@ -46,15 +46,15 @@ class TimerRoutineFragment : BaseFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            cyclerItemRoutines = arguments.getParcelableArrayList( ARG_CYCLE_ITEMS )
+            cyclerItemRoutines = arguments!!.getParcelableArrayList( ARG_CYCLE_ITEMS )
 
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        builder = AlertDialog.Builder(context, 0)
+        builder = AlertDialog.Builder(requireContext(), 0)
 
 
         builder.apply {
@@ -64,7 +64,7 @@ class TimerRoutineFragment : BaseFragment()
 
         }
 
-        val view =  inflater?.inflate(R.layout.fragment_timer, container, false)
+        val view =  inflater.inflate(R.layout.fragment_timer, container, false)
 
         return view
 
@@ -73,7 +73,7 @@ class TimerRoutineFragment : BaseFragment()
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapter                     = RoutineAdapter( context, cyclerItemRoutines)
+        adapter                     = RoutineAdapter( requireContext(), cyclerItemRoutines)
         rvCycleList.adapter         = adapter
         rvCycleList.layoutManager   = LinearLayoutManager( context )
 

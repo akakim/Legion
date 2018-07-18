@@ -22,14 +22,14 @@ class DBHelper :SQLiteOpenHelper{
 
 
     companion object {
-        open    val LOG_TAG ="DBHelper"
+        val LOG_TAG ="DBHelper"
 
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "archive.db"
 
         var dbInstance : DBHelper? =null
 
-        open fun getInstance(context: Context) : DBHelper? {
+        fun getInstance(context: Context) : DBHelper? {
 
 
 
@@ -134,7 +134,7 @@ class DBHelper :SQLiteOpenHelper{
     }
 
 
-    open fun getCount( tableName : String ) : Int {
+    fun getCount( tableName : String ) : Int {
         val count = readableDatabase.query( tableName, arrayOf( DataInterface._ID ),null,null,null,null,null).count
 
         readableDatabase.close()
@@ -154,7 +154,7 @@ class DBHelper :SQLiteOpenHelper{
     /**
      * 인터페이스를 이용하여
      */
-    open fun addItem( tableName: String ,items :DataInterface) : Long{
+    fun addItem( tableName: String ,items :DataInterface) : Long{
 
         val rowId : Long = writableDatabase.insert( tableName,null,items.getContentValue() )
 
@@ -167,7 +167,7 @@ class DBHelper :SQLiteOpenHelper{
     /**
      * 나름 실시간 동기화 하는 방법론
      */
-    open fun getItemAtTodoListItem ( position : Int ) : TodoListItem{
+    fun getItemAtTodoListItem ( position : Int ) : TodoListItem{
 
         val aItem = TodoListItem()
         writableDatabase.query( TodoListItem.TABLE_TODO_LIST,null,null,null,null,null,null,null)
@@ -186,7 +186,7 @@ class DBHelper :SQLiteOpenHelper{
 
 
 
-    open fun getRecordItemList() : ArrayList<RecordItem>{
+    fun getRecordItemList() : ArrayList<RecordItem>{
 
         var cursor =  writableDatabase.query( RecordItem.TABLE_RECORD,null,null,null,null,null,null,null)
         val resultList = ArrayList<RecordItem>()
@@ -216,7 +216,7 @@ class DBHelper :SQLiteOpenHelper{
     /**
      *
      */
-    open fun getRecordItemItem ( position : Int ) : RecordItem {
+    fun getRecordItemItem ( position : Int ) : RecordItem {
         val aItem = RecordItem()
         var cursor =  writableDatabase.query( RecordItem.TABLE_RECORD,null,null,null,null,null,null,null)
 
@@ -232,7 +232,7 @@ class DBHelper :SQLiteOpenHelper{
     }
 
 
-    open fun getCheckListItem( position: Int ) : CheckList{
+    fun getCheckListItem( position: Int ) : CheckList{
         val aItem = CheckList()
         writableDatabase.query( TodoListItem.TABLE_TODO_LIST,null,null,null,null,null,null,null)
                 .let {
@@ -249,7 +249,7 @@ class DBHelper :SQLiteOpenHelper{
         return aItem
     }
 
-    open fun getBreathRoutineCycleItem( position : Int ) : BreatheRoutineCycleItem {
+    fun getBreathRoutineCycleItem( position : Int ) : BreatheRoutineCycleItem {
         val aItem = BreatheRoutineCycleItem()
         writableDatabase.query( TodoListItem.TABLE_TODO_LIST,null,null,null,null,null,null,null)
                 .let {
@@ -271,7 +271,7 @@ class DBHelper :SQLiteOpenHelper{
      * 반영된 열이 없으므로 -1 을 반환한다.
      * 반영된 열이 있다면, 있는 수만큼 반영이된다.
      */
-    open fun renameItem(tableName: String, dataInterface: DataInterface?) : Int {
+    fun renameItem(tableName: String, dataInterface: DataInterface?) : Int {
 
         if( dataInterface == null ){
             return -1
@@ -289,7 +289,7 @@ class DBHelper :SQLiteOpenHelper{
      * 반영된 열이 없으므로 -1 을 반환한다.
      * 반영된 열이 있다면, 있는 수만큼 반영이된다.
      */
-    open fun updateItem( tableName: String, dataInterface: DataInterface?) : Int {
+    fun updateItem( tableName: String, dataInterface: DataInterface?) : Int {
 
         if( dataInterface == null ){
             return -1
@@ -304,7 +304,7 @@ class DBHelper :SQLiteOpenHelper{
      *
      *
      */
-    open fun removeTodoListItem( tableName: String, id : String ): Int {
+    fun removeTodoListItem( tableName: String, id : String ): Int {
         val affectRow = writableDatabase.delete(tableName,DataInterface._ID+"=?" , arrayOf( id ))
 
         return affectRow

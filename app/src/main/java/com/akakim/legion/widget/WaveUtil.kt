@@ -15,7 +15,7 @@
  *
  */
 
-package com.akakim.soundlibrary
+package com.akakim.legion.widget
 
 /**
  * @author KIM
