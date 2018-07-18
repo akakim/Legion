@@ -9,7 +9,7 @@ buildscript {
     ext.appTargetSdkVersion = 26
 
     ext{
-        suppportLibraryVersion='26.1.0'
+        suppportLibraryVersion='27.1.1'
         constraintLayoutVersion='1.1.2'
         exoplayerVersion = 'r2.5.1'
 

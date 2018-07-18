@@ -12,13 +12,13 @@
         android:layout_height="0dp"
         android:layout_weight="3"/>
 
-    <com.akakim.soundlibrary.view.WaveFormThumbView
-        android:id="@+id/waveFormThumbView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:background="#e1e1e1"
-        />
+    <!--<com.akakim.soundlibrary.view.WaveFormThumbView-->
+        <!--android:id="@+id/waveFormThumbView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="4"-->
+        <!--android:background="#e1e1e1"-->
+        <!--/>-->
 
     <!--        app:wf_wave_form_color="#00ffff"
         app:wf_waveform_highlight_color="#ff11ff"-->

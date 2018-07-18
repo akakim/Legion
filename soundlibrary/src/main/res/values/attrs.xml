@@ -4,10 +4,10 @@
 
     <attr name="wf_waveform_color" format="color"/>
 
-    <declare-styleable name="WaveformView">
+    <!--<declare-styleable name="WaveformView">-->
 
 
-    </declare-styleable>
+    <!--</declare-styleable>-->
 
 
     <declare-styleable name="WaveFormThumbView">
